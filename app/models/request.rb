@@ -1,5 +1,5 @@
 class Request < ApplicationRecord
-  belongs_to :approved_by, class_name: "Account"
+  belongs_to :approved_by, class_name: "Account", optional: true
   belongs_to :work_breakdown_structure
   belongs_to :project
   belongs_to :payment_method

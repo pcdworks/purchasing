@@ -8,9 +8,9 @@
     <%= f.text_field :vendor_reference %>
   </td>
   <td>
-    <%= f.text_field :quantity %>
+    <%= f.number_field :quantity, step: 1, min: 0 %>
   </td>
   <td>
-    <%= f.text_field :price %>
+    <%= f.number_field :price, step: 0.01, min: 0.00 %>
   </td>
 </tr>
