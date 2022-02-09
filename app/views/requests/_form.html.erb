@@ -101,6 +101,14 @@
     <%= form.text_field :vendor %>
   </div>
 
+  <div id="items" class="nested-fields">
+
+  <%= form.fields_for :items do |f| %>  
+    <%= render "item_fields", f: f %>
+    <% end %>
+    <%= link_to_add_association "add item", form, :items %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
