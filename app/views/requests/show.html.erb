@@ -1,0 +1,94 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @request.notes %>
+</p>
+
+<p>
+  <strong>Reason for rejection:</strong>
+  <%= @request.reason_for_rejection %>
+</p>
+
+<p>
+  <strong>Shipping cost:</strong>
+  <%= @request.shipping_cost %>
+</p>
+
+<p>
+  <strong>Sales tax:</strong>
+  <%= @request.sales_tax %>
+</p>
+
+<p>
+  <strong>Import tax:</strong>
+  <%= @request.import_tax %>
+</p>
+
+<p>
+  <strong>Date received:</strong>
+  <%= @request.date_received %>
+</p>
+
+<p>
+  <strong>Date shipped:</strong>
+  <%= @request.date_shipped %>
+</p>
+
+<p>
+  <strong>Date ordered:</strong>
+  <%= @request.date_ordered %>
+</p>
+
+<p>
+  <strong>Order number:</strong>
+  <%= @request.order_number %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @request.status %>
+</p>
+
+<p>
+  <strong>Approved by:</strong>
+  <%= @request.approved_by_id %>
+</p>
+
+<p>
+  <strong>Work breakdown structure:</strong>
+  <%= @request.work_breakdown_structure_id %>
+</p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @request.project_id %>
+</p>
+
+<p>
+  <strong>Payment method:</strong>
+  <%= @request.payment_method_id %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @request.account_id %>
+</p>
+
+<p>
+  <strong>Requested by:</strong>
+  <%= @request.requested_by_id %>
+</p>
+
+<p>
+  <strong>Shipping charges paid to:</strong>
+  <%= @request.shipping_charges_paid_to %>
+</p>
+
+<p>
+  <strong>Vendor:</strong>
+  <%= @request.vendor %>
+</p>
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', requests_path %>

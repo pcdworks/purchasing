@@ -1,0 +1,41 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  notes: MyText
+  reason_for_rejection: MyText
+  shipping_cost: 1.5
+  sales_tax: 1.5
+  import_tax: 1.5
+  date_received: 2022-02-09 02:32:19
+  date_shipped: 2022-02-09 02:32:19
+  date_ordered: 2022-02-09 02:32:19
+  order_number: MyString
+  status: 1
+  approved_by: one
+  work_breakdown_structure: one
+  project: one
+  payment_method: one
+  account: one
+  requested_by: one
+  shipping_charges_paid_to: 1
+  vendor: MyString
+
+two:
+  notes: MyText
+  reason_for_rejection: MyText
+  shipping_cost: 1.5
+  sales_tax: 1.5
+  import_tax: 1.5
+  date_received: 2022-02-09 02:32:19
+  date_shipped: 2022-02-09 02:32:19
+  date_ordered: 2022-02-09 02:32:19
+  order_number: MyString
+  status: 1
+  approved_by: two
+  work_breakdown_structure: two
+  project: two
+  payment_method: two
+  account: two
+  requested_by: two
+  shipping_charges_paid_to: 1
+  vendor: MyString

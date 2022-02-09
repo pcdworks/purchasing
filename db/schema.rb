@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_09_082615) do
+ActiveRecord::Schema.define(version: 2022_02_09_083305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,4 +41,70 @@ ActiveRecord::Schema.define(version: 2022_02_09_082615) do
     t.index ["unlock_token"], name: "index_accounts_on_unlock_token", unique: true
   end
 
+  create_table "items", force: :cascade do |t|
+    t.string "description"
+    t.string "vendor_reference"
+    t.integer "quantity"
+    t.float "price"
+    t.bigint "request_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_items_on_request_id"
+  end
+
+  create_table "payment_methods", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "title"
+    t.integer "identifier"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.text "notes"
+    t.text "reason_for_rejection"
+    t.float "shipping_cost"
+    t.float "sales_tax"
+    t.float "import_tax"
+    t.datetime "date_received"
+    t.datetime "date_shipped"
+    t.datetime "date_ordered"
+    t.string "order_number"
+    t.integer "status"
+    t.bigint "approved_by_id", null: false
+    t.bigint "work_breakdown_structure_id", null: false
+    t.bigint "project_id", null: false
+    t.bigint "payment_method_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "requested_by_id", null: false
+    t.integer "shipping_charges_paid_to"
+    t.string "vendor"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_requests_on_account_id"
+    t.index ["approved_by_id"], name: "index_requests_on_approved_by_id"
+    t.index ["payment_method_id"], name: "index_requests_on_payment_method_id"
+    t.index ["project_id"], name: "index_requests_on_project_id"
+    t.index ["requested_by_id"], name: "index_requests_on_requested_by_id"
+    t.index ["work_breakdown_structure_id"], name: "index_requests_on_work_breakdown_structure_id"
+  end
+
+  create_table "work_breakdown_structures", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "items", "requests"
+  add_foreign_key "requests", "accounts"
+  add_foreign_key "requests", "accounts", column: "approved_by_id"
+  add_foreign_key "requests", "accounts", column: "requested_by_id"
+  add_foreign_key "requests", "payment_methods"
+  add_foreign_key "requests", "projects"
+  add_foreign_key "requests", "work_breakdown_structures"
 end

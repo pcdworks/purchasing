@@ -1,0 +1,2 @@
+class WorkBreakdownStructure < ApplicationRecord
+end

@@ -1,0 +1,107 @@
+<%= form_with(model: request) do |form| %>
+  <% if request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+        <% request.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reason_for_rejection %>
+    <%= form.text_area :reason_for_rejection %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shipping_cost %>
+    <%= form.text_field :shipping_cost %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sales_tax %>
+    <%= form.text_field :sales_tax %>
+  </div>
+
+  <div class="field">
+    <%= form.label :import_tax %>
+    <%= form.text_field :import_tax %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_received %>
+    <%= form.datetime_select :date_received %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_shipped %>
+    <%= form.datetime_select :date_shipped %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_ordered %>
+    <%= form.datetime_select :date_ordered %>
+  </div>
+
+  <div class="field">
+    <%= form.label :order_number %>
+    <%= form.text_field :order_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.number_field :status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :approved_by_id %>
+    <%= form.text_field :approved_by_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :work_breakdown_structure_id %>
+    <%= form.text_field :work_breakdown_structure_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :project_id %>
+    <%= form.text_field :project_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :payment_method_id %>
+    <%= form.text_field :payment_method_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :account_id %>
+    <%= form.text_field :account_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :requested_by_id %>
+    <%= form.text_field :requested_by_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shipping_charges_paid_to %>
+    <%= form.number_field :shipping_charges_paid_to %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vendor %>
+    <%= form.text_field :vendor %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

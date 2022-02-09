@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Requests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Notes</th>
+      <th>Reason for rejection</th>
+      <th>Shipping cost</th>
+      <th>Sales tax</th>
+      <th>Import tax</th>
+      <th>Date received</th>
+      <th>Date shipped</th>
+      <th>Date ordered</th>
+      <th>Order number</th>
+      <th>Status</th>
+      <th>Approved by</th>
+      <th>Work breakdown structure</th>
+      <th>Project</th>
+      <th>Payment method</th>
+      <th>Account</th>
+      <th>Requested by</th>
+      <th>Shipping charges paid to</th>
+      <th>Vendor</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @requests.each do |request| %>
+      <tr>
+        <td><%= request.notes %></td>
+        <td><%= request.reason_for_rejection %></td>
+        <td><%= request.shipping_cost %></td>
+        <td><%= request.sales_tax %></td>
+        <td><%= request.import_tax %></td>
+        <td><%= request.date_received %></td>
+        <td><%= request.date_shipped %></td>
+        <td><%= request.date_ordered %></td>
+        <td><%= request.order_number %></td>
+        <td><%= request.status %></td>
+        <td><%= request.approved_by_id %></td>
+        <td><%= request.work_breakdown_structure_id %></td>
+        <td><%= request.project_id %></td>
+        <td><%= request.payment_method_id %></td>
+        <td><%= request.account_id %></td>
+        <td><%= request.requested_by_id %></td>
+        <td><%= request.shipping_charges_paid_to %></td>
+        <td><%= request.vendor %></td>
+        <td><%= link_to 'Show', request %></td>
+        <td><%= link_to 'Edit', edit_request_path(request) %></td>
+        <td><%= link_to 'Destroy', request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Request', new_request_path %>
