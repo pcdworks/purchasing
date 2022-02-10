@@ -1,14 +1,15 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @project.title %>
-</p>
-
-<p>
-  <strong>Identifier:</strong>
-  <%= @project.identifier %>
-</p>
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<h1>Viewing Project</h1>
+<br/>
+<div class="btn-group gap-2 d-flex">
+  <%= link_to 'Back', projects_path, class: 'btn btn-outline-secondary' %>
+  <%= link_to 'Edit', edit_project_path(@project), class: 'btn btn-outline-warning' %>
+  <%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+</div>
+<br/>
+<div class="card">
+  <div class="card-body">
+    <div class="card-text bg-transparent">
+      <%= @project.identifier %>-<%= @project.title %>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,12 @@
 <%= form_with(model: project) do |form| %>
+  <div class="btn-group gap-2 d-flex">
+    <%= link_to 'Back', projects_path, class: 'btn btn-outline-secondary' %>
+    <% if !form.object.new_record? %>
+      <%= link_to 'View', form.object, class: 'btn btn-outline-info' %>
+    <% end %>
+    <%= form.submit('Save', class: 'btn btn-outline-primary') %>
+  </div>
+  <br/>
   <% if project.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
@@ -10,18 +18,11 @@
     </div>
   <% end %>
   <div class="mb-3">
-    <div class="form-floating">
-      <%= form.text_field :title, class: "form-control" %>
-      <%= form.label :title %>
-    </div>
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
   <div class="mb-3">
-    <div class="form-floating">
-      <%= form.number_field :identifier, class: "form-control", step: 1, min: 0 %>
-      <%= form.label :identifier %>
-    </div>
-  </div>
-  <div class="actions">
-    <%= form.submit %>
+    <%= form.label :identifier %>
+    <%= form.number_field :identifier, class: "form-control", step: 1, min: 0 %>
   </div>
 <% end %>
