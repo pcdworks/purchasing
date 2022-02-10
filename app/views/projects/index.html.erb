@@ -1,29 +1,29 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Projects</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Identifier</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<br/>
+<div class="d-grid gap-2">
+  <%= link_to 'New Project', new_project_path, class: 'btn btn-primary text-light' %>
+</div>
+<br/>
+<div class="container mt-3">
+  <div class="row g-2">
     <% @projects.each do |project| %>
-      <tr>
-        <td><%= project.title %></td>
-        <td><%= project.identifier %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <div class="col-sm-6">
+        <div class="card m-2">
+          <div class="card-header">
+            <div class="btn-group d-flex">
+              <%= link_to 'View', project, class: 'btn btn-outline-info' %>
+              <%= link_to 'Edit', edit_project_path(project), class: 'btn btn-outline-warning' %>
+              <%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-footer bg-transparent">
+              <%= project.identifier %>-<%= project.title %>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
-
+  </div>
+</div>
 <br>
-
-<%= link_to 'New Project', new_project_path %>
