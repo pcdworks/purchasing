@@ -33,7 +33,11 @@
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <%= link_to "Log In", account_session_path, class: 'nav-link' %>
+              <% if current_account %>
+                <%= link_to "Log out", destroy_account_session_path, method: :delete, class: 'nav-link' %>
+              <% else %>
+                <%= link_to "Log In", account_session_path, class: 'nav-link' %>
+              <% end %>
             </li>
           </ul>
         </div>

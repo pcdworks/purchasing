@@ -17,14 +17,16 @@
       </ul>
     </div>
   <% end %>
-  <%= form.hidden_field :account_id%>
+  <% if current_account %>
+    <%= form.hidden_field :account_id, value: current_account.id %>
+  <% end %>
   <div class="row">
     <div class="col-md-4">
       <div class="row">
         <div class="col">
           <div class="field">
             <%= form.label :requested_by_id %>
-            <%= form.text_field :requested_by_id, class: 'form-control' %>
+            <%= form.select(:requested_by_id, Account.all.collect {|u| [u.email, u.id]}, {include_blank: true}, {class: 'form-select'})%>
           </div>
         </div>
       </div>
@@ -40,7 +42,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :payment_method_id %>
-            <%= form.text_field :payment_method_id, class: 'form-control' %>
+            <%= form.select(:payment_method_id, PaymentMethod.all.collect {|u| [u.title, u.id]}, {include_blank: true}, {class: 'form-select'})%>
           </div>
         </div>
       </div>
@@ -56,7 +58,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :project_id %>
-            <%= form.text_field :project_id, class: 'form-control' %>
+            <%= form.select(:project_id, Project.all.collect {|u| [u.title, u.id]}, {include_blank: true}, {class: 'form-select'})%>
           </div>
         </div>
       </div>
@@ -64,7 +66,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :work_breakdown_structure_id %>
-            <%= form.text_field :work_breakdown_structure_id, class: 'form-control' %>
+            <%= form.select(:work_breakdown_structure_id, WorkBreakdownStructure.all.collect {|u| [u.title, u.id]}, {include_blank: true}, {class: 'form-select'})%>
           </div>
         </div>
       </div>
@@ -148,7 +150,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :approved_by_id %>
-            <%= form.text_field :approved_by_id, class: 'form-control' %>
+            <%= form.select(:approved_by_id, Account.all.collect {|u| [u.email, u.id]}, {include_blank: true}, {class: 'form-select'})%>
           </div>
         </div>
       </div>

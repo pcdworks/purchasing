@@ -11,7 +11,7 @@ class CreateRequests < ActiveRecord::Migration[6.1]
       t.datetime :date_ordered
       t.string :order_number
       t.integer :status
-      t.references :approved_by, null: false, foreign_key: {to_table: "accounts"}
+      t.references :approved_by, null: true, foreign_key: {to_table: "accounts"}
       t.references :work_breakdown_structure, null: false, foreign_key: true
       t.references :project, null: false, foreign_key: true
       t.references :payment_method, null: false, foreign_key: true

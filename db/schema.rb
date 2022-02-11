@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2022_02_09_083305) do
     t.datetime "date_ordered"
     t.string "order_number"
     t.integer "status"
-    t.bigint "approved_by_id", null: false
+    t.bigint "approved_by_id"
     t.bigint "work_breakdown_structure_id", null: false
     t.bigint "project_id", null: false
     t.bigint "payment_method_id", null: false
