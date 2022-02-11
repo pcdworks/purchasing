@@ -1,4 +1,12 @@
 <%= form_with(model: request) do |form| %>
+  <div class="btn-group gap-2 d-flex">
+    <%= link_to 'Back', requests_path, class: 'btn btn-outline-secondary' %>
+    <% if !form.object.new_record? %>
+      <%= link_to 'View', form.object, class: 'btn btn-outline-info' %>
+    <% end %>
+    <%= form.submit('Save', class: 'btn btn-outline-primary') %>
+  </div>
+  <br/>
   <% if request.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(request.errors.count, "error") %> prohibited this request from being saved:</h2>
@@ -9,83 +17,174 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= form.label :notes %>
-    <%= form.text_area :notes %>
+  <%= form.hidden_field :account_id%>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :requested_by_id %>
+            <%= form.text_field :requested_by_id, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :vendor %>
+            <%= form.text_field :vendor, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :payment_method_id %>
+            <%= form.text_field :payment_method_id, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :shipping_charges_paid_to %>
+            <%= form.number_field :shipping_charges_paid_to, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :project_id %>
+            <%= form.text_field :project_id, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :work_breakdown_structure_id %>
+            <%= form.text_field :work_breakdown_structure_id, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :order_number %>
+            <%= form.text_field :order_number, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :date_ordered %>
+            <%= form.date_select :date_ordered, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :date_shipped %>
+            <%= form.date_select :date_shipped, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :date_received %>
+            <%= form.date_select :date_received, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :shipping_cost %>
+            <%= form.number_field :shipping_cost, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :sales_tax %>
+            <%= form.number_field :sales_tax, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :import_tax %>
+            <%= form.number_field :import_tax, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :subtotal %>
+            <input type="number" id="subtotal" readonly value="0.00" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :total %>
+            <input type="number" id="total" readonly value="0.00" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :approved_by_id %>
+            <%= form.text_field :approved_by_id, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :status %>
+            <%= form.number_field :status, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :notes %>
+            <%= form.text_area :notes, class: 'form-control', style: 'min-height: 128px' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :reason_for_rejection %>
+            <%= form.text_area :reason_for_rejection, class: 'form-control', style: 'min-height: 128px' %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= form.label :reason_for_rejection %>
-    <%= form.text_area :reason_for_rejection %>
+  <div class="d-grid gap-2">
+    <%= link_to_add_association('Add Item', form, :items, :"data-association-insertion-node" => "tbody#items", :"data-association-insertion-method" => "append",  class: 'btn btn-primary text-light') %>
   </div>
-  <div class="field">
-    <%= form.label :shipping_cost %>
-    <%= form.text_field :shipping_cost %>
-  </div>
-  <div class="field">
-    <%= form.label :sales_tax %>
-    <%= form.text_field :sales_tax %>
-  </div>
-  <div class="field">
-    <%= form.label :import_tax %>
-    <%= form.text_field :import_tax %>
-  </div>
-  <div class="field">
-    <%= form.label :date_received %>
-    <%= form.datetime_select :date_received %>
-  </div>
-  <div class="field">
-    <%= form.label :date_shipped %>
-    <%= form.datetime_select :date_shipped %>
-  </div>
-  <div class="field">
-    <%= form.label :date_ordered %>
-    <%= form.datetime_select :date_ordered %>
-  </div>
-  <div class="field">
-    <%= form.label :order_number %>
-    <%= form.text_field :order_number %>
-  </div>
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.number_field :status %>
-  </div>
-  <div class="field">
-    <%= form.label :approved_by_id %>
-    <%= form.text_field :approved_by_id %>
-  </div>
-  <div class="field">
-    <%= form.label :work_breakdown_structure_id %>
-    <%= form.text_field :work_breakdown_structure_id %>
-  </div>
-  <div class="field">
-    <%= form.label :project_id %>
-    <%= form.text_field :project_id %>
-  </div>
-  <div class="field">
-    <%= form.label :payment_method_id %>
-    <%= form.text_field :payment_method_id %>
-  </div>
-  <div class="field">
-    <%= form.label :account_id %>
-    <%= form.text_field :account_id %>
-  </div>
-  <div class="field">
-    <%= form.label :requested_by_id %>
-    <%= form.text_field :requested_by_id %>
-  </div>
-  <div class="field">
-    <%= form.label :shipping_charges_paid_to %>
-    <%= form.number_field :shipping_charges_paid_to %>
-  </div>
-  <div class="field">
-    <%= form.label :vendor %>
-    <%= form.text_field :vendor %>
-  </div>
-  <%= link_to_add_association('Add Item', form, :items, :"data-association-insertion-node" => "tbody#items", :"data-association-insertion-method" => "append",  class: 'btn btn-primary btn-success') %>
+  <br/>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="">#</th>
         <th class=""><%=form.label :description%></th>
         <th class=""><%=form.label :vendor_reference%></th>
         <th class=""><%=form.label :quantity%></th>
@@ -99,7 +198,6 @@
       <% end %>
     </tbody>
   </table>
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>
+<br/>
+<br/>

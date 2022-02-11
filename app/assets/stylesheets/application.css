@@ -26,12 +26,12 @@ body {
     width: 100%;
 }
 
-input {
+input#em {
     background: none;
     border: none;
     width: 100%;
 }
-input:focus {
+input#em:focus {
     background: white;
     border: 1px solid grey;
 }

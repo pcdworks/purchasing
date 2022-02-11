@@ -1,17 +1,15 @@
 <tr class="nested-fields">
   <td>
+    <%= f.text_field :description, id: 'em' %>
   </td>
   <td>
-    <%= f.text_field :description %>
+    <%= f.text_field :vendor_reference, id: 'em' %>
   </td>
   <td>
-    <%= f.text_field :vendor_reference %>
+    <%= f.number_field :quantity, step: 1, min: 0, id: 'em' %>
   </td>
   <td>
-    <%= f.number_field :quantity, step: 1, min: 0 %>
-  </td>
-  <td>
-    <%= f.number_field :price, step: 0.01, min: 0.00 %>
+    <%= f.number_field :price, step: 0.01, min: 0.00, id: 'em' %>
   </td>
   <td>
   $
