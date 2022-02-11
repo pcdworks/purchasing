@@ -1,27 +1,29 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Payment Methods</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<br/>
+<div class="d-grid gap-2">
+  <%= link_to 'New', new_payment_method_path, class: 'btn btn-primary text-light' %>
+</div>
+<br/>
+<div class="container mt-3">
+  <div class="row g-2">
     <% @payment_methods.each do |payment_method| %>
-      <tr>
-        <td><%= payment_method.title %></td>
-        <td><%= link_to 'Show', payment_method %></td>
-        <td><%= link_to 'Edit', edit_payment_method_path(payment_method) %></td>
-        <td><%= link_to 'Destroy', payment_method, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <div class="col-sm-6">
+        <div class="card mb-2">
+          <div class="card-header">
+            <div class="btn-group d-flex">
+              <%= link_to 'View', payment_method, class: 'btn btn-outline-info' %>
+              <%= link_to 'Edit', edit_payment_method_path(payment_method), class: 'btn btn-outline-warning' %>
+              <%= link_to 'Destroy', payment_method, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-footer bg-transparent">
+              <%= payment_method.title %>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
-
+  </div>
+</div>
 <br>
-
-<%= link_to 'New Payment Method', new_payment_method_path %>

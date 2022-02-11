@@ -1,9 +1,15 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @work_breakdown_structure.title %>
-</p>
-
-<%= link_to 'Edit', edit_work_breakdown_structure_path(@work_breakdown_structure) %> |
-<%= link_to 'Back', work_breakdown_structures_path %>
+<h1>Viewing Work Breakdown Structure</h1>
+<br/>
+<div class="btn-group gap-2 d-flex">
+  <%= link_to 'Back', work_breakdown_structures_path, class: 'btn btn-outline-secondary' %>
+  <%= link_to 'Edit', edit_work_breakdown_structure_path(@work_breakdown_structure), class: 'btn btn-outline-warning' %>
+  <%= link_to 'Destroy', @work_breakdown_structure, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+</div>
+<br/>
+<div class="card">
+  <div class="card-body">
+    <div class="card-text bg-transparent">
+      <%= @work_breakdown_structure.title %>
+    </div>
+  </div>
+</div>

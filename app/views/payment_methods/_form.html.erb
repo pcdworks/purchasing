@@ -1,8 +1,15 @@
 <%= form_with(model: payment_method) do |form| %>
+  <div class="btn-group gap-2 d-flex">
+    <%= link_to 'Back', payment_methods_path, class: 'btn btn-outline-secondary' %>
+    <% if !form.object.new_record? %>
+      <%= link_to 'View', form.object, class: 'btn btn-outline-info' %>
+    <% end %>
+    <%= form.submit('Save', class: 'btn btn-outline-primary') %>
+  </div>
+  <br/>
   <% if payment_method.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(payment_method.errors.count, "error") %> prohibited this payment_method from being saved:</h2>
-
       <ul>
         <% payment_method.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,13 +17,8 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
+  <div class="mb-3">
     <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
 <% end %>
