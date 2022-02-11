@@ -6,7 +6,7 @@ class Request < ApplicationRecord
   belongs_to :account
   belongs_to :requested_by, class_name: "Account"
 
-  has_many :items, dependent: :destroy
+  has_many :items, inverse_of: :request, dependent: :destroy
 
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
 end
