@@ -9,4 +9,10 @@ class Request < ApplicationRecord
   has_many :items, inverse_of: :request, dependent: :destroy
 
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
+
+  validates :vendor, presence: true, allow_blank: false
+
+  def to_s
+    'pr-' + self.created_at.strftime("%Y%m%d") + '-' + self.vendor.gsub(' ', '_')
+  end
 end
