@@ -17,16 +17,29 @@
       </ul>
     </div>
   <% end %>
-  <% if current_account && form.object.new_record? %>
-    <%= form.hidden_field :account_id, value: current_account.id %>
-  <% end %>
   <div class="row">
     <div class="col-md-4">
       <div class="row">
         <div class="col">
           <div class="field">
+            <%= form.label :account_id %>
+            <%= form.hidden_field :account_id %>
+            <%= form.select(:account_id,
+              options_for_select(Account.all.collect {|u| [u, u.id]},
+              (form.object.new_record? ? current_account.id : form.object.account_id)),
+              {include_blank: true},
+              {class: 'form-select', disabled: true})%>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
             <%= form.label :requested_by_id %>
-            <%= form.select(:requested_by_id, Account.all.collect {|u| [u, u.id]}, {include_blank: true}, {class: 'form-select'})%>
+            <%= form.select(:requested_by_id,
+                            Account.all.collect {|u| [u, u.id]},
+                            {include_blank: true},
+                            {class: 'form-select'})%>
           </div>
         </div>
       </div>
@@ -42,7 +55,10 @@
         <div class="col">
           <div class="field">
             <%= form.label :payment_method_id %>
-            <%= form.select(:payment_method_id, PaymentMethod.all.collect {|u| [u.title, u.id]}, {include_blank: true}, {class: 'form-select'})%>
+            <%= form.select(:payment_method_id,
+                            PaymentMethod.all.collect {|u| [u.title, u.id]},
+                            {include_blank: true},
+                            {class: 'form-select'})%>
           </div>
         </div>
       </div>
@@ -58,7 +74,10 @@
         <div class="col">
           <div class="field">
             <%= form.label :project_id %>
-            <%= form.select(:project_id, Project.all.collect {|u| [u.title, u.id]}, {include_blank: true}, {class: 'form-select'})%>
+            <%= form.select(:project_id,
+                            Project.all.collect {|u| [u.title, u.id]},
+                            {include_blank: true},
+                            {class: 'form-select'})%>
           </div>
         </div>
       </div>
@@ -66,7 +85,10 @@
         <div class="col">
           <div class="field">
             <%= form.label :work_breakdown_structure_id %>
-            <%= form.select(:work_breakdown_structure_id, WorkBreakdownStructure.all.collect {|u| [u.title, u.id]}, {include_blank: true}, {class: 'form-select'})%>
+            <%= form.select(:work_breakdown_structure_id,
+                            WorkBreakdownStructure.all.collect {|u| [u.title, u.id]},
+                            {include_blank: true},
+                            {class: 'form-select'})%>
           </div>
         </div>
       </div>
@@ -128,29 +150,16 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <%= form.label :subtotal %>
-            <input type="number" id="subtotal" readonly value="0.00" class="form-control">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <%= form.label :total %>
-            <input type="number" id="total" readonly value="0.00" class="form-control">
-          </div>
-        </div>
-      </div>
     </div>
     <div class="col-md-4">
       <div class="row">
         <div class="col">
           <div class="field">
             <%= form.label :approved_by_id %>
-            <%= form.select(:approved_by_id, Account.all.collect {|u| [u, u.id]}, {include_blank: true}, {class: 'form-select'})%>
+            <%= form.select(:approved_by_id,
+                            Account.all.collect {|u| [u, u.id]},
+                            {include_blank: true},
+                            {class: 'form-select'})%>
           </div>
         </div>
       </div>
