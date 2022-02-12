@@ -26,7 +26,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :requested_by_id %>
-            <%= form.select(:requested_by_id, Account.all.collect {|u| [u.email, u.id]}, {include_blank: true}, {class: 'form-select'})%>
+            <%= form.select(:requested_by_id, Account.all.collect {|u| [u, u.id]}, {include_blank: true}, {class: 'form-select'})%>
           </div>
         </div>
       </div>
@@ -150,7 +150,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :approved_by_id %>
-            <%= form.select(:approved_by_id, Account.all.collect {|u| [u.email, u.id]}, {include_blank: true}, {class: 'form-select'})%>
+            <%= form.select(:approved_by_id, Account.all.collect {|u| [u, u.id]}, {include_blank: true}, {class: 'form-select'})%>
           </div>
         </div>
       </div>

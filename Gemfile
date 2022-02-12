@@ -20,6 +20,7 @@ gem "jbuilder", "~> 2.7"
 
 # Devise for accounts
 gem "devise"
+gem 'devise_ldap_authenticatable'
 
 # Cocoon for nested models
 gem "cocoon"
