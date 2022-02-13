@@ -13,6 +13,14 @@ class Request < ApplicationRecord
   validates :vendor, presence: true, allow_blank: false
 
   def to_s
-    'pr-' + self.created_at.strftime("%Y%m%d") + '-' + self.vendor.gsub(' ', '_')
+    'PR' + self.created_at.strftime("%Y%m%d") + self.account.initials + '-' + self.vendor.gsub(' ', '_') 
+  end
+
+  def subtotal
+    self.items.sum(&:total)
+  end
+
+  def total
+    self.subtotal + self.shipping_cost.to_f + self.import_tax.to_f + self.sales_tax.to_f
   end
 end

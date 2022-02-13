@@ -22,8 +22,12 @@
       <div class="row">
         <div class="col">
           <div class="field">
+            <% if form.object.new_record? %>
+              <%= form.hidden_field :account_id, value: current_account.id %>
+            <% else %>
+              <%= form.hidden_field :account_id, value: form.object.id %>
+            <% end %>
             <%= form.label :account_id %>
-            <%= form.hidden_field :account_id %>
             <%= form.select(:account_id,
               options_for_select(Account.all.collect {|u| [u, u.id]},
               (form.object.new_record? ? current_account.id : form.object.account_id)),
@@ -56,7 +60,7 @@
           <div class="field">
             <%= form.label :payment_method_id %>
             <%= form.select(:payment_method_id,
-                            PaymentMethod.all.collect {|u| [u.title, u.id]},
+                            PaymentMethod.all.collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select'})%>
           </div>
@@ -75,7 +79,7 @@
           <div class="field">
             <%= form.label :project_id %>
             <%= form.select(:project_id,
-                            Project.all.collect {|u| [u.title, u.id]},
+                            Project.all.collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select'})%>
           </div>
@@ -86,7 +90,7 @@
           <div class="field">
             <%= form.label :work_breakdown_structure_id %>
             <%= form.select(:work_breakdown_structure_id,
-                            WorkBreakdownStructure.all.collect {|u| [u.title, u.id]},
+                            WorkBreakdownStructure.all.collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select'})%>
           </div>
@@ -200,7 +204,6 @@
         <th class=""><%=form.label :vendor_reference%></th>
         <th class=""><%=form.label :quantity%></th>
         <th class=""><%=form.label :price%></th>
-        <th class=""><%=form.label :total%></th>
       </tr>
     </thead>
     <tbody id="items">
