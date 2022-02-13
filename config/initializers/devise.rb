@@ -17,7 +17,7 @@ Devise.setup do |config|
   # config.ldap_check_group_membership = true
   # config.ldap_check_group_membership_without_admin = false
   # config.ldap_check_attributes = false
-  # config.ldap_check_attributes_presence = false
+  # config.ldap_check_attributes_presence = true
   config.ldap_use_admin_to_bind = true
   # config.ldap_ad_group_check = false
 

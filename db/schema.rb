@@ -17,6 +17,10 @@ ActiveRecord::Schema.define(version: 2022_02_09_083305) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "username", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "givenname", default: "", null: false
+    t.string "surname", default: "", null: false
+    t.string "initials", default: "", null: false
     t.datetime "remember_created_at"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
@@ -25,6 +29,7 @@ ActiveRecord::Schema.define(version: 2022_02_09_083305) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["username"], name: "index_accounts_on_username", unique: true
   end
 

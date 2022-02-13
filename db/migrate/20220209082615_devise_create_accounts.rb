@@ -8,8 +8,13 @@ class DeviseCreateAccounts < ActiveRecord::Migration[6.1]
       t.string :username, null: false, default: "", unique: true
 
       ## Database authenticatable
-      # t.string :email,              null: false, default: ""
+      t.string :email,              null: false, default: ""
       # t.string :encrypted_password, null: false, default: ""
+
+      # LDAP info
+      t.string :givenname, null: false, default: ""
+      t.string :surname, null: false, default: ""
+      t.string :initials, null: false, default: ""
 
       ## Recoverable
       # t.string   :reset_password_token
@@ -40,7 +45,7 @@ class DeviseCreateAccounts < ActiveRecord::Migration[6.1]
       t.timestamps null: false
     end
     add_index :accounts, :username,                unique: true
-    # add_index :accounts, :email,                unique: true
+    add_index :accounts, :email,                unique: true
     # add_index :accounts, :reset_password_token, unique: true
     # add_index :accounts, :confirmation_token,   unique: true
     # add_index :accounts, :unlock_token,         unique: true

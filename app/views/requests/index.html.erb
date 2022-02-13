@@ -26,45 +26,5 @@
     <% end %>
   </div>
 </div>
-<br>
-
-
-
-<table>
-  <thead>
-    <tr>
-      <th>Date received</th>
-      <th>Date shipped</th>
-      <th>Date ordered</th>
-      <th>Order number</th>
-      <th>Status</th>
-      <th>Approved by</th>
-      <th>Project</th>
-      <th>Payment method</th>
-      <th>Account</th>
-      <th>Requested by</th>
-      <th>Vendor</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @requests.each do |request| %>
-      <tr>
-        <td><%= request.date_received.to_date %></td>
-        <td><%= request.date_shipped.to_date %></td>
-        <td><%= request.date_ordered.to_date %></td>
-        <td><%= request.order_number %></td>
-        <td><%= request.status %></td>
-        <td><%= request.approved_by %></td>
-        <td><%= request.project %></td>
-        <td><%= request.payment_method %></td>
-        <td><%= request.account %></td>
-        <td><%= request.requested_by %></td>
-        <td><%= request.vendor %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <br/>
 <br/>
