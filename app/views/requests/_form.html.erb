@@ -70,7 +70,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :shipping_charges_paid_to %>
-            <%= form.number_field :shipping_charges_paid_to, class: 'form-control' %>
+            <%= form.select :shipping_charges_paid_to, options_from_collection_for_select(shipping_charges, :first, :last, form.object.status), {}, {class: 'form-control'}  %>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :date_ordered %>
-            <%= form.date_select :date_ordered, class: 'form-control' %>
+            <%= form.date_select :date_ordered, {include_blank: true}, {class: 'form-control'} %>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :date_shipped %>
-            <%= form.date_select :date_shipped, class: 'form-control' %>
+            <%= form.date_select :date_shipped, {include_blank: true}, {class: 'form-control'} %>
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@
         <div class="col">
           <div class="field">
             <%= form.label :date_received %>
-            <%= form.date_select :date_received, class: 'form-control' %>
+            <%= form.date_select :date_received, {include_blank: true}, {class: 'form-control'} %>
           </div>
         </div>
       </div>
@@ -158,20 +158,30 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col">
-          <div class="field">
-            <%= form.label :approved_by_id %>
-            <%= form.select(:approved_by_id,
-                            Account.all.collect {|u| [u, u.id]},
-                            {include_blank: true},
-                            {class: 'form-select'})%>
-          </div>
+          <% if current_account.in_group?('approver') %>
+            <div class="field">
+              <%= form.label :approved_by_id %>
+              <%= form.select(:approved_by_id,
+                              options_from_collection_for_select([current_account], :id, :to_s, form.object.approved_by_id),
+                              {include_blank: true},
+                              {class: 'form-select', disabled: false})%>
+            </div>
+            <% else %>
+            <div class="field">
+              <%= form.label :approved_by_id %>
+              <%= form.select(:approved_by_id,
+                              Account.all.collect {|u| [u, u.id]},
+                              {include_blank: true},
+                              {class: 'form-select', disabled: true})%>
+            </div>
+          <% end %>
         </div>
       </div>
       <div class="row">
         <div class="col">
           <div class="field">
             <%= form.label :status %>
-            <%= form.number_field :status, class: 'form-control' %>
+            <%= form.select :status, options_from_collection_for_select(statuses, :first, :last, form.object.status), {}, {class: 'form-control'} %>
           </div>
         </div>
       </div>

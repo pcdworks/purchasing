@@ -17,10 +17,51 @@
             </div>
           </div>
           <div class="card-body">
-            <%= request %>
-            <div class="card-footer bg-transparent">
-              <%= number_to_currency request.subtotal%>
+            <div class="field">
+              <strong>
+                <%= Request.human_attribute_name :status %>
+              </strong>
+              <%= statuses[request.status] %>
             </div>
+            <div class="field">
+              <strong>
+                <%= Request.human_attribute_name :approved_by %>
+              </strong>
+              <%= request.approved_by %>
+            </div>
+            <div class="field">
+              <strong>
+                <%= Request.human_attribute_name :created_at %>
+              </strong>
+              <%= I18n.l request.created_at if request.created_at %>
+            </div>
+            <div class="field">
+              <strong>
+                <%= Request.human_attribute_name :date_ordered %>
+              </strong>
+              <%= I18n.l request.date_ordered if request.date_ordered %>
+            </div>
+            <div class="field">
+              <strong>
+                <%= Request.human_attribute_name :date_shipped %>
+              </strong>
+              <%= I18n.l request.date_shipped if request.date_shipped %>
+            </div>
+            <div class="field">
+              <strong>
+                <%= Request.human_attribute_name :date_received %>
+              </strong>
+              <%= I18n.l request.date_received if request.date_received %>
+            </div>
+            <div class="field">
+              <strong>
+                <%= Request.human_attribute_name :total %>
+              </strong>
+              <%= number_to_currency request.total %>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent">
+            <%= request %>
           </div>
         </div>
       </div>
