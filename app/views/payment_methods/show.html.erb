@@ -9,7 +9,14 @@
 <div class="card">
   <div class="card-body">
     <div class="card-text bg-transparent">
-      <%= @payment_method.title %>
+      <%= text_field_tag :title, @payment_method.title, class: 'form-control' %>
+      <br/>
+      <div class="form-check">
+        <%= check_box_tag :active, @payment_method.active, @payment_method.active, class: 'form-check-input', disabled: true %>
+        <label class="form-check-label">
+          <%= PaymentMethod.human_attribute_name :active %>
+        </label>
+      </div>
     </div>
   </div>
 </div>
