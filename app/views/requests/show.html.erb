@@ -1,90 +1,46 @@
-<p>
-  <strong>Notes:</strong>
-  <%= @request.notes %>
-</p>
+<h1>Viewing Request</h1>
+<br/>
+<form>
+  <div class="btn-group gap-2 d-flex">
+    <%= link_to 'Back', requests_path, class: 'btn btn-outline-secondary' %>
+    <%= link_to 'Edit', edit_request_path(@request), class: 'btn btn-outline-warning' %>
+    <%= link_to 'Destroy', @request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+  </div>
+  <br/>
 
-<p>
-  <strong>Reason for rejection:</strong>
-  <%= @request.reason_for_rejection %>
-</p>
-
-<p>
-  <strong>Shipping cost:</strong>
-  <%= @request.shipping_cost %>
-</p>
-
-<p>
-  <strong>Sales tax:</strong>
-  <%= @request.sales_tax %>
-</p>
-
-<p>
-  <strong>Import tax:</strong>
-  <%= @request.import_tax %>
-</p>
-
-<p>
-  <strong>Date received:</strong>
-  <%= @request.date_received %>
-</p>
-
-<p>
-  <strong>Date shipped:</strong>
-  <%= @request.date_shipped %>
-</p>
-
-<p>
-  <strong>Date ordered:</strong>
-  <%= @request.date_ordered %>
-</p>
-
-<p>
-  <strong>Order number:</strong>
-  <%= @request.order_number %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @request.status %>
-</p>
-
-<p>
-  <strong>Approved by:</strong>
-  <%= @request.approved_by_id %>
-</p>
-
-<p>
-  <strong>Work breakdown structure:</strong>
-  <%= @request.work_breakdown_structure_id %>
-</p>
-
-<p>
-  <strong>Project:</strong>
-  <%= @request.project_id %>
-</p>
-
-<p>
-  <strong>Payment method:</strong>
-  <%= @request.payment_method_id %>
-</p>
-
-<p>
-  <strong>Account:</strong>
-  <%= @request.account_id %>
-</p>
-
-<p>
-  <strong>Requested by:</strong>
-  <%= @request.requested_by_id %>
-</p>
-
-<p>
-  <strong>Shipping charges paid to:</strong>
-  <%= @request.shipping_charges_paid_to %>
-</p>
-
-<p>
-  <strong>Vendor:</strong>
-  <%= @request.vendor %>
-</p>
-
+  <br/>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class=""><label><%= Item.human_attribute_name :description %></label></th>
+        <th class=""><label><%= Item.human_attribute_name :vendor_reference %></label></th>
+        <th class=""><label><%= Item.human_attribute_name :quantity %></label></th>
+        <th class=""><label><%= Item.human_attribute_name :price %></label></th>
+        <th class=""><label><%= Item.human_attribute_name :total %></label></th>
+      </tr>
+    </thead>
+    <tbody id="items">
+      <% @request.items.each do |item| %>
+        <tr>
+          <td>
+            <%= item.description %>
+          </td>
+          <td>
+            <%= item.vendor_reference %>
+          </td>
+          <td>
+            <%= item.quantity %>
+          </td>
+          <td>
+            <%= item.price %>
+          </td>
+          <td>
+            <%= item.total %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</form>
+<br/>
+<br/>

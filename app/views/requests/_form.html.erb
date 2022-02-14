@@ -27,7 +27,7 @@
             <% else %>
               <%= form.hidden_field :account_id, value: form.object.id %>
             <% end %>
-            <%= form.label :account_id %>
+            <%= form.label "Filled by" %>
             <%= form.select(:account_id,
               options_for_select(Account.all.collect {|u| [u, u.id]},
               (form.object.new_record? ? current_account.id : form.object.account_id)),
