@@ -14,7 +14,10 @@ ENV RAILS_LOG_TO_STDOUT=true
 ADD . /app
 WORKDIR /app
 RUN bundle install
-RUN bundle exec rails webpacker:install
+RUN yarn install
+RUN bundle exec rake assets:precompile
+RUN bundle exec rails webpacker:compile
+
 
 COPY ./docker/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
