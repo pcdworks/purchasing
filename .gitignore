@@ -36,3 +36,8 @@ yarn-debug.log*
 .yarn-integrity
 ~*
 *~
+
+# ignore deployed files
+docker/purchasing-binddn.update
+docker/variables.env
+docker/volumes
