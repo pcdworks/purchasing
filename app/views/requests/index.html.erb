@@ -25,12 +25,6 @@
             </div>
             <div class="field">
               <strong>
-                <%= Request.human_attribute_name :approved_by %>
-              </strong>
-              <%= request.approved_by %>
-            </div>
-            <div class="field">
-              <strong>
                 <%= Request.human_attribute_name :created_at %>
               </strong>
               <%= I18n.l request.created_at.to_date if request.created_at %>
@@ -40,12 +34,6 @@
                 <%= Request.human_attribute_name :date_ordered %>
               </strong>
               <%= I18n.l request.date_ordered.to_date if request.date_ordered %>
-            </div>
-            <div class="field">
-              <strong>
-                <%= Request.human_attribute_name :date_shipped %>
-              </strong>
-              <%= I18n.l request.date_shipped.to_date if request.date_shipped %>
             </div>
             <div class="field">
               <strong>

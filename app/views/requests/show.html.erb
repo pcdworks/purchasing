@@ -120,18 +120,6 @@
           <div class="field">
             <strong>
               <label>
-                <%= Request.human_attribute_name :date_shipped %>
-              </label>
-            </strong>
-            <%= text_field_tag :date_shipped, (I18n.l @request.date_shipped.to_date if @request.date_shipped), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
                 <%= Request.human_attribute_name :date_received %>
               </label>
             </strong>
