@@ -1,3 +1,6 @@
 
 # ignore running instance
-docker
+docker/purchasing-binddn.update
+docker/variables.env
+docker/volumes
+
