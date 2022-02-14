@@ -14,7 +14,7 @@ class Request < ApplicationRecord
   validates :vendor, presence: true, allow_blank: false
 
   def to_s
-    'PR' + self.created_at.strftime("%Y%m%d") + self.account.initials + '-' + self.vendor.gsub(' ', '_') 
+    'PR' + self.created_at.strftime("%Y%m%d") + self.requested_by.initials + self.seq.to_s + '-' + self.vendor.gsub(' ', '_') 
   end
 
   def subtotal
@@ -33,5 +33,9 @@ class Request < ApplicationRecord
     self.order_number = self.order_number.strip unless self.order_number.nil?
     self.notes = self.notes.strip unless self.notes.nil?
     self.reason_for_rejection = self.reason_for_rejection.strip unless self.reason_for_rejection.nil?
+
+    if !self.seq || self.seq == 0
+      self.seq = Request.where('requested_by_id = ? and created_at > ?', self.requested_by_id, DateTime.now - 12.hours).count + 1
+    end
   end
 end

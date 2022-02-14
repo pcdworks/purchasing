@@ -1,8 +1,7 @@
 class Account < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :validatable and :omniauthable, :recoverable
-  devise :ldap_authenticatable,
-         :rememberable, :trackable
+  # :confirmable, :lockable, :timeoutable, :validatable and :omniauthable, :recoverable, :rememberable
+  devise :ldap_authenticatable, :trackable
   before_create :set_fields
 
   def to_s
