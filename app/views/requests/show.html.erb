@@ -275,10 +275,10 @@
             <%= item.quantity %>
           </td>
           <td>
-            <%= item.price %>
+            <%= number_to_currency(item.price) %>
           </td>
           <td>
-            <%= item.total %>
+            <%= number_to_currency(item.total) %>
           </td>
         </tr>
       <% end %>

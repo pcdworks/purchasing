@@ -27,7 +27,7 @@
             <% else %>
               <%= form.hidden_field :account_id, value: form.object.id %>
             <% end %>
-            <%= form.label "Filled by" %>
+            <strong><%= form.label "Filled by" %></strong>
             <%= form.select(:account_id,
               options_for_select(Account.all.collect {|u| [u, u.id]},
               (form.object.new_record? ? current_account.id : form.object.account_id)),
@@ -39,7 +39,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :requested_by_id %>
+            <strong><%= form.label :requested_by_id %></strong>
             <%= form.select(:requested_by_id,
                             Account.all.collect {|u| [u, u.id]},
                             {include_blank: true},
@@ -50,7 +50,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :vendor %>
+            <strong><%= form.label :vendor %></strong>
             <%= form.text_field :vendor, class: 'form-control' %>
           </div>
         </div>
@@ -58,7 +58,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :payment_method_id %>
+            <strong><%= form.label :payment_method_id %></strong>
             <%= form.select(:payment_method_id,
                             PaymentMethod.all.collect {|u| [u, u.id]},
                             {include_blank: true},
@@ -69,7 +69,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :shipping_charges_paid_to %>
+            <strong><%= form.label :shipping_charges_paid_to %></strong>
             <%= form.select :shipping_charges_paid_to, options_from_collection_for_select(shipping_charges, :first, :last, form.object.status), {}, {class: 'form-control'}  %>
           </div>
         </div>
@@ -77,7 +77,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :project_id %>
+            <strong><%= form.label :project_id %></strong>
             <%= form.select(:project_id,
                             Project.all.collect {|u| [u, u.id]},
                             {include_blank: true},
@@ -88,7 +88,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :work_breakdown_structure_id %>
+            <strong><%= form.label :work_breakdown_structure_id %></strong>
             <%= form.select(:work_breakdown_structure_id,
                             WorkBreakdownStructure.all.collect {|u| [u, u.id]},
                             {include_blank: true},
@@ -99,7 +99,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :order_number %>
+            <strong><%= form.label :order_number %></strong>
             <%= form.text_field :order_number, class: 'form-control' %>
           </div>
         </div>
@@ -109,7 +109,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :date_ordered %>
+            <strong><%= form.label :date_ordered %></strong>
             <%= form.date_select :date_ordered, {include_blank: true}, {class: 'form-control'} %>
           </div>
         </div>
@@ -117,7 +117,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :date_shipped %>
+            <strong><%= form.label :date_shipped %></strong>
             <%= form.date_select :date_shipped, {include_blank: true}, {class: 'form-control'} %>
           </div>
         </div>
@@ -125,7 +125,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :date_received %>
+            <strong><%= form.label :date_received %></strong>
             <%= form.date_select :date_received, {include_blank: true}, {class: 'form-control'} %>
           </div>
         </div>
@@ -133,7 +133,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :shipping_cost %>
+            <strong><%= form.label :shipping_cost %></strong>
             <%= form.number_field :shipping_cost, class: 'form-control' %>
           </div>
         </div>
@@ -141,7 +141,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :sales_tax %>
+            <strong><%= form.label :sales_tax %></strong>
             <%= form.number_field :sales_tax, class: 'form-control' %>
           </div>
         </div>
@@ -149,7 +149,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :import_tax %>
+            <strong><%= form.label :import_tax %></strong>
             <%= form.number_field :import_tax, class: 'form-control' %>
           </div>
         </div>
@@ -160,7 +160,7 @@
         <div class="col">
           <% if current_account.in_group?('approver') %>
             <div class="field">
-              <%= form.label :approved_by_id %>
+              <strong><%= form.label :approved_by_id %></strong>
               <%= form.select(:approved_by_id,
                               options_from_collection_for_select([current_account], :id, :to_s, form.object.approved_by_id),
                               {include_blank: true},
@@ -168,7 +168,7 @@
             </div>
             <% else %>
             <div class="field">
-              <%= form.label :approved_by_id %>
+              <strong><%= form.label :approved_by_id %></strong>
               <%= form.select(:approved_by_id,
                               Account.all.collect {|u| [u, u.id]},
                               {include_blank: true},
@@ -180,7 +180,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :status %>
+            <strong><%= form.label :status %></strong>
             <%= form.select :status, options_from_collection_for_select(statuses, :first, :last, form.object.status), {}, {class: 'form-control'} %>
           </div>
         </div>
@@ -188,7 +188,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :notes %>
+            <strong><%= form.label :notes %></strong>
             <%= form.text_area :notes, class: 'form-control', style: 'min-height: 180px' %>
           </div>
         </div>
@@ -196,7 +196,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <%= form.label :reason_for_rejection %>
+            <strong><%= form.label :reason_for_rejection %></strong>
             <%= form.text_area :reason_for_rejection, class: 'form-control', style: 'min-height: 180px' %>
           </div>
         </div>
