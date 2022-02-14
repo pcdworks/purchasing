@@ -1,0 +1,7 @@
+dn: uid=purchasing,cn=sysaccounts,cn=etcYOUR_DOMAIN_BINDDN
+add:objectclass:account
+add:objectclass:simplesecurityobject
+add:uid:purchasing
+add:userPassword:YOUR_PASSWORD
+add:passwordExpirationTime:21380119031407Z
+add:nsIdleTimeout:0
