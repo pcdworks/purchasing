@@ -218,10 +218,22 @@
           <div class="field">
             <strong>
               <label>
+                <%= Request.human_attribute_name :date_approved %>
+              </label>
+            </strong>
+            <%= text_field_tag :date_approved, (I18n.l @request.date_approved.to_date if @request.date_approved), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
                 <%= Request.human_attribute_name :notes %>
               </label>
             </strong>
-            <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', style: 'min-height: 180px' %>
+            <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', style: 'min-height: 120px' %>
           </div>
         </div>
       </div>
@@ -233,7 +245,7 @@
                 <%= Request.human_attribute_name :reason_for_rejection %>
               </label>
             </strong>
-            <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', style: 'min-height: 180px' %>
+            <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', style: 'min-height: 120px' %>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ class CreateRequests < ActiveRecord::Migration[6.1]
       t.float :sales_tax, null: false, default: 0.0
       t.float :import_tax, null: false, default: 0.0
       t.datetime :date_received
-      t.datetime :date_shipped
+      t.datetime :date_approved
       t.datetime :date_ordered
       t.string :order_number
       t.integer :status, null: false, default: 0

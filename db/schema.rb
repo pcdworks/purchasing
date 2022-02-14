@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2022_02_09_083305) do
     t.float "sales_tax"
     t.float "import_tax"
     t.datetime "date_received"
-    t.datetime "date_shipped"
+    t.datetime "date_approved"
     t.datetime "date_ordered"
     t.string "order_number"
     t.integer "status"

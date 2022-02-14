@@ -18,7 +18,7 @@ class RequestsTest < ApplicationSystemTestCase
     fill_in "Approved by", with: @request.approved_by_id
     fill_in "Date ordered", with: @request.date_ordered
     fill_in "Date received", with: @request.date_received
-    fill_in "Date shipped", with: @request.date_shipped
+    fill_in "Date approved", with: @request.date_approved
     fill_in "Import tax", with: @request.import_tax
     fill_in "Notes", with: @request.notes
     fill_in "Order number", with: @request.order_number
@@ -46,7 +46,7 @@ class RequestsTest < ApplicationSystemTestCase
     fill_in "Approved by", with: @request.approved_by_id
     fill_in "Date ordered", with: @request.date_ordered
     fill_in "Date received", with: @request.date_received
-    fill_in "Date shipped", with: @request.date_shipped
+    fill_in "Date approved", with: @request.date_approved
     fill_in "Import tax", with: @request.import_tax
     fill_in "Notes", with: @request.notes
     fill_in "Order number", with: @request.order_number
