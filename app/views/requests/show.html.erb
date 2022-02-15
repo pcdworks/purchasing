@@ -132,6 +132,18 @@
           <div class="field">
             <strong>
               <label>
+                <%= Request.human_attribute_name :surcharge %>
+              </label>
+            </strong>
+            <%= text_field_tag :surcharge, (number_to_currency @request.surcharge), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
                 <%= Request.human_attribute_name :shipping_cost %>
               </label>
             </strong>

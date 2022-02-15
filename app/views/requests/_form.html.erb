@@ -133,6 +133,14 @@
       <div class="row">
         <div class="col">
           <div class="field">
+            <strong><%= form.label :surcharge %></strong>
+            <%= form.number_field :surcharge, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
             <strong><%= form.label :sales_tax %></strong>
             <%= form.number_field :sales_tax, class: 'form-control' %>
           </div>
@@ -181,7 +189,7 @@
         <div class="col">
           <div class="field">
             <strong><%= form.label :notes %></strong>
-            <%= form.text_area :notes, class: 'form-control', style: 'min-height: 180px' %>
+            <%= form.text_area :notes, class: 'form-control', style: 'min-height: 170px' %>
           </div>
         </div>
       </div>
@@ -189,12 +197,13 @@
         <div class="col">
           <div class="field">
             <strong><%= form.label :reason_for_rejection %></strong>
-            <%= form.text_area :reason_for_rejection, class: 'form-control', style: 'min-height: 180px' %>
+            <%= form.text_area :reason_for_rejection, class: 'form-control', style: 'min-height: 170px' %>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <br/>
   <div class="d-grid gap-2">
     <%= link_to_add_association('Add Item', form, :items, :"data-association-insertion-node" => "tbody#items", :"data-association-insertion-method" => "append",  class: 'btn btn-primary text-light') %>
   </div>
