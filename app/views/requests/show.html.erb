@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col">
           <div class="field">
-            <strong><label>Filled by</label></strong>
+            <strong><label>Requested by</label></strong>
             <%= text_field_tag :account_id, @request.account, disabled: true, class: 'form-control' %>
           </div>
         </div>
@@ -22,10 +22,10 @@
           <div class="field">
             <strong>
               <label>
-                <%= Request.human_attribute_name :requested_by_id %>
+                <%= Request.human_attribute_name :requested_for_id %>
               </label>
             </strong>
-            <%= text_field_tag :requested_by_id, @request.requested_by, disabled: true, class: 'form-control' %>
+            <%= text_field_tag :requested_for_id, @request.requested_for, disabled: true, class: 'form-control' %>
           </div>
         </div>
       </div>

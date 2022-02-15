@@ -4,7 +4,7 @@ class Request < ApplicationRecord
   belongs_to :project
   belongs_to :payment_method
   belongs_to :account
-  belongs_to :requested_by, class_name: "Account"
+  belongs_to :requested_for, class_name: "Account"
   before_save :clean_up
 
   has_many :items, inverse_of: :request, dependent: :destroy

@@ -16,7 +16,7 @@ class CreateRequests < ActiveRecord::Migration[6.1]
       t.references :project, null: false, foreign_key: true
       t.references :payment_method, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
-      t.references :requested_by, null: false, foreign_key: {to_table: "accounts"}
+      t.references :requested_for, null: false, foreign_key: {to_table: "accounts"}
       t.integer :shipping_charges_paid_to
       t.string :vendor, null: false, default: ""
 

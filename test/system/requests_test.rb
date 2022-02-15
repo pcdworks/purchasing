@@ -25,7 +25,7 @@ class RequestsTest < ApplicationSystemTestCase
     fill_in "Payment method", with: @request.payment_method_id
     fill_in "Project", with: @request.project_id
     fill_in "Reason for rejection", with: @request.reason_for_rejection
-    fill_in "Requested by", with: @request.requested_by_id
+    fill_in "Requested by", with: @request.requested_for_id
     fill_in "Sales tax", with: @request.sales_tax
     fill_in "Shipping charges paid to", with: @request.shipping_charges_paid_to
     fill_in "Shipping cost", with: @request.shipping_cost
@@ -53,7 +53,7 @@ class RequestsTest < ApplicationSystemTestCase
     fill_in "Payment method", with: @request.payment_method_id
     fill_in "Project", with: @request.project_id
     fill_in "Reason for rejection", with: @request.reason_for_rejection
-    fill_in "Requested by", with: @request.requested_by_id
+    fill_in "Requested for", with: @request.requested_for_id
     fill_in "Sales tax", with: @request.sales_tax
     fill_in "Shipping charges paid to", with: @request.shipping_charges_paid_to
     fill_in "Shipping cost", with: @request.shipping_cost

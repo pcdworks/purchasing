@@ -16,7 +16,7 @@ one:
   project: one
   payment_method: one
   account: one
-  requested_by: one
+  requested_for: one
   shipping_charges_paid_to: 1
   vendor: MyString
 
@@ -36,6 +36,6 @@ two:
   project: two
   payment_method: two
   account: two
-  requested_by: two
+  requested_for: two
   shipping_charges_paid_to: 1
   vendor: MyString
