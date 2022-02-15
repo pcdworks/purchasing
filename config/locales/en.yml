@@ -31,3 +31,14 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      request:
+        total: 'Total'
+        created_at: 'Created at'
+        date_ordered: 'Ordered at'
+        date_received: 'Received at'
+        date_approved: 'Appoved at'
+      item:
+        total: 'Line total'
+
