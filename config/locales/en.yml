@@ -35,10 +35,10 @@ en:
     attributes:
       request:
         total: 'Total'
-        created_at: 'Created at'
-        date_ordered: 'Ordered at'
-        date_received: 'Received at'
-        date_approved: 'Appoved at'
+        created_at: 'Date created'
+        date_ordered: 'Date ordered'
+        date_received: 'Date received'
+        date_approved: 'Date appoved'
       item:
         total: 'Line total'
 

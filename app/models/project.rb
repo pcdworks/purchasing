@@ -3,6 +3,10 @@ class Project < ApplicationRecord
     validates :identifier, presence: true, allow_blank: false
 
     def to_s
-        self.identifier.to_s + '-' + self.title
+        if self.identifier.to_i == 0
+            self.title
+        else
+            ("%06d" % self.identifier) + '-' + self.title
+        end
     end
 end
