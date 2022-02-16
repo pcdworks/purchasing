@@ -2,7 +2,7 @@ class Account < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :validatable and :omniauthable, :recoverable, :rememberable
   devise :ldap_authenticatable, :trackable
-  before_create :set_fields
+  before_save :set_fields
 
   def to_s
     self.username
@@ -30,5 +30,11 @@ class Account < ApplicationRecord
     self.givenname = entry.givenname[0]
     self.initials = entry.initials[0]
     self.email = entry.mail[0]
+
+    if self.in_group?('approver')
+      self.approver = true
+    else
+      self.approver = false
+    end
   end
 end

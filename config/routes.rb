@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :requests
+  resources :requests do
+    get :send_mail, to: 'requests#send_mail'
+  end
   resources :projects
   resources :work_breakdown_structures
   resources :payment_methods

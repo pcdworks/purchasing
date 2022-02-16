@@ -3,6 +3,7 @@
 <form>
   <div class="btn-group gap-2 d-flex">
     <%= link_to 'Back', requests_path, class: 'btn btn-outline-secondary' %>
+    <%= link_to 'Send mail', request_send_mail_path(@request), class: 'btn btn-outline-success'%>
     <%= link_to 'Edit', edit_request_path(@request), class: 'btn btn-outline-warning' %>
     <%= link_to 'Destroy', @request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
   </div>

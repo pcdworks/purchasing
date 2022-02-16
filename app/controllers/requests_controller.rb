@@ -19,6 +19,13 @@ class RequestsController < ApplicationController
   def edit
   end
 
+
+  def send_mail
+    @request = Request.find(params["request_id"])    
+    RequestMailer.with(request: @request).new_request_email.deliver_now
+    redirect_to request_url(@request), notice: "Your purchase request has been sent."
+  end
+
   # POST /requests or /requests.json
   def create
     @request = Request.new(request_params)
