@@ -24,8 +24,6 @@
           <div class="field">
             <% if form.object.new_record? %>
               <%= form.hidden_field :account_id, value: current_account.id %>
-            <% else %>
-              <%= form.hidden_field :account_id, value: form.object.id %>
             <% end %>
             <strong><%= form.label "Requested by" %></strong>
             <%= form.select(:account_id,
@@ -126,7 +124,7 @@
         <div class="col">
           <div class="field">
             <strong><%= form.label :shipping_cost %></strong>
-            <%= form.number_field :shipping_cost, class: 'form-control' %>
+            <%= form.number_field :shipping_cost, step: 0.01, min: 0.00, class: 'form-control' %>
           </div>
         </div>
       </div>
@@ -134,7 +132,7 @@
         <div class="col">
           <div class="field">
             <strong><%= form.label :surcharge %></strong>
-            <%= form.number_field :surcharge, class: 'form-control' %>
+            <%= form.number_field :surcharge, step: 0.01, min: 0.00, class: 'form-control' %>
           </div>
         </div>
       </div>
@@ -142,7 +140,7 @@
         <div class="col">
           <div class="field">
             <strong><%= form.label :sales_tax %></strong>
-            <%= form.number_field :sales_tax, class: 'form-control' %>
+            <%= form.number_field :sales_tax, step: 0.01, min: 0.00, class: 'form-control' %>
           </div>
         </div>
       </div>
@@ -150,7 +148,7 @@
         <div class="col">
           <div class="field">
             <strong><%= form.label :import_tax %></strong>
-            <%= form.number_field :import_tax, class: 'form-control' %>
+            <%= form.number_field :import_tax, step: 0.01, min: 0.00, class: 'form-control' %>
           </div>
         </div>
       </div>

@@ -30,6 +30,10 @@ class Request < ApplicationRecord
       self.date_approved = DateTime.now
     end
 
+    if self.status == 0 && self.approved_by
+      self.status = 1
+    end
+
     self.vendor = self.vendor.strip unless self.vendor.nil?
     self.order_number = self.order_number.strip unless self.order_number.nil?
     self.notes = self.notes.strip unless self.notes.nil?
