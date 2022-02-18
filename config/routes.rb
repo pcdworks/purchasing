@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pages/browsers'
   resources :requests do
     get :send_mail, to: 'requests#send_mail'
   end

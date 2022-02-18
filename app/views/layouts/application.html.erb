@@ -7,6 +7,16 @@
     <%= csp_meta_tag %>
     <%= stylesheet_pack_tag "application", media: "all", 'data-turbolinks-track': "reload" %>
     <%= javascript_pack_tag "application", 'data-turbolinks-track': "reload" %>
+    <script>
+      window.onload = function() {
+          var isUnsupported = (window.navigator.userAgent.indexOf("Edg") != -1) ||
+                              (window.navigator.userAgent.indexOf("IE") != -1) ||
+                              (window.navigator.userAgent.indexOf("Trident") != -1)
+          if(isUnsupported && window.location.pathname != "/pages/browsers") {
+            window.location.href = "<%= pages_browsers_url %>";
+          }
+      }
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
