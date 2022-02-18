@@ -39,6 +39,9 @@ en:
         date_ordered: 'Date ordered'
         date_received: 'Date received'
         date_approved: 'Date appoved'
+        shipping_charges_paid_to: 'Shipping paid to'
+        shipping_cost: 'Shipping'
+        vendor: 'Vendor name'
       item:
         total: 'Line total'
 

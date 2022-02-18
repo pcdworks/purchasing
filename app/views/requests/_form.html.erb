@@ -18,7 +18,7 @@
     </div>
   <% end %>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="row">
         <div class="col">
           <div class="field">
@@ -34,6 +34,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -45,33 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :vendor %></strong>
-            <%= form.text_field :vendor, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :payment_method_id %></strong>
-            <%= form.select(:payment_method_id,
-                            PaymentMethod.all.collect {|u| [u, u.id]},
-                            {include_blank: true},
-                            {class: 'form-select'})%>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :shipping_charges_paid_to %></strong>
-            <%= form.select :shipping_charges_paid_to, options_from_collection_for_select(shipping_charges, :first, :last, form.object.status), {}, {class: 'form-control'}  %>
-          </div>
-        </div>
-      </div>
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -83,6 +59,7 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -94,6 +71,24 @@
           </div>
         </div>
       </div>
+
+
+
+
+    </div>
+    <div class="col-md-3">
+
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><%= form.label :vendor %></strong>
+            <%= form.text_field :vendor, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -102,40 +97,36 @@
           </div>
         </div>
       </div>
+
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><%= form.label :payment_method_id %></strong>
+            <%= form.select(:payment_method_id,
+                            PaymentMethod.all.collect {|u| [u, u.id]},
+                            {include_blank: true},
+                            {class: 'form-select'})%>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><%= form.label :shipping_charges_paid_to %></strong>
+            <%= form.select :shipping_charges_paid_to, options_from_collection_for_select(shipping_charges, :first, :last, form.object.status), {}, {class: 'form-control'}  %>
+          </div>
+        </div>
+      </div>
+
+
     </div>
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :date_ordered %></strong>
-            <%= form.date_select :date_ordered, {include_blank: true}, {class: 'form-control'} %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :date_received %></strong>
-            <%= form.date_select :date_received, {include_blank: true}, {class: 'form-control'} %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :shipping_cost %></strong>
-            <%= form.number_field :shipping_cost, step: 0.01, min: 0.00, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :surcharge %></strong>
-            <%= form.number_field :surcharge, step: 0.01, min: 0.00, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-3">
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -144,6 +135,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -152,8 +145,28 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><%= form.label :shipping_cost %></strong>
+            <%= form.number_field :shipping_cost, step: 0.01, min: 0.00, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><%= form.label :surcharge %></strong>
+            <%= form.number_field :surcharge, step: 0.01, min: 0.00, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="row">
         <div class="col">
           <% if current_account.in_group?('approver') %>
@@ -173,34 +186,54 @@
                               {class: 'form-select', disabled: true})%>
             </div>
           <% end %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :status %></strong>
-            <%= form.select :status, options_from_collection_for_select(statuses, :first, :last, form.object.status), {}, {class: 'form-control'} %>
+          <div class="row">
+            <div class="col">
+              <div class="field">
+                <strong><%= form.label :status %></strong>
+                <%= form.select :status, options_from_collection_for_select(statuses, :first, :last, form.object.status), {}, {class: 'form-control'} %>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :notes %></strong>
-            <%= form.text_area :notes, class: 'form-control', style: 'min-height: 170px' %>
+          <div class="row">
+            <div class="col">
+              <div class="field">
+                <strong><%= form.label :date_ordered %></strong>
+                <%= form.date_field :date_ordered, {class: 'form-control'} %>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :reason_for_rejection %></strong>
-            <%= form.text_area :reason_for_rejection, class: 'form-control', style: 'min-height: 170px' %>
+          <div class="row">
+            <div class="col">
+              <div class="field">
+                <strong><%= form.label :date_received %></strong>
+                <%= form.date_field :date_received, {class: 'form-control'} %>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="row">
+
+    <div class="col-md-9">
+      <div class="field">
+        <strong><%= form.label :notes %></strong>
+        <%= form.text_area :notes, class: 'form-control', rows: 1 %>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="field">
+        <strong><%= form.label :reason_for_rejection %></strong>
+        <%= form.text_area :reason_for_rejection, class: 'form-control', rows: 1 %>
+      </div>
+    </div>
+
+  </div>
+
+</div>
   <br/>
   <div class="d-grid gap-2">
     <%= link_to_add_association('Add Item', form, :items, :"data-association-insertion-node" => "tbody#items", :"data-association-insertion-method" => "append",  class: 'btn btn-primary text-light') %>
@@ -210,11 +243,11 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th class="col-md-5"><%=form.label :description%></th>
+          <th class="col-md-4"><%=form.label :description%></th>
           <th class="col-md-3"><%=form.label :vendor_reference%></th>
           <th class="col-md-2"><%=form.label :quantity%></th>
           <th class="col-md-3"><%=form.label :price%></th>
-          <th class="col-md-1"></th>
+          <th class="col-md-2"></th>
         </tr>
       </thead>
       <tbody id="items">

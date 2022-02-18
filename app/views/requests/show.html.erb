@@ -9,7 +9,9 @@
   </div>
   <br/>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -18,6 +20,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -30,42 +34,14 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :vendor %>
-              </label>
-            </strong>
-            <%= text_field_tag :vendor, @request.vendor, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :payment_method_id %>
-              </label>
-            </strong>
-            <%= text_field_tag :payment_method_id, @request.payment_method, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :shipping_charges_paid_to %>
-              </label>
-            </strong>
-            <%= text_field_tag :shipping_charges_paid_to, shipping_charges[@request.shipping_charges_paid_to], disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
+
+
+
+
+
+
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -78,6 +54,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -90,6 +68,27 @@
           </div>
         </div>
       </div>
+
+
+
+    </div>
+    <div class="col-md-3">
+
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :vendor %>
+              </label>
+            </strong>
+            <%= text_field_tag :vendor, @request.vendor, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -102,92 +101,33 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
+
       <div class="row">
         <div class="col">
           <div class="field">
             <strong>
               <label>
-                <%= Request.human_attribute_name :date_ordered %>
+                <%= Request.human_attribute_name :payment_method_id %>
               </label>
             </strong>
-            <%= text_field_tag :date_ordered, (I18n.l @request.date_ordered.to_date if @request.date_ordered), disabled: true, class: 'form-control' %>
+            <%= text_field_tag :payment_method_id, @request.payment_method, disabled: true, class: 'form-control' %>
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <div class="field">
             <strong>
               <label>
-                <%= Request.human_attribute_name :date_received %>
+                <%= Request.human_attribute_name :shipping_charges_paid_to %>
               </label>
             </strong>
-            <%= text_field_tag :date_received, (I18n.l @request.date_received.to_date if @request.date_received), disabled: true, class: 'form-control' %>
+            <%= text_field_tag :shipping_charges_paid_to, shipping_charges[@request.shipping_charges_paid_to], disabled: true, class: 'form-control' %>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :surcharge %>
-              </label>
-            </strong>
-            <%= text_field_tag :surcharge, (number_to_currency @request.surcharge), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :shipping_cost %>
-              </label>
-            </strong>
-            <%= text_field_tag :shipping_cost, (number_to_currency @request.shipping_cost), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :sales_tax %>
-              </label>
-            </strong>
-            <%= text_field_tag :sales_tax, (number_to_currency @request.sales_tax), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :import_tax %>
-              </label>
-            </strong>
-            <%= text_field_tag :import_tax, (number_to_currency @request.import_tax), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :subtotal %>
-              </label>
-            </strong>
-            <%= text_field_tag :subtotal, (number_to_currency @request.subtotal), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -200,8 +140,86 @@
           </div>
         </div>
       </div>
+
     </div>
-    <div class="col-md-4">
+
+
+    <div class="col-md-3">
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :sales_tax %>
+              </label>
+            </strong>
+            <%= text_field_tag :sales_tax, (number_to_currency @request.sales_tax), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :import_tax %>
+              </label>
+            </strong>
+            <%= text_field_tag :import_tax, (number_to_currency @request.import_tax), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :shipping_cost %>
+              </label>
+            </strong>
+            <%= text_field_tag :shipping_cost, (number_to_currency @request.shipping_cost), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :surcharge %>
+              </label>
+            </strong>
+            <%= text_field_tag :surcharge, (number_to_currency @request.surcharge), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :subtotal %>
+              </label>
+            </strong>
+            <%= text_field_tag :subtotal, (number_to_currency @request.subtotal), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+    
       <div class="row">
         <div class="col">
           <div class="field">
@@ -214,6 +232,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -226,6 +246,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col">
           <div class="field">
@@ -238,41 +260,72 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <div class="field">
             <strong>
               <label>
-                <%= Request.human_attribute_name :notes %>
+                <%= Request.human_attribute_name :date_ordered %>
               </label>
             </strong>
-            <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', style: 'min-height: 120px' %>
+            <%= text_field_tag :date_ordered, (I18n.l @request.date_ordered.to_date if @request.date_ordered), disabled: true, class: 'form-control' %>
           </div>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col">
           <div class="field">
             <strong>
               <label>
-                <%= Request.human_attribute_name :reason_for_rejection %>
+                <%= Request.human_attribute_name :date_received %>
               </label>
             </strong>
-            <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', style: 'min-height: 120px' %>
+            <%= text_field_tag :date_received, (I18n.l @request.date_received.to_date if @request.date_received), disabled: true, class: 'form-control' %>
           </div>
         </div>
+      </div>
+
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="field">
+        <strong>
+          <label>
+            <%= Request.human_attribute_name :notes %>
+          </label>
+        </strong>
+        <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', rows: 1 %>
       </div>
     </div>
+
+
+    <div class="col-md-3">
+      <div class="field">
+        <strong>
+          <label>
+            <%= Request.human_attribute_name :reason_for_rejection %>
+          </label>
+        </strong>
+        <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', rows: 1 %>
+      </div>
+    </div>
+
   </div>
   <br/>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class=""><label><%= Item.human_attribute_name :description %></label></th>
-        <th class=""><label><%= Item.human_attribute_name :vendor_reference %></label></th>
-        <th class=""><label><%= Item.human_attribute_name :quantity %></label></th>
-        <th class=""><label><%= Item.human_attribute_name :price %></label></th>
-        <th class=""><label><%= Item.human_attribute_name :total %></label></th>
+        <th class="col-md-4"><label><%= Item.human_attribute_name :description %></label></th>
+        <th class="col-md-3"><label><%= Item.human_attribute_name :vendor_reference %></label></th>
+        <th class="col-md-2"><label><%= Item.human_attribute_name :quantity %></label></th>
+        <th class="col-md-3"><label><%= Item.human_attribute_name :price %></label></th>
+        <th class="col-md-2"><label><%= Item.human_attribute_name :total %></label></th>
       </tr>
     </thead>
     <tbody id="items">
