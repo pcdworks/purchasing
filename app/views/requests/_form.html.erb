@@ -206,21 +206,24 @@
     <%= link_to_add_association('Add Item', form, :items, :"data-association-insertion-node" => "tbody#items", :"data-association-insertion-method" => "append",  class: 'btn btn-primary text-light') %>
   </div>
   <br/>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th class=""><%=form.label :description%></th>
-        <th class=""><%=form.label :vendor_reference%></th>
-        <th class=""><%=form.label :quantity%></th>
-        <th class=""><%=form.label :price%></th>
-      </tr>
-    </thead>
-    <tbody id="items">
-      <%= form.fields_for :items do |item| %>
-        <%= render 'item_fields', f: item %>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="col-md-5"><%=form.label :description%></th>
+          <th class="col-md-3"><%=form.label :vendor_reference%></th>
+          <th class="col-md-2"><%=form.label :quantity%></th>
+          <th class="col-md-3"><%=form.label :price%></th>
+          <th class="col-md-1"></th>
+        </tr>
+      </thead>
+      <tbody id="items">
+        <%= form.fields_for :items do |item| %>
+          <%= render 'item_fields', f: item %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
 <br/>
 <br/>

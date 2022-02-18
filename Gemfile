@@ -22,6 +22,11 @@ gem "jbuilder", "~> 2.7"
 gem "devise"
 gem 'devise_ldap_authenticatable'
 
+# Spreadsheets
+gem 'rspreadsheet'
+gem 'libxml-ruby', '3.0'
+
+
 # Cocoon for nested models
 gem "cocoon"
 # Use Redis adapter to run Action Cable in production

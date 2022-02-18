@@ -21,3 +21,13 @@ input#em:focus {
     background: white;
     border: 1px solid grey;
 }
+
+textarea#em {
+    background: none;
+    border: none;
+    width: 100%;
+}
+textarea#em:focus {
+    background: white;
+    border: 1px solid grey;
+}
