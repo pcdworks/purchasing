@@ -34,8 +34,6 @@
           </div>
         </div>
       </div>
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -47,7 +45,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -55,30 +52,22 @@
             <%= form.select(:project_id,
                             Project.all.collect {|u| [u, u.id]},
                             {include_blank: true},
-                            {class: 'form-select'})%>
+                            {class: 'form-select', id: 'project'})%>
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col">
           <div class="field">
-            <strong><%= form.label :work_breakdown_structure_id %></strong>
-            <%= form.select(:work_breakdown_structure_id,
-                            WorkBreakdownStructure.all.collect {|u| [u, u.id]},
-                            {include_blank: true},
-                            {class: 'form-select'})%>
+            <strong><%= form.label :work_breakdown_structure %></strong>
+            <%= form.text_field :work_breakdown_structure, class: 'form-select', list: 'wbs', autocomplete: 'off' %>
+            <datalist id="wbs">
+            </datalist>
           </div>
         </div>
       </div>
-
-
-
-
     </div>
     <div class="col-md-3">
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -87,8 +76,6 @@
           </div>
         </div>
       </div>
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -97,8 +84,6 @@
           </div>
         </div>
       </div>
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -110,9 +95,6 @@
           </div>
         </div>
       </div>
-
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -121,12 +103,8 @@
           </div>
         </div>
       </div>
-
-
     </div>
     <div class="col-md-3">
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -135,8 +113,6 @@
           </div>
         </div>
       </div>
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -145,7 +121,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -154,7 +129,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -163,8 +137,6 @@
           </div>
         </div>
       </div>
-
-
     </div>
     <div class="col-md-3">
       <div class="row">
@@ -177,7 +149,7 @@
                               {include_blank: true},
                               {class: 'form-select', disabled: false})%>
             </div>
-            <% else %>
+          <% else %>
             <div class="field">
               <strong><%= form.label :approved_by_id %></strong>
               <%= form.select(:approved_by_id,
@@ -214,49 +186,75 @@
       </div>
     </div>
   </div>
-
   <div class="row">
-
     <div class="col-md-9">
       <div class="field">
         <strong><%= form.label :notes %></strong>
         <%= form.text_area :notes, class: 'form-control', rows: 1 %>
       </div>
     </div>
-
     <div class="col-md-3">
       <div class="field">
         <strong><%= form.label :reason_for_rejection %></strong>
         <%= form.text_area :reason_for_rejection, class: 'form-control', rows: 1 %>
       </div>
     </div>
-
   </div>
+  <script>
+    function wbs(){
+      var project = document.getElementById("project").value;
+      // console.log(project)
+      $.ajax({
+        url: "/work_breakdown_structures",
+        method: "GET",
+        dataType: "json",
+        data: {project_id: project},
+        error: function (xhr, status, error) {
+          console.error('AJAX Error: ' + status + error);
+        },
+        success: function (response) {
+          // console.log(response);
+          var wbs = response;
+          $("#wbs").empty();
 
+          $("#wbs").append('<option></option>');
+          for(var i=0; i< wbs.length; i++){
+            $("#wbs").append('<option value="' + wbs[i] + '">' + wbs[i] + '</option>');
+          }
+        }
+      });
+    }
+    $(document).on("change", "#project", wbs);
+    $(document).ready(wbs);
+  </script>
 </div>
-  <br/>
-  <div class="d-grid gap-2">
-    <%= link_to_add_association('Add Item', form, :items, :"data-association-insertion-node" => "tbody#items", :"data-association-insertion-method" => "append",  class: 'btn btn-primary text-light') %>
-  </div>
-  <br/>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th class="col-md-4"><%=form.label :description%></th>
-          <th class="col-md-3"><%=form.label :vendor_reference%></th>
-          <th class="col-md-2"><%=form.label :quantity%></th>
-          <th class="col-md-3"><%=form.label :price%></th>
-          <th class="col-md-2"></th>
-        </tr>
-      </thead>
-      <tbody id="items">
-        <%= form.fields_for :items do |item| %>
-          <%= render 'item_fields', f: item %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+<br/>
+<div class="d-grid gap-2">
+  <%= link_to_add_association('Add Item',
+                              form, :items,
+                              :"data-association-insertion-node" => "tbody#items",
+                              :"data-association-insertion-method" => "append",
+                              class: 'btn btn-primary text-light') %>
+</div>
+<br/>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="col-md-4"><%=form.label :description%></th>
+        <th class="col-md-3"><%=form.label :vendor_reference%></th>
+        <th class="col-md-2"><%=form.label :quantity%></th>
+        <th class="col-md-3"><%=form.label :price%></th>
+        <th class="col-md-2"></th>
+      </tr>
+    </thead>
+    <tbody id="items">
+      <%= form.fields_for :items do |item| %>
+        <%= render 'item_fields', f: item %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <% end %>
 <br/>
 <br/>

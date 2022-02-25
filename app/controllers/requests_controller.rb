@@ -75,7 +75,7 @@ class RequestsController < ApplicationController
       params.require(:request).permit(:notes, :reason_for_rejection,
         :shipping_cost, :sales_tax, :import_tax, :date_received,
         :date_approved, :date_ordered, :order_number, :status,
-        :approved_by_id, :work_breakdown_structure_id,
+        :approved_by_id, :work_breakdown_structure,
         :project_id, :payment_method_id, :account_id,
         :requested_for_id, :shipping_charges_paid_to, :vendor,
         :surcharge,

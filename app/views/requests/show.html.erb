@@ -61,10 +61,10 @@
           <div class="field">
             <strong>
               <label>
-                <%= Request.human_attribute_name :work_breakdown_structure_id %>
+                <%= Request.human_attribute_name :work_breakdown_structure %>
               </label>
             </strong>
-            <%= text_field_tag :work_breakdown_structure_id, @request.work_breakdown_structure, disabled: true, class: 'form-control' %>
+            <%= text_field_tag :work_breakdown_structure, @request.work_breakdown_structure, disabled: true, class: 'form-control' %>
           </div>
         </div>
       </div>

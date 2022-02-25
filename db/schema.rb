@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_16_064730) do
+ActiveRecord::Schema.define(version: 2022_02_24_061325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,7 +71,6 @@ ActiveRecord::Schema.define(version: 2022_02_16_064730) do
     t.string "order_number"
     t.integer "status"
     t.bigint "approved_by_id"
-    t.bigint "work_breakdown_structure_id", null: false
     t.bigint "project_id", null: false
     t.bigint "payment_method_id", null: false
     t.bigint "account_id", null: false
@@ -82,12 +81,12 @@ ActiveRecord::Schema.define(version: 2022_02_16_064730) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "seq", default: 0
     t.float "surcharge", default: 0.0
+    t.string "work_breakdown_structure"
     t.index ["account_id"], name: "index_requests_on_account_id"
     t.index ["approved_by_id"], name: "index_requests_on_approved_by_id"
     t.index ["payment_method_id"], name: "index_requests_on_payment_method_id"
     t.index ["project_id"], name: "index_requests_on_project_id"
     t.index ["requested_for_id"], name: "index_requests_on_requested_for_id"
-    t.index ["work_breakdown_structure_id"], name: "index_requests_on_work_breakdown_structure_id"
   end
 
   create_table "work_breakdown_structures", force: :cascade do |t|
@@ -102,5 +101,4 @@ ActiveRecord::Schema.define(version: 2022_02_16_064730) do
   add_foreign_key "requests", "accounts", column: "requested_for_id"
   add_foreign_key "requests", "payment_methods"
   add_foreign_key "requests", "projects"
-  add_foreign_key "requests", "work_breakdown_structures"
 end
