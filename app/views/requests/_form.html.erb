@@ -219,7 +219,7 @@
 
           $("#wbs").append('<option></option>');
           for(var i=0; i< wbs.length; i++){
-            $("#wbs").append('<option value="' + wbs[i] + '">' + wbs[i] + '</option>');
+            $("#wbs").append('<option value="' + wbs[i]['id'] + '">' + wbs[i]['title'] + '</option>');
           }
         }
       });

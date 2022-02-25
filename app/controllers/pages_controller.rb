@@ -5,7 +5,9 @@ class PagesController < ApplicationController
 
   def work_breakdown_structures
     if params['project_id'].to_i > 0
-      @wbs = Request.where(project_id: params['project_id'].to_i).pluck(:work_breakdown_structure).uniq
+      @wbs = Request.where(
+        project_id: params['project_id'].to_i).pluck(
+          :work_breakdown_structure).uniq.collect {|r| { id: r, title: r }}
     else
       @wbs = []
     end
