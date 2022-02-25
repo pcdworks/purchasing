@@ -5,6 +5,7 @@ class Request < ApplicationRecord
   belongs_to :account
   belongs_to :requested_for, class_name: "Account"
   before_save :clean_up
+  after_save :send_email
 
   has_many :items, inverse_of: :request, dependent: :destroy
 
@@ -25,12 +26,24 @@ class Request < ApplicationRecord
   end
 
   def clean_up
+    # set the date for approval if approved
     if self.approved_by && !self.date_approved
       self.date_approved = DateTime.now
     end
 
+    # auto update the status to approved for the approver
     if self.status == 1 && self.approved_by
       self.status = 2
+    end
+
+    # Don't allow unapproval
+    if self.date_approved && self.status < 2
+      self.status = 2
+    end
+
+    # Don't allow by passing approval
+    if !self.date_approved && self.status > 1
+      self.status = 1
     end
 
     self.vendor = self.vendor.strip unless self.vendor.nil?
@@ -42,5 +55,9 @@ class Request < ApplicationRecord
     if !self.seq || self.seq == 0
       self.seq = Request.where('account_id = ? and created_at > ?', self.account_id, DateTime.now - 12.hours).count + 1
     end
+  end
+
+  def send_email
+    RequestMailer.with(request: self).new_request_email.deliver_now
   end
 end

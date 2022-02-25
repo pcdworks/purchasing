@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   get 'pages/browsers'
   get 'work_breakdown_structures', to: 'pages#work_breakdown_structures'
-  resources :requests do
-    get :send_mail, to: 'requests#send_mail'
-  end
+  resources :requests
   resources :projects
   resources :payment_methods
   devise_for :accounts, controllers: {

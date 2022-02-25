@@ -4,13 +4,14 @@ module RequestsHelper
     def statuses
         {
             0 => 'Draft',
-            1 => 'Submitted - Awaiting Approval',
+            1 => 'Submitted and Awaiting Approval',
             2 => 'Approved',
             3 => 'On Hold',
             4 => 'Ordered',
-            5 => 'Received - Completed',
-            6 => 'Received - Partial',
-            7 => 'Received - Returned'
+            5 => 'Received',
+            6 => 'Partially Received',
+            7 => 'Received and Returned',
+            8 => 'Partially Received and Partially Returned'
         }
     end
 
