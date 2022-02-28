@@ -89,7 +89,7 @@
           <div class="field">
             <strong><%= form.label :payment_method_id %></strong>
             <%= form.select(:payment_method_id,
-                            PaymentMethod.all.collect {|u| [u, u.id]},
+                            PaymentMethod.where(active: true).collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select'})%>
           </div>
