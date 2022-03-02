@@ -5,7 +5,6 @@ class Request < ApplicationRecord
   belongs_to :account
   belongs_to :requested_for, class_name: "Account"
   before_save :clean_up
-  after_save :send_email
 
   has_many :items, inverse_of: :request, dependent: :destroy
 
@@ -57,7 +56,4 @@ class Request < ApplicationRecord
     end
   end
 
-  def send_email
-    RequestMailer.with(request: self).new_request_email.deliver_now
-  end
 end

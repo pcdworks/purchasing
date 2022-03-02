@@ -25,6 +25,7 @@ class RequestsController < ApplicationController
 
     respond_to do |format|
       if @request.save
+        send_mail(@request)
         format.html { redirect_to request_url(@request), notice: "Request was successfully created." }
         format.json { render :show, status: :created, location: @request }
       else
@@ -38,6 +39,7 @@ class RequestsController < ApplicationController
   def update
     respond_to do |format|
       if @request.update(request_params)
+        send_mail(@request)
         format.html { redirect_to request_url(@request), notice: "Request was successfully updated." }
         format.json { render :show, status: :ok, location: @request }
       else
@@ -58,6 +60,11 @@ class RequestsController < ApplicationController
   end
 
   private
+
+    def send_mail(req)
+      RequestMailer.with(request: req).new_request_email.deliver_now
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_request
       @request = Request.find(params[:id])
