@@ -62,7 +62,7 @@ class RequestsController < ApplicationController
   private
 
     def send_mail(req)
-      RequestMailer.with(request: req).new_request_email.deliver_now
+      rm = RequestMailer.with(request: req).new_request_email.deliver_now
     end
 
     # Use callbacks to share common setup or constraints between actions.
