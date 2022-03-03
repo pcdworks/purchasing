@@ -99,7 +99,10 @@
         <div class="col">
           <div class="field">
             <strong><%= form.label :shipping_charges_paid_to %></strong>
-            <%= form.select :shipping_charges_paid_to, options_from_collection_for_select(shipping_charges, :first, :last, form.object.status), {}, {class: 'form-control'}  %>
+            <%= form.select :shipping_charges_paid_to,
+                            options_from_collection_for_select(shipping_charges, :first, :last, form.object.shipping_charges_paid_to),
+                            {},
+                            {class: 'form-control'}  %>
           </div>
         </div>
       </div>
