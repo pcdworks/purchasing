@@ -40,6 +40,7 @@ ENV LDAP_PASS=
 
 
 VOLUME [ "/app/log" ]
+VOLUME [ "/app/storage" ]
 
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000

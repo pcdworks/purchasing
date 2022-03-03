@@ -7,6 +7,7 @@ class Request < ApplicationRecord
   before_save :clean_up
 
   has_many :items, inverse_of: :request, dependent: :destroy
+  has_many_attached :attachment
 
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
 

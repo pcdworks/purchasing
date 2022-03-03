@@ -35,12 +35,6 @@
       </div>
 
 
-
-
-
-
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -317,6 +311,31 @@
 
   </div>
   <br/>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="col-md-10"><label>Attachment</label></th>
+        <th class="col-md-2"><label></label></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @request.attachment.each do |attachment| %>
+        <tr id="<%= dom_id attachment %>">
+          <td>
+            <%= link_to attachment.filename, rails_blob_path(attachment, disposition: 'attachment') %>
+          </td>
+          <td style="text-align: right">
+            <%= link_to(active_storage_attachment_path(attachment),
+                        remote: :true,
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' },
+                        class: 'btn btn-outline-danger btn-sm') do %>
+              X
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
   <table class="table table-striped">
     <thead>
       <tr>

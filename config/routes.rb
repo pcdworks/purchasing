@@ -12,5 +12,9 @@ Rails.application.routes.draw do
     get 'sign_in', to: 'accounts/sessions#new'
     get '/accounts/sign_out', to: 'accounts/sessions#destroy'
   end
+
+  scope :active_storage, module: :active_storage, as: :active_storage do
+    resources :attachments, only: [:destroy]
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
