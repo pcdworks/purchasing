@@ -9,7 +9,7 @@
     <%= f.number_field :quantity, step: 1, min: 0, id: 'em' %>
   </td>
   <td>
-    <%= f.number_field :price, step: 0.01, min: 0.00, id: 'em' %>
+    <%= f.number_field :price, step: 0.000001, min: 0.00, id: 'em' %>
   </td>
   <td>
     <%= link_to_remove_association(f, class: 'btn btn-outline-danger btn-sm') do %>
