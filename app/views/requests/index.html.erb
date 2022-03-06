@@ -5,41 +5,52 @@
 </div>
 <br/>
 
-
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="col-md-3"><label><%= Request.human_attribute_name :identifier %></label></th>
+        <th class="col-md-3"><label><%= Request.human_attribute_name :status %></label></th>
+        <th class="col-md-2"><label><%= Request.human_attribute_name :created_at %></label></th>
+        <th class="col-md-2"><label><%= Request.human_attribute_name :date_approved %></label></th>
+        <th class="col-md-2"><label><%= Request.human_attribute_name :date_ordered %></label></th>
+        <th class="col-md-2"><label><%= Request.human_attribute_name :date_received %></label></th>
+        <th class="col-md-2"><label><%= Request.human_attribute_name :total %></label></th>
+        <th class="col-md-1"></th>
+        <th class="col-md-1"></th>
+        <th class="col-md-1"></th>
+      </tr>
+    </thead>
+    <tbody id="items">
+      <% @requests.each do |request| %>
         <tr>
-          <th class="col-md-3"><label><%= Request.human_attribute_name :identifier %></label></th>
-          <th class="col-md-3"><label><%= Request.human_attribute_name :status %></label></th>
-          <th class="col-md-2"><label><%= Request.human_attribute_name :created_at %></label></th>
-          <th class="col-md-2"><label><%= Request.human_attribute_name :date_approved %></label></th>
-          <th class="col-md-2"><label><%= Request.human_attribute_name :date_ordered %></label></th>
-          <th class="col-md-2"><label><%= Request.human_attribute_name :date_received %></label></th>
-          <th class="col-md-2"><label><%= Request.human_attribute_name :total %></label></th>
-          <th class="col-md-1"></th>
-          <th class="col-md-1"></th>
-          <th class="col-md-1"></th>
+          <td><%= request %></td>
+          <td><%= statuses[request.status] %></td>
+          <td><%= I18n.l request.created_at.to_date if request.created_at %></td>
+          <td><%= I18n.l request.date_approved.to_date if request.date_approved %></td>
+          <td><%= I18n.l request.date_ordered.to_date if request.date_ordered %></td>
+          <td><%= I18n.l request.date_received.to_date if request.date_received %></td>
+          <td><%= number_to_currency request.total %></td>
+          <td>
+            <%= link_to(request, class: 'btn btn-outline-info')do %>
+              <i class="fa-solid fa-eye"></i>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to(edit_request_path(request), class: 'btn btn-outline-warning') do %>
+              <i class="fa-solid fa-pencil"></i>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to(request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger') do %>
+              <i class="fa-solid fa-trash-can"></i>
+            <% end %>
+          </td>
         </tr>
-      </thead>
-      <tbody id="items">
-        <% @requests.each do |request| %>
-          <tr>
-            <td><%= request %></td>
-            <td><%= statuses[request.status] %></td>
-            <td><%= I18n.l request.created_at.to_date if request.created_at %></td>
-            <td><%= I18n.l request.date_approved.to_date if request.date_approved %></td>
-            <td><%= I18n.l request.date_ordered.to_date if request.date_ordered %></td>
-            <td><%= I18n.l request.date_received.to_date if request.date_received %></td>
-            <td><%= number_to_currency request.total %></td>
-            <td><%= link_to 'View', request, class: 'btn btn-outline-info' %></td>
-            <td><%= link_to 'Edit', edit_request_path(request), class: 'btn btn-outline-warning' %></td>
-            <td><%= link_to 'Destroy', request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 
 
