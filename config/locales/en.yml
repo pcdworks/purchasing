@@ -43,6 +43,7 @@ en:
         shipping_cost: 'Shipping'
         vendor: 'Vendor name'
         identifier: 'PO identifier'
+        items_count: 'Number of items'
       item:
         total: 'Line total'
 

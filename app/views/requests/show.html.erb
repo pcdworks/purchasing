@@ -20,7 +20,7 @@
         <div class="col">
           <div class="field">
             <strong><label><%= Request.human_attribute_name :identifier %></label></strong>
-            <%= text_field_tag :identifier, @request.identifier, disabled: true, class: 'form-control' %>
+            <%= text_field_tag :identifier, @request.identifier.upcase, disabled: true, class: 'form-control' %>
           </div>
         </div>
       </div>
@@ -142,6 +142,19 @@
               </label>
             </strong>
             <%= text_field_tag :shipping_charges_paid_to, shipping_charges[@request.shipping_charges_paid_to], disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :items_count %>
+              </label>
+            </strong>
+            <%= text_field_tag :items_count, @request.items.count, disabled: true, class: 'form-control' %>
           </div>
         </div>
       </div>
