@@ -1,10 +1,16 @@
 <%= form_with(model: request) do |form| %>
   <div class="btn-group gap-2 d-flex">
-    <%= link_to 'Back', requests_path, class: 'btn btn-outline-secondary' %>
-    <% if !form.object.new_record? %>
-      <%= link_to 'View', form.object, class: 'btn btn-outline-info' %>
+    <%= link_to(requests_path, class: 'btn btn-outline-secondary') do %>
+      <i class="fa-solid fa-angle-left"></i>
     <% end %>
-    <%= form.submit('Save', class: 'btn btn-outline-primary') %>
+    <% if !form.object.new_record? %>
+      <%= link_to(form.object, class: 'btn btn-outline-info') do %>
+        <i class="fa-solid fa-eye"></i>
+      <% end %>
+    <% end %>
+    <%= form.button(class: 'btn btn-outline-primary') do %>
+      <i class="fa-solid fa-floppy-disk"></i>
+    <% end %>
   </div>
   <br/>
   <% if request.errors.any? %>
@@ -76,6 +82,18 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><%= form.label :notes %></strong>
+            <%= form.text_area :notes, class: 'form-control', rows: 1 %>
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
     <div class="col-md-3">
       <div class="row">
@@ -117,16 +135,14 @@
         </div>
       </div>
 
-
-    <div class="row">
-      <div class="col">
-        <div class="field">
-          <strong><%= form.label :notes %></strong>
-          <%= form.text_area :notes, class: 'form-control', rows: 1 %>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><%= form.label :reason_for_rejection %></strong>
+            <%= form.text_area :reason_for_rejection, class: 'form-control', rows: 1 %>
+          </div>
         </div>
       </div>
-    </div>
-
 
     </div>
     <div class="col-md-3">
@@ -213,20 +229,23 @@
             </div>
           </div>
 
+        <div class="row">
+          <div class="col">
+            <div class="field">
+              <strong><%= form.label :received_by_id %></strong>
+              <%= form.select(:received_by_id,
+                              Account.all.collect {|u| [u, u.id]},
+                              {include_blank: true},
+                              {class: 'form-select'})%>
+            </div>
+          </div>
+        </div>
 
           <div class="row">
             <div class="col">
               <div class="field">
                 <strong><%= form.label :date_received %></strong>
                 <%= form.date_field :date_received, {class: 'form-control'} %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="field">
-                <strong><%= form.label :reason_for_rejection %></strong>
-                <%= form.text_area :reason_for_rejection, class: 'form-control', rows: 1 %>
               </div>
             </div>
           </div>

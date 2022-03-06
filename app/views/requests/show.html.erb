@@ -2,9 +2,15 @@
 <br/>
 <form>
   <div class="btn-group gap-2 d-flex">
-    <%= link_to 'Back', requests_path, class: 'btn btn-outline-secondary' %>
-    <%= link_to 'Edit', edit_request_path(@request), class: 'btn btn-outline-warning' %>
-    <%= link_to 'Destroy', @request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+    <%= link_to(requests_path, class: 'btn btn-outline-secondary') do %>
+      <i class="fa-solid fa-angle-left"></i>
+    <% end %>
+    <%= link_to(edit_request_path(@request), class: 'btn btn-outline-warning') do %>
+      <i class="fa-solid fa-pencil"></i>
+    <% end %>
+    <%= link_to(@request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger') do %>
+      <i class="fa-solid fa-trash-can"></i>
+    <% end %>
   </div>
   <br/>
   <div class="row">
@@ -70,7 +76,18 @@
         </div>
       </div>
 
-
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :notes %>
+              </label>
+            </strong>
+            <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', rows: 1 %>
+          </div>
+        </div>
+      </div>
 
     </div>
     <div class="col-md-3">
@@ -134,10 +151,10 @@
           <div class="field">
             <strong>
               <label>
-                <%= Request.human_attribute_name :notes %>
+                <%= Request.human_attribute_name :reason_for_rejection %>
               </label>
             </strong>
-            <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', rows: 1 %>
+            <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', rows: 1 %>
           </div>
         </div>
       </div>
@@ -290,6 +307,18 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :received_by_id %>
+              </label>
+            </strong>
+            <%= text_field_tag :received_by_id, @request.received_by, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col">
@@ -300,19 +329,6 @@
               </label>
             </strong>
             <%= text_field_tag :date_received, (I18n.l @request.date_received.to_date if @request.date_received), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :reason_for_rejection %>
-              </label>
-            </strong>
-            <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', rows: 1 %>
           </div>
         </div>
       </div>
@@ -367,7 +383,7 @@
                       method: :delete,
                       data: { confirm: 'Are you sure?' },
                       class: 'btn btn-outline-danger btn-sm') do %>
-            X
+            <i class="fa-solid fa-trash-can"></i>
           <% end %>
         </div>
       </div>

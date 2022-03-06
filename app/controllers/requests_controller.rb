@@ -78,7 +78,7 @@ class RequestsController < ApplicationController
         :approved_by_id, :work_breakdown_structure,
         :project_id, :payment_method_id, :account_id,
         :requested_for_id, :shipping_charges_paid_to, :vendor,
-        :surcharge,
+        :surcharge, :received_by_id, :identifier,
         items_attributes: [:id, :description, :vendor_reference,
                            :quantity, :price, :_destroy],
         attachment: [])

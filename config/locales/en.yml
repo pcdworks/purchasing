@@ -42,6 +42,7 @@ en:
         shipping_charges_paid_to: 'Shipping paid to'
         shipping_cost: 'Shipping'
         vendor: 'Vendor name'
+        identifier: 'PO identifier'
       item:
         total: 'Line total'
 

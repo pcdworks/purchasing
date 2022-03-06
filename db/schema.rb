@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_06_025251) do
+ActiveRecord::Schema.define(version: 2022_03_06_062215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,10 +111,12 @@ ActiveRecord::Schema.define(version: 2022_03_06_025251) do
     t.float "surcharge", default: 0.0
     t.string "work_breakdown_structure"
     t.string "identifier"
+    t.bigint "received_by_id"
     t.index ["account_id"], name: "index_requests_on_account_id"
     t.index ["approved_by_id"], name: "index_requests_on_approved_by_id"
     t.index ["payment_method_id"], name: "index_requests_on_payment_method_id"
     t.index ["project_id"], name: "index_requests_on_project_id"
+    t.index ["received_by_id"], name: "index_requests_on_received_by_id"
     t.index ["requested_for_id"], name: "index_requests_on_requested_for_id"
   end
 
@@ -129,6 +131,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_025251) do
   add_foreign_key "items", "requests"
   add_foreign_key "requests", "accounts"
   add_foreign_key "requests", "accounts", column: "approved_by_id"
+  add_foreign_key "requests", "accounts", column: "received_by_id"
   add_foreign_key "requests", "accounts", column: "requested_for_id"
   add_foreign_key "requests", "payment_methods"
   add_foreign_key "requests", "projects"

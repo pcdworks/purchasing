@@ -4,6 +4,7 @@ class Request < ApplicationRecord
   belongs_to :payment_method
   belongs_to :account
   belongs_to :requested_for, class_name: "Account"
+  belongs_to :received_by, class_name: "Account", optional: true
   before_save :clean_up
 
   has_many :items, inverse_of: :request, dependent: :destroy
@@ -30,6 +31,11 @@ class Request < ApplicationRecord
   end
 
   def clean_up
+
+    # if received by someone then set the date if they forgot to
+    if !self.date_received && self.received_by
+      self.date_received = DateTime.now
+    end
 
     # create identifier
     if self.identifier.nil? || self.identifier == ''
