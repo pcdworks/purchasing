@@ -10,11 +10,19 @@
   <div class="row">
     <div class="col-md-3">
 
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><label><%= Request.human_attribute_name :identifier %></label></strong>
+            <%= text_field_tag :identifier, @request.identifier, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col">
           <div class="field">
-            <strong><label>Requested by</label></strong>
+            <strong><label><%= Request.human_attribute_name :account_id %></label></strong>
             <%= text_field_tag :account_id, @request.account, disabled: true, class: 'form-control' %>
           </div>
         </div>
@@ -126,10 +134,10 @@
           <div class="field">
             <strong>
               <label>
-                <%= Request.human_attribute_name :total %>
+                <%= Request.human_attribute_name :notes %>
               </label>
             </strong>
-            <%= text_field_tag :total, (number_to_currency @request.total), disabled: true, class: 'form-control' %>
+            <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', rows: 1 %>
           </div>
         </div>
       </div>
@@ -208,6 +216,21 @@
         </div>
       </div>
 
+
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :total %>
+              </label>
+            </strong>
+            <%= text_field_tag :total, (number_to_currency @request.total), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+
     </div>
 
 
@@ -281,62 +304,23 @@
         </div>
       </div>
 
-
-    </div>
-
-  </div>
-  <div class="row">
-    <div class="col-md-9">
-      <div class="field">
-        <strong>
-          <label>
-            <%= Request.human_attribute_name :notes %>
-          </label>
-        </strong>
-        <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', rows: 1 %>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :reason_for_rejection %>
+              </label>
+            </strong>
+            <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', rows: 1 %>
+          </div>
+        </div>
       </div>
-    </div>
 
-
-    <div class="col-md-3">
-      <div class="field">
-        <strong>
-          <label>
-            <%= Request.human_attribute_name :reason_for_rejection %>
-          </label>
-        </strong>
-        <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', rows: 1 %>
-      </div>
     </div>
 
   </div>
   <br/>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th class="col-md-10"><label>Attachment</label></th>
-        <th class="col-md-2"><label></label></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @request.attachment.each do |attachment| %>
-        <tr id="<%= dom_id attachment %>">
-          <td>
-            <%= link_to attachment.filename, rails_blob_path(attachment, disposition: 'attachment') %>
-          </td>
-          <td style="text-align: right">
-            <%= link_to(active_storage_attachment_path(attachment),
-                        remote: :true,
-                        method: :delete,
-                        data: { confirm: 'Are you sure?' },
-                        class: 'btn btn-outline-danger btn-sm') do %>
-              X
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -371,6 +355,27 @@
       </tbody>
     </table>
   </div>
+  <% @request.attachment.each do |attachment| %>
+    <div id="<%= dom_id attachment %>">
+      <div class="row attachment">
+        <div class="col">
+          <%= link_to attachment.filename, rails_blob_path(attachment, disposition: :attachment) %>
+        </div>
+        <div class="col" style="text-align: right">
+          <%= link_to(active_storage_attachment_path(attachment),
+                      remote: :true,
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' },
+                      class: 'btn btn-outline-danger btn-sm') do %>
+            X
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <embed type="application/pdf" src="<%=rails_blob_path(attachment, disposition: :inline)%>" style="width:100%;height:100vh;">
+      </div>
+    </div>
+  <% end %>
 </form>
 <br/>
 <br/>

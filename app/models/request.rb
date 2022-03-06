@@ -14,7 +14,11 @@ class Request < ApplicationRecord
   validates :vendor, presence: true, allow_blank: false
 
   def to_s
-    'PR' + self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i+64).chr.to_s + '-' + self.vendor.gsub(' ', '_') 
+    if self.identifier
+      self.identifier
+    else
+      self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i+64).chr.to_s
+    end + '-' + self.vendor.gsub(' ', '_')
   end
 
   def subtotal
@@ -26,6 +30,12 @@ class Request < ApplicationRecord
   end
 
   def clean_up
+
+    # create identifier
+    if self.identifier.nil? || self.identifier == ''
+      self.identifier = self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i+64).chr.to_s
+    end
+
     # set the date for approval if approved
     if self.approved_by && !self.date_approved
       self.date_approved = DateTime.now

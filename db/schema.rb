@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_03_012444) do
+ActiveRecord::Schema.define(version: 2022_03_06_025251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2022_03_03_012444) do
     t.integer "seq", default: 0
     t.float "surcharge", default: 0.0
     t.string "work_breakdown_structure"
+    t.string "identifier"
     t.index ["account_id"], name: "index_requests_on_account_id"
     t.index ["approved_by_id"], name: "index_requests_on_approved_by_id"
     t.index ["payment_method_id"], name: "index_requests_on_payment_method_id"
