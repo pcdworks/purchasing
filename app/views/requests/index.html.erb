@@ -30,7 +30,7 @@
     <tbody id="items">
       <% @requests.each do |request| %>
         <tr>
-          <td><%= request.identifier.upcase %></td>
+          <td><%= request.identifier.upcase if request.identifier %></td>
           <td><%= statuses[request.status] %></td>
           <td><%= I18n.l request.created_at.to_date if request.created_at %></td>
           <td><%= I18n.l request.date_approved.to_date if request.date_approved %></td>

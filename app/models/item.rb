@@ -18,7 +18,7 @@ class Item < ApplicationRecord
     self.description = self.description.strip unless self.description.nil?
     self.vendor_reference = self.vendor_reference.strip unless self.vendor_reference.nil?
     self.link = self.link.strip unless self.link.nil?
-    unless self.link.start_with?('https://') || self.link.start_with?('https://')
+    unless self.link.start_with?('https://') || self.link.start_with?('https://') || self.link.to_s == ''
       self.link = 'https://' + self.link.to_s
     end
   end
