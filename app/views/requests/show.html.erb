@@ -146,18 +146,6 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :items_count %>
-              </label>
-            </strong>
-            <%= text_field_tag :items_count, @request.items.count, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
 
       <div class="row">
         <div class="col">
@@ -359,6 +347,29 @@
           <th class="col-md-2"><label><%= Item.human_attribute_name :quantity %></label></th>
           <th class="col-md-3"><label><%= Item.human_attribute_name :price %></label></th>
           <th class="col-md-2"><label><%= Item.human_attribute_name :total %></label></th>
+          <th class="col-md-1">
+            <div class="d-grid gap-2">
+              <% if @request.received? %>
+                <%= link_to('#',
+                            class: 'btn btn-outline-secondary',
+                            target: "_blank",
+                            'data-bs-toggle': 'tooltip',
+                            'data-bs-placement': 'top',
+                            'title': 'Mark all items not received') do %>
+                    <i class="fa-solid fa-box-open"></i>
+                <% end %>
+              <% else %>
+                  <%= link_to('#',
+                            class: 'btn btn-outline-secondary',
+                            target: "_blank",
+                            'data-bs-toggle': 'tooltip',
+                            'data-bs-placement': 'top',
+                            'title': 'Mark all items received') do %>
+                    <i class="fa-solid fa-box"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody id="items">
@@ -379,6 +390,39 @@
             <td>
               <%= number_to_currency(item.total) %>
             </td>
+            <td style="text-align: right;">
+              <div class="btn-group gap-2 d-flex">
+                <% if item.received? %>
+                  <%= link_to('#',
+                              class: 'btn btn-outline-secondary',
+                              target: "_blank",
+                              'data-bs-toggle': 'tooltip',
+                              'data-bs-placement': 'top',
+                              'title': 'Mark item not received') do %>
+                    <i class="fa-solid fa-box-open"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to('#',
+                              class: 'btn btn-outline-secondary',
+                              target: "_blank",
+                              'data-bs-toggle': 'tooltip',
+                              'data-bs-placement': 'top',
+                              'title': 'Mark item received') do %>
+                    <i class="fa-solid fa-box"></i>
+                  <% end %>
+                <% end %>
+                <% if item.link? %>
+                  <%= link_to(item.link,
+                              class: 'btn btn-outline-secondary',
+                              target: "_blank",
+                              'data-bs-toggle': 'tooltip',
+                              'data-bs-placement': 'top',
+                              'title': 'Open link to item in new tab') do %>
+                    <i class="fa-solid fa-link"></i>
+                  <% end %>
+                <% end %>
+              </td>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -395,7 +439,7 @@
                       remote: :true,
                       method: :delete,
                       data: { confirm: 'Are you sure?' },
-                      class: 'btn btn-outline-danger btn-sm') do %>
+                      class: 'btn btn-outline-danger') do %>
             <i class="fa-solid fa-trash-can"></i>
           <% end %>
         </div>

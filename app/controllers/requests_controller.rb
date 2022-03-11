@@ -80,7 +80,8 @@ class RequestsController < ApplicationController
         :requested_for_id, :shipping_charges_paid_to, :vendor,
         :surcharge, :received_by_id, :identifier,
         items_attributes: [:id, :description, :vendor_reference,
-                           :quantity, :price, :_destroy],
+                           :quantity, :price, :received_by_id,
+                           :received_at, :link, :_destroy],
         attachment: [])
     end
 end

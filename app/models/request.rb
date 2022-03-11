@@ -83,4 +83,8 @@ class Request < ApplicationRecord
 
   end
 
+  def received?
+    !self.received_by_id.nil?
+  end
+
 end

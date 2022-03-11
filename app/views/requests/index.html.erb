@@ -1,7 +1,12 @@
 <h1>Requests</h1>
 <br/>
 <div class="d-grid gap-2">
-  <%= link_to 'New', new_request_path, class: 'btn btn-primary text-light' %>
+  <%= link_to('New',
+              new_request_path,
+              class: 'btn btn-primary text-light',
+              'data-bs-toggle': 'tooltip',
+              'data-bs-placement': 'top',
+              'title': 'Create new request') %>
 </div>
 <br/>
 
@@ -32,88 +37,37 @@
           <td><%= I18n.l request.date_received.to_date if request.date_received %></td>
           <td><%= number_to_currency request.total %></td>
           <td>
-            <%= link_to(request, class: 'btn btn-outline-info')do %>
-              <i class="fa-solid fa-eye"></i>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to(edit_request_path(request), class: 'btn btn-outline-warning') do %>
-              <i class="fa-solid fa-pencil"></i>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to(request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger') do %>
-              <i class="fa-solid fa-trash-can"></i>
-            <% end %>
+            <div class="btn-group gap-2 d-flex">
+              <%= link_to(request,
+                          class: 'btn btn-outline-info',
+                          'data-bs-toggle': 'tooltip',
+                          'data-bs-placement': 'top',
+                          'title': 'View request') do %>
+                <i class="fa-solid fa-eye"></i>
+              <% end %>
+              <%= link_to(edit_request_path(request),
+                          class: 'btn btn-outline-warning',
+                          'data-bs-toggle': 'tooltip',
+                          'data-bs-placement': 'top',
+                          'title': 'Edit request') do %>
+                <i class="fa-solid fa-pencil"></i>
+              <% end %>
+              <%= link_to(request,
+                          method: :delete,
+                          data: { confirm: 'Are you sure?' },
+                          class: 'btn btn-outline-danger',
+                          'data-bs-toggle': 'tooltip',
+                          'data-bs-placement': 'top',
+                          'title': 'Delete request') do %>
+                <i class="fa-solid fa-trash-can"></i>
+              <% end %>
+            </div>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
-
-
-
 <br/>
-<!--
-<div class="container mt-3">
-  <div class="row g-2">
-    <% @requests.each do |request| %>
-      <div class="col-sm-6">
-        <div class="card mb-2">
-          <div class="card-header">
-            <div class="btn-group d-flex">
-              <%= link_to 'View', request, class: 'btn btn-outline-info' %>
-              <%= link_to 'Edit', edit_request_path(request), class: 'btn btn-outline-warning' %>
-              <%= link_to 'Destroy', request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="field">
-              <strong>
-                <%= Request.human_attribute_name :status %>
-              </strong>
-              <%= statuses[request.status] %>
-            </div>
-            <div class="field">
-              <strong>
-                <%= Request.human_attribute_name :created_at %>
-              </strong>
-              <%= I18n.l request.created_at.to_date if request.created_at %>
-            </div>
-            <div class="field">
-              <strong>
-                <%= Request.human_attribute_name :date_approved %>
-              </strong>
-              <%= I18n.l request.date_approved.to_date if request.date_approved %>
-            </div>
-            <div class="field">
-              <strong>
-                <%= Request.human_attribute_name :date_ordered %>
-              </strong>
-              <%= I18n.l request.date_ordered.to_date if request.date_ordered %>
-            </div>
-            <div class="field">
-              <strong>
-                <%= Request.human_attribute_name :date_received %>
-              </strong>
-              <%= I18n.l request.date_received.to_date if request.date_received %>
-            </div>
-            <div class="field">
-              <strong>
-                <%= Request.human_attribute_name :total %>
-              </strong>
-              <%= number_to_currency request.total %>
-            </div>
-          </div>
-          <div class="card-footer bg-transparent">
-            <%= request %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
--->
 <br/>
 <br/>
