@@ -78,7 +78,6 @@ class RequestsController < ApplicationController
           end
         else
           @request.items.each do |item|
-            puts "nilling"
             item.received_by_id = nil
             item.received_at = nil
             item.save

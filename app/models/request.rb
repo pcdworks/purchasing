@@ -7,7 +7,7 @@ class Request < ApplicationRecord
   belongs_to :received_by, class_name: "Account", optional: true
   before_save :clean_up
 
-  has_many :items, inverse_of: :request, dependent: :destroy
+  has_many :items, -> { order(created_at: :desc) }, inverse_of: :request, dependent: :destroy
   has_many_attached :attachment
 
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true

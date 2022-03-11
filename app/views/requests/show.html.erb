@@ -342,6 +342,7 @@
     <table class="table table-striped">
       <thead>
         <tr>
+          <th class="col-md-1"><label>#</label></th>
           <th class="col-md-4"><label><%= Item.human_attribute_name :description %></label></th>
           <th class="col-md-3"><label><%= Item.human_attribute_name :vendor_reference %></label></th>
           <th class="col-md-2"><label><%= Item.human_attribute_name :quantity %></label></th>
@@ -382,8 +383,11 @@
         </tr>
       </thead>
       <tbody id="items">
-        <% @request.items.each do |item| %>
+        <% @request.items.each_with_index do |item, index| %>
           <tr>
+            <td>
+              <%= index + 1 %>
+            </td>
             <td>
               <%= item.description %>
             </td>
@@ -406,21 +410,28 @@
             </td>
             <td style="text-align: right;">
               <div class="btn-group gap-2 d-flex">
-                <% if item.received? %>
-                  <%= link_to('#',
-                              class: 'btn btn-outline-secondary',
-                              'data-bs-toggle': 'tooltip',
-                              'data-bs-placement': 'top',
-                              'title': 'Mark item not received') do %>
-                    <i class="fa-solid fa-box-open"></i>
-                  <% end %>
-                <% else %>
-                  <%= link_to('#',
-                              class: 'btn btn-outline-secondary',
-                              'data-bs-toggle': 'tooltip',
-                              'data-bs-placement': 'top',
-                              'title': 'Mark item received') do %>
-                    <i class="fa-solid fa-box"></i>
+                <%= form_for(item, method: :put) do |form| %>
+                  <% if item.received? %>
+                    <%= form.hidden_field :received_by_id, value: nil %>
+                    <%= form.hidden_field :received_at, value: nil %>
+                    <%= form.button(class: 'btn btn-outline-secondary',
+                                  data: { confirm: 'Are you sure?' },
+                                  'data-bs-toggle': 'tooltip',
+                                  'data-bs-placement': 'top',
+                                  'title': 'Mark item not received') do %>
+                      <i class="fa-solid fa-box-open"></i>
+                    <% end %>
+                  <% else %>
+                    <%= form.hidden_field :received_by_id, value: current_account.id %>
+                    <%= form.hidden_field :received_at, value: DateTime.now %>
+                    <%= form.button(class: 'btn btn-outline-secondary',
+                                    data: { confirm: 'Are you sure?' },
+                                    style: 'width: 46px;',
+                                    'data-bs-toggle': 'tooltip',
+                                    'data-bs-placement': 'top',
+                                    'title': 'Mark item received') do %>
+                        <i class="fa-solid fa-box"></i>
+                    <% end %>
                   <% end %>
                 <% end %>
                 <% if item.link? %>

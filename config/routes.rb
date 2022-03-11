@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :items, only: [:update]
   get 'pages/browsers'
   get 'work_breakdown_structures', to: 'pages#work_breakdown_structures'
   resources :requests, param: :identifier

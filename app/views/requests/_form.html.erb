@@ -285,11 +285,15 @@
 </div>
 <br/>
 <div class="d-grid gap-2">
-  <%= link_to_add_association('Add Item',
-                              form, :items,
+  <%= link_to_add_association(form, :items,
                               :"data-association-insertion-node" => "tbody#items",
                               :"data-association-insertion-method" => "append",
-                              class: 'btn btn-primary text-light') %>
+                              class: 'btn btn-primary text-light',
+                              'data-bs-toggle': 'tooltip',
+                              'data-bs-placement': 'top',
+                              'title': 'Add item to request') do %>
+    <i class="fa-solid fa-cart-plus"></i>
+  <% end %>
 </div>
 <br/>
 <div class="table-responsive">

@@ -1,12 +1,13 @@
 <h1>Requests</h1>
 <br/>
 <div class="d-grid gap-2">
-  <%= link_to('New',
-              new_request_path,
+  <%= link_to(new_request_path,
               class: 'btn btn-primary text-light',
               'data-bs-toggle': 'tooltip',
               'data-bs-placement': 'top',
-              'title': 'Create new request') %>
+              'title': 'Create new request') do %>
+    <i class="fa-solid fa-plus"></i>
+  <% end %>
 </div>
 <br/>
 
