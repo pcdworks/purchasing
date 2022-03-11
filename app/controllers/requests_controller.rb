@@ -38,7 +38,8 @@ class RequestsController < ApplicationController
   # PATCH/PUT /requests/1 or /requests/1.json
   def update
     respond_to do |format|
-      if @request.update(request_params)
+      update_items(request_params)
+      if @request.update(request_params.except(:received))
         send_mail(@request)
         format.html { redirect_to request_url(@request), notice: "Request was successfully updated." }
         format.json { render :show, status: :ok, location: @request }
@@ -61,6 +62,32 @@ class RequestsController < ApplicationController
 
   private
 
+    def update_items(request_params)
+      received = request_params[:received]
+      account_id = current_account.id
+      status = request_params[:status].to_i
+      now = DateTime.now
+      unless received.nil?
+        if ActiveModel::Type::Boolean.new.cast(received)
+          @request.items.each do |item|
+            if item.received_by_id.nil?
+              item.received_by_id = account_id
+              item.received_at = now
+              item.save
+            end
+          end
+        else
+          @request.items.each do |item|
+            puts "nilling"
+            item.received_by_id = nil
+            item.received_at = nil
+            item.save
+          end
+        end
+        @request.status = status
+      end
+    end
+
     def send_mail(req)
       rm = RequestMailer.with(request: req).new_request_email.deliver_now
     end
@@ -79,6 +106,7 @@ class RequestsController < ApplicationController
         :project_id, :payment_method_id, :account_id,
         :requested_for_id, :shipping_charges_paid_to, :vendor,
         :surcharge, :received_by_id, :identifier,
+        :received,
         items_attributes: [:id, :description, :vendor_reference,
                            :quantity, :price, :received_by_id,
                            :received_at, :link, :_destroy],

@@ -42,8 +42,10 @@ class Request < ApplicationRecord
       self.date_received = DateTime.now
     end
 
+    # make sure there is a created date so we can generate the identifier
     self.created_at ||= DateTime.now
 
+    # figure out the sequence number
     if !self.seq || self.seq == 0
       self.seq = Request.where('account_id = ? and created_at > ?', self.account_id, DateTime.now - 12.hours).count + 1
     end
@@ -74,6 +76,7 @@ class Request < ApplicationRecord
       self.status = 1
     end
 
+    # clean up fields
     self.vendor = self.vendor.strip unless self.vendor.nil?
     self.order_number = self.order_number.strip unless self.order_number.nil?
     self.notes = self.notes.strip unless self.notes.nil?

@@ -1,6 +1,6 @@
 <h1>Viewing Request</h1>
 <br/>
-<form>
+<div>
   <div class="btn-group gap-2 d-flex">
     <%= link_to(requests_path, class: 'btn btn-outline-secondary') do %>
       <i class="fa-solid fa-angle-left"></i>
@@ -347,28 +347,37 @@
           <th class="col-md-2"><label><%= Item.human_attribute_name :quantity %></label></th>
           <th class="col-md-3"><label><%= Item.human_attribute_name :price %></label></th>
           <th class="col-md-2"><label><%= Item.human_attribute_name :total %></label></th>
+          <th class="col-md-2"><label><%= Item.human_attribute_name :received_by %></label></th>
           <th class="col-md-1">
-            <div class="d-grid gap-2">
-              <% if @request.received? %>
-                <%= link_to('#',
-                            class: 'btn btn-outline-secondary',
-                            target: "_blank",
-                            'data-bs-toggle': 'tooltip',
-                            'data-bs-placement': 'top',
-                            'title': 'Mark all items not received') do %>
+            <%= form_for(@request, method: :put) do |form| %>
+              <div class="d-grid gap-2">
+                <% if @request.received? %>
+                    <%= form.hidden_field :status, value:  4 %>
+                    <%= form.hidden_field :received, value: false %>
+                    <%= form.hidden_field :received_by_id, value: nil %>
+                    <%= form.hidden_field :date_received, value: nil %>
+                    <%= form.button(class: 'btn btn-outline-secondary',
+                                    data: { confirm: 'Are you sure?' },
+                                    'data-bs-toggle': 'tooltip',
+                                    'data-bs-placement': 'top',
+                                    'title': 'Mark all items not received') do %>
                     <i class="fa-solid fa-box-open"></i>
+                    <% end %>
+                <% else %>
+                    <%= form.hidden_field :status, value: 5 %>
+                    <%= form.hidden_field :received, value: true %>
+                    <%= form.hidden_field :received_by_id, value: current_account.id %>
+                    <%= form.hidden_field :date_received, value: DateTime.now %>
+                    <%= form.button(class: 'btn btn-outline-secondary',
+                                    data: { confirm: 'Are you sure?' },
+                                    'data-bs-toggle': 'tooltip',
+                                    'data-bs-placement': 'top',
+                                    'title': 'Mark all items received') do %>
+                        <i class="fa-solid fa-box"></i>
+                    <% end %>
                 <% end %>
-              <% else %>
-                  <%= link_to('#',
-                            class: 'btn btn-outline-secondary',
-                            target: "_blank",
-                            'data-bs-toggle': 'tooltip',
-                            'data-bs-placement': 'top',
-                            'title': 'Mark all items received') do %>
-                    <i class="fa-solid fa-box"></i>
-                <% end %>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           </th>
         </tr>
       </thead>
@@ -390,12 +399,16 @@
             <td>
               <%= number_to_currency(item.total) %>
             </td>
+            <td>
+              <% if item.received_by %>
+                <%= item.received_by.initials %>
+              <% end %>
+            </td>
             <td style="text-align: right;">
               <div class="btn-group gap-2 d-flex">
                 <% if item.received? %>
                   <%= link_to('#',
                               class: 'btn btn-outline-secondary',
-                              target: "_blank",
                               'data-bs-toggle': 'tooltip',
                               'data-bs-placement': 'top',
                               'title': 'Mark item not received') do %>
@@ -404,7 +417,6 @@
                 <% else %>
                   <%= link_to('#',
                               class: 'btn btn-outline-secondary',
-                              target: "_blank",
                               'data-bs-toggle': 'tooltip',
                               'data-bs-placement': 'top',
                               'title': 'Mark item received') do %>
@@ -449,6 +461,6 @@
       </div>
     </div>
   <% end %>
-</form>
+</div>
 <br/>
 <br/>
