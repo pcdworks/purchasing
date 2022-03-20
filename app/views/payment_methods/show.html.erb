@@ -15,7 +15,7 @@
 <div class="card">
   <div class="card-body">
     <div class="card-text bg-transparent">
-      <%= text_field_tag :title, @payment_method.title, class: 'form-control' %>
+      <%= text_field_tag :title, @payment_method.title, class: 'form-control', disabled: true %>
       <br/>
       <div class="form-check">
         <%= check_box_tag :active, @payment_method.active, @payment_method.active, class: 'form-check-input', disabled: true %>

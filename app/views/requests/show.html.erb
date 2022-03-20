@@ -308,18 +308,7 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :received_by_id %>
-              </label>
-            </strong>
-            <%= text_field_tag :received_by_id, @request.received_by, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
+
 
       <div class="row">
         <div class="col">
@@ -333,6 +322,20 @@
           </div>
         </div>
       </div>
+
+
+    <div class="row">
+      <div class="col">
+        <div class="field">
+          <strong>
+            <label>
+              <%= Request.human_attribute_name :received_by_id %>
+            </label>
+          </strong>
+          <%= text_field_tag :received_by_id, @request.received_by, disabled: true, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
 
     </div>
 
