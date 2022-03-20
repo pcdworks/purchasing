@@ -60,21 +60,30 @@ class ItemsController < ApplicationController
 
   private
 
+    def send_mail
+      
+    end
+
     def check_request
       request = @item.request
-      received_by_ids = request.items.map(&:received_by_id).uniq
-      
-      # if all are received now
-      if received_by_ids.all?
+      dates = request.items.map(&:received_at)
+
+
+      # nothing is received
+      if dates.all?(&:nil?)
+        request.status = 4
+        request.received_by_id = nil
+        request.date_received = nil
+        request.save
+      # everything is receivied
+      elsif dates.none?(&:nil?)
         request.status = 5
         request.received_by_id = current_account.id
         request.date_received = DateTime.now
         request.save
-      # if not all is received
+      # must be partial
       else
-        request.status = 4
-        request.received_by_id = nil
-        request.date_received = nil
+        request.status = 6
         request.save
       end
     end
