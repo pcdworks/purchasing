@@ -1,10 +1,16 @@
 <%= form_with(model: payment_method) do |form| %>
   <div class="btn-group gap-2 d-flex">
-    <%= link_to 'Back', payment_methods_path, class: 'btn btn-outline-secondary' %>
-    <% if !form.object.new_record? %>
-      <%= link_to 'View', form.object, class: 'btn btn-outline-info' %>
+    <%= link_to(payment_methods_path, class: 'btn btn-outline-secondary') do %>
+      <i class="fa-solid fa-angle-left"></i>
     <% end %>
-    <%= form.submit('Save', class: 'btn btn-outline-primary') %>
+    <% if !form.object.new_record? %>
+      <%= link_to(form.object, class: 'btn btn-outline-info') do %>
+        <i class="fa-solid fa-eye"></i>
+      <% end %>
+    <% end %>
+    <%= form.button(class: 'btn btn-outline-primary') do %>
+      <i class="fa-solid fa-floppy-disk"></i>
+    <% end %>
   </div>
   <br/>
   <% if payment_method.errors.any? %>

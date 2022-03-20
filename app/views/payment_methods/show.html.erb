@@ -1,9 +1,15 @@
 <h1>Viewing Payment Method</h1>
 <br/>
 <div class="btn-group gap-2 d-flex">
-  <%= link_to 'Back', payment_methods_path, class: 'btn btn-outline-secondary' %>
-  <%= link_to 'Edit', edit_payment_method_path(@payment_method), class: 'btn btn-outline-warning' %>
-  <%= link_to 'Destroy', @payment_method, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+  <%= link_to(payment_methods_path, class: 'btn btn-outline-secondary') do %>
+    <i class="fa-solid fa-angle-left"></i>
+  <% end %>
+  <%= link_to(edit_payment_method_path(@payment_method), class: 'btn btn-outline-warning') do %>
+    <i class="fa-solid fa-pencil"></i>
+  <% end %>
+  <%= link_to(@payment_method, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger') do %>
+    <i class="fa-solid fa-trash-can"></i>
+  <% end %>
 </div>
 <br/>
 <div class="card">
