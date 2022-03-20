@@ -67,24 +67,39 @@ class ItemsController < ApplicationController
     def check_request
       request = @item.request
       dates = request.items.map(&:received_at)
+      past_time = DateTime.now - 10.minutes
 
+      send_it = dates.collect do |d|
+        !d.nil? && d > past_time
+      end.count(true) == 1
 
       # nothing is received
       if dates.all?(&:nil?)
-        request.status = 4
-        request.received_by_id = nil
-        request.date_received = nil
-        request.save
+        unless request.status == 4 && request.received_by_id.nil? && request.date_received.nil?
+          request.status = 4
+          request.received_by_id = nil
+          request.date_received = nil
+          request.save
+        end
       # everything is receivied
       elsif dates.none?(&:nil?)
-        request.status = 5
-        request.received_by_id = current_account.id
-        request.date_received = DateTime.now
-        request.save
+        unless request.status == 5 && !request.received_by_id.nil? && !request.date_received.nil?
+          request.status = 5
+          request.received_by_id = current_account.id
+          request.date_received = DateTime.now
+          request.save
+        end
       # must be partial
       else
-        request.status = 6
-        request.save
+        # don't save unless you have to
+        unless request.status == 6
+          request.status = 6
+          request.save
+        end
+      end
+
+      if send_it
+        send_mail()
       end
     end
 
