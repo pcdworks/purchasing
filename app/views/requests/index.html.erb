@@ -15,7 +15,8 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="col-md-3"><label><%= Request.human_attribute_name :identifier %></label></th>
+        <th class="col-md-2"><label><%= Request.human_attribute_name :identifier %></label></th>
+        <th class="col-md-3"><label><%= Request.human_attribute_name :vendor %></label></th>
         <th class="col-md-3"><label><%= Request.human_attribute_name :status %></label></th>
         <th class="col-md-2"><label><%= Request.human_attribute_name :created_at %></label></th>
         <th class="col-md-2"><label><%= Request.human_attribute_name :date_approved %></label></th>
@@ -23,14 +24,13 @@
         <th class="col-md-2"><label><%= Request.human_attribute_name :date_received %></label></th>
         <th class="col-md-2"><label><%= Request.human_attribute_name :total %></label></th>
         <th class="col-md-1"></th>
-        <th class="col-md-1"></th>
-        <th class="col-md-1"></th>
       </tr>
     </thead>
     <tbody id="items">
       <% @requests.each do |request| %>
         <tr>
           <td><%= request.identifier.upcase if request.identifier %></td>
+          <td><%= request.vendor %></td>
           <td><%= statuses[request.status] %></td>
           <td><%= I18n.l request.created_at.to_date if request.created_at %></td>
           <td><%= I18n.l request.date_approved.to_date if request.date_approved %></td>
