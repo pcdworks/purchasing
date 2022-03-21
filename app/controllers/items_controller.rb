@@ -60,8 +60,8 @@ class ItemsController < ApplicationController
 
   private
 
-    def send_mail
-      
+    def send_mail(req, type = nil)
+      rm = RequestMailer.with(request: req, type: type).new_request_email.deliver_now
     end
 
     def check_request
@@ -89,6 +89,10 @@ class ItemsController < ApplicationController
           request.date_received = DateTime.now
           request.save
         end
+        if send_it
+          send_mail(request, :received)
+        end
+
       # must be partial
       else
         # don't save unless you have to
@@ -96,11 +100,11 @@ class ItemsController < ApplicationController
           request.status = 6
           request.save
         end
+        if send_it
+          send_mail(request, :partial_received)
+        end
       end
 
-      if send_it
-        send_mail()
-      end
     end
 
     # Use callbacks to share common setup or constraints between actions.

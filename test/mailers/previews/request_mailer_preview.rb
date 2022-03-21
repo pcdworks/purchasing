@@ -4,6 +4,6 @@ class RequestMailerPreview < ActionMailer::Preview
         # Set up a temporary order for the preview
         request = Request.first
     
-        RequestMailer.with(request: request).new_request_email
+        RequestMailer.with(request: request, type: nil).new_request_email
       end
 end
