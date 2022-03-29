@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="min-vh-100">
   <head>
     <title>Purchasing</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -19,7 +19,7 @@
       }
     </script>
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#"></a>
@@ -57,7 +57,7 @@
         </div>
       </div>
     </nav>
-    <main class="container">
+    <main class="container flex-shrink-0">
       <% if notice %>
         <div class="alert alert-primary alert-dismissible fade show" role="alert">
           <%= notice %>
@@ -72,5 +72,15 @@
       <% end %>
       <%= yield %>
     </main>
+    <footer class="footer mt-auto py-3 bg-light">
+      <div class="container">
+        <div class="row">
+            <span class="col-md-6">
+              © 2017-<%= Time.zone.now.year %> - Product Concept Development, Inc.
+            </span>
+            <span class="col-md-6 text-muted text-md-end">Purchasing <%= "#{REVISION}" %></span>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
