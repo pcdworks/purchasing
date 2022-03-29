@@ -37,4 +37,12 @@ class Account < ApplicationRecord
       self.approver = false
     end
   end
+
+  def approver?
+    self.in_group?('approver')
+  end
+
+  def validator?
+    self.in_group?('validator')
+  end
 end

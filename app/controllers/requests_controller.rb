@@ -24,8 +24,13 @@ class RequestsController < ApplicationController
     @request = Request.new(request_params)
 
     respond_to do |format|
+      if request_params[:attachment]
+        type = :attached
+      else
+        type = nil
+      end
       if @request.save
-        send_mail(@request)
+        send_mail(@request, type)
         format.html { redirect_to request_url(@request), notice: "Request was successfully created." }
         format.json { render :show, status: :created, location: @request }
       else
@@ -38,9 +43,16 @@ class RequestsController < ApplicationController
   # PATCH/PUT /requests/1 or /requests/1.json
   def update
     respond_to do |format|
+      
+      if request_params[:attachment]
+        type = :attached
+      else
+        type = nil
+      end
+
       update_items(request_params)
       if @request.update(request_params.except(:received))
-        send_mail(@request)
+        send_mail(@request, type)
         format.html { redirect_to request_url(@request), notice: "Request was successfully updated." }
         format.json { render :show, status: :ok, location: @request }
       else

@@ -53,6 +53,14 @@ class RequestMailer < ApplicationMailer
                     cc: @cc,
                     subject: "Some item(s) have been received for: " + @request.to_s
                 )
+            when :attached
+                Account.all.select { |a| a.validator?  }.each do |account|
+                    mail(
+                        from: @from,
+                        to: account.email,
+                        subject: "An attachment has been added to the purchase request: " + @request.to_s
+                    )
+                end
             end # @type
         end # @to && @cc
     end
