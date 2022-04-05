@@ -29,7 +29,10 @@
         <div class="col">
           <div class="field">
             <strong><%= form.label :identifier %></strong>
-            <%= form.text_field :identifier, class: 'form-control', disabled: form.object.new_record? %>
+            <%= form.text_field :identifier,
+                                class: 'form-control',
+                                disabled: form.object.new_record?,
+                                style: "text-transform:uppercase" %>
           </div>
         </div>
       </div>
