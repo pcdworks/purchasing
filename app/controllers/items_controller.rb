@@ -60,7 +60,7 @@ class ItemsController < ApplicationController
 
   private
 
-    def send_mail(req, type = nil, current_account = nil)
+    def send_mail(req, type)
       rm = RequestMailer.with(
         request: req,
         type: type,
@@ -90,10 +90,10 @@ class ItemsController < ApplicationController
           request.status = 5
           request.received_by_id = current_account.id
           request.date_received = DateTime.now
+          if send_it
+            send_mail(request, :received)
+          end
           request.save
-        end
-        if send_it
-          send_mail(request, :received, current_account)
         end
 
       # must be partial
@@ -101,10 +101,10 @@ class ItemsController < ApplicationController
         # don't save unless you have to
         unless request.status == 6
           request.status = 6
+          if send_it
+            send_mail(request, :partial_received)
+          end
           request.save
-        end
-        if send_it
-          send_mail(request, :partial_received, current_account)
         end
       end
 

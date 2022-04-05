@@ -99,7 +99,7 @@ class RequestsController < ApplicationController
       end
     end
 
-    def send_mail(req, type = nil, current_account = nil)
+    def send_mail(req, type = nil)
       rm = RequestMailer.with(
         request: req,
         type: type,

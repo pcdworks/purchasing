@@ -3,20 +3,21 @@ class RequestMailer < ApplicationMailer
     def new_request_email
         @request = params[:request]
         @type = params[:type]
-        @current_account = params[:current_account]
-        @requested_for = @request.requested_for
-        @requested_by = @request.account
+
+        @current_account = params[:current_account].email
+        @requested_for = @request.requested_for.email
+        @requested_by = @request.account.email
         @from = ENV['MAILER_USER_NAME']
+
         if @current_account != @requested_by && @current_account != @requested_for
-            @to = @requested_by.email
-            @cc = @requested_for.email
+            @to = @requested_by
+            @cc = @requested_for
         elsif @current_account == @requested_by && @current_account != @requested_for
-            @to = @requested_for.email
-            @cc = @requested_for.email
+            @to = @requested_for
+            @cc = @requested_for
         elsif @current_account == @requested_for && @current_account != @requested_by
-            @to = @requested_by.email
-            @cc = @requested_by.email
-        else
+            @to = @requested_by
+            @cc = @requested_by
         end
 
         if @to && @cc
