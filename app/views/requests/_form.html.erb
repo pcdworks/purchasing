@@ -32,7 +32,19 @@
             <%= form.text_field :identifier,
                                 class: 'form-control',
                                 disabled: form.object.new_record?,
-                                style: "text-transform:uppercase" %>
+                                style: "text-transform:uppercase",
+                                placeholder: 'yyyymmddnnx',
+                                'data-bs-toggle': 'tooltip',
+                                'data-bs-placement': 'bottom',
+                                'data-bs-html': true,
+                                'title': '
+                                <p>
+                                YYYY: year<br>
+                                MM: month<br>
+                                DD: day<br>
+                                NN: initials<br>
+                                X: counter for how many requests you\'ve made today
+                                </p>' %>
           </div>
         </div>
       </div>
