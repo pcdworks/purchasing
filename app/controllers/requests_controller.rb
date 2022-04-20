@@ -108,12 +108,15 @@ class RequestsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_request
-      @request = Request.find_by(identifier: params[:identifier])
+        @request = Request.find_by(identifier: params[:identifier])
+        if @request.nil?
+          @request = Request.find(params[:request][:id])
+        end
     end
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:notes, :reason_for_rejection,
+      params.require(:request).permit(:id, :notes, :reason_for_rejection,
         :shipping_cost, :sales_tax, :import_tax, :date_received,
         :date_approved, :date_ordered, :order_number, :status,
         :approved_by_id, :work_breakdown_structure,
