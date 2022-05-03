@@ -20,7 +20,6 @@ class RequestMailer < ApplicationMailer
             @cc = @requested_by
         end
 
-        if @to && @cc
         case @type
             when nil
                 case @request.status
@@ -41,19 +40,23 @@ class RequestMailer < ApplicationMailer
                     )
                 end # status
             when :received
-                mail(
-                    from: @from,
-                    to: @to,
-                    cc: @cc,
-                    subject: "Everything has been received for: " + @request.to_s
-                )
+                if @to && @cc
+                    mail(
+                        from: @from,
+                        to: @to,
+                        cc: @cc,
+                        subject: "Everything has been received for: " + @request.to_s
+                    )
+                end # @to && @cc
             when :partial_received
-                mail(
-                    from: @from,
-                    to: @to,
-                    cc: @cc,
-                    subject: "Some item(s) have been received for: " + @request.to_s
-                )
+                if @to && @cc
+                    mail(
+                        from: @from,
+                        to: @to,
+                        cc: @cc,
+                        subject: "Some item(s) have been received for: " + @request.to_s
+                    )
+                end # @to && @cc
             when :attached
                 Account.all.select { |a| a.validator?  }.each do |account|
                     mail(
@@ -62,7 +65,6 @@ class RequestMailer < ApplicationMailer
                         subject: "An attachment has been added to the purchase request: " + @request.to_s
                     )
                 end
-            end # @type
-        end # @to && @cc
+        end # @type
     end
 end
