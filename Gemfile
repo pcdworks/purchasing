@@ -26,6 +26,8 @@ gem 'devise_ldap_authenticatable'
 gem 'rspreadsheet'
 gem 'libxml-ruby', '3.0'
 
+# Pagination
+gem 'kaminari'
 
 # Cocoon for nested models
 gem "cocoon"
