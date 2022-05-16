@@ -76,18 +76,6 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :notes %>
-              </label>
-            </strong>
-            <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', rows: 1 %>
-          </div>
-        </div>
-      </div>
 
     </div>
     <div class="col-md-3">
@@ -323,16 +311,30 @@
         </div>
       </div>
 
-
+      <!--
+        <div class="row">
+          <div class="col">
+            <div class="field">
+              <strong>
+                <label>
+                  <%= Request.human_attribute_name :received_by_id %>
+                </label>
+              </strong>
+              <%= text_field_tag :received_by_id, @request.received_by, disabled: true, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+      -->
+    
     <div class="row">
       <div class="col">
         <div class="field">
           <strong>
             <label>
-              <%= Request.human_attribute_name :received_by_id %>
+              <%= Request.human_attribute_name :notes %>
             </label>
           </strong>
-          <%= text_field_tag :received_by_id, @request.received_by, disabled: true, class: 'form-control' %>
+          <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', rows: 1 %>
         </div>
       </div>
     </div>
