@@ -55,15 +55,29 @@ class Request < ApplicationRecord
     self.created_at ||= DateTime.now
 
     # figure out the sequence number
-    if !self.seq || self.seq == 0
-      self.seq = Request.where('account_id = ? and created_at > ?', self.account_id, DateTime.now - 12.hours).count + 1
+    if !self.seq || self.seq == 0 || self.use_requested_for_changed? || self.requested_for_id_changed?
+      if self.use_requested_for
+        taccount_id = self.requested_for_id
+      else
+        taccount_id = self.account_id
+      end
+        self.seq = Request.where('account_id = ? and created_at > ?',
+                                taccount_id, DateTime.now - 12.hours).count +
+                   Request.where('account_id != ? and requested_for_id = ? and use_requested_for = true and created_at > ?',
+                                taccount_id, taccount_id, DateTime.now - 12.hours).count + 1
     end
   
     # create identifier
-    if self.identifier.nil? || self.identifier == ''
-      self.identifier = self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i+64).chr.to_s
+    if self.use_requested_for
+      ident = (self.created_at.strftime("%Y%m%d") + self.requested_for.initials + (self.seq.to_i+64).chr.to_s).downcase
+    else
+      ident = (self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i+64).chr.to_s).downcase
     end
 
+    if self.identifier.nil? || self.identifier == '' || self.identifier != ident
+      self.identifier = ident
+      self.seq = ident[-1].ord - 96
+    end
 
     # set the date for approval if approved
     if self.approved_by && !self.date_approved
@@ -91,7 +105,7 @@ class Request < ApplicationRecord
     self.notes = self.notes.strip unless self.notes.nil?
     self.reason_for_rejection = self.reason_for_rejection.strip unless self.reason_for_rejection.nil?
     self.work_breakdown_structure = self.work_breakdown_structure.strip unless self.work_breakdown_structure.nil?
-    self.identifier = self.identifier.downcase
+
 
   end
 

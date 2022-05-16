@@ -123,7 +123,7 @@ class RequestsController < ApplicationController
         :project_id, :payment_method_id, :account_id,
         :requested_for_id, :shipping_charges_paid_to, :vendor,
         :surcharge, :received_by_id, :identifier,
-        :received,
+        :received, :use_requested_for,
         items_attributes: [:id, :description, :vendor_reference,
                            :quantity, :price, :received_by_id,
                            :received_at, :link, :_destroy],
