@@ -55,7 +55,7 @@ class Request < ApplicationRecord
     self.created_at ||= DateTime.now
 
     # figure out the sequence number
-    if !self.seq || self.seq == 0 || self.use_requested_for_changed? || self.requested_for_id_changed?
+    if !self.seq || self.seq == 0 || self.use_requested_for_changed? || self.requested_for_id_changed? || self.created_at_changed?
       if self.use_requested_for
         taccount_id = self.requested_for_id
       else
@@ -75,6 +75,9 @@ class Request < ApplicationRecord
     end
 
     if self.identifier.nil? || self.identifier == '' || self.identifier != ident
+      if Request.exists?(identifier: ident)
+        ident[-1] = (ident[-1].ord + 1).chr
+      end
       self.identifier = ident
       self.seq = ident[-1].ord - 96
     end

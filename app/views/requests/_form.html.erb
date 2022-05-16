@@ -249,6 +249,17 @@
             </div>
           </div>
 
+          <% if !form.object.new_record? %>
+            <div class="row">
+              <div class="col">
+                <div class="field">
+                  <strong><%= form.label :created_at %></strong>
+                  <%= form.date_field :created_at, {class: 'form-control'} %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
 
           <div class="row">
             <div class="col">
