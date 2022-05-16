@@ -6,21 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-WorkBreakdownStructure.create([
-  { title: "Marketing" },
-  { title: "Business Development" },
-  { title: "Electrical Engineering Department" },
-  { title: "Employee Training/Development" },
-  { title: "Facilities" },
-  { title: "Human Resource/Accounting" },
-  { title: "Information Technology" },
-  { title: "Mechanical Engineering Department" },
-  { title: "Skunkworks" },
-  { title: "Project Management" },
-  { title: "Shop" },
-  { title: "Safety" }
-])
-
 PaymentMethod.create([
   { title: "Net30" },
   { title: "Net20" },
