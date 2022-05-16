@@ -1,29 +1,62 @@
 <h1>Projects</h1>
 <br/>
 <div class="d-grid gap-2">
-  <%= link_to 'New', new_project_path, class: 'btn btn-primary text-light' %>
+  <%= link_to(new_project_path,
+              class: 'btn btn-primary text-light',
+              'data-bs-toggle': 'tooltip',
+              'data-bs-placement': 'top',
+              'title': 'Create new project') do %>
+    <i class="fa-solid fa-plus"></i>
+  <% end %>
 </div>
 <br/>
-<div class="container mt-3">
-  <div class="row g-2">
-    <% @projects.each do |project| %>
-      <div class="col-sm-6">
-        <div class="card mb-2">
-          <div class="card-header">
-            <div class="btn-group d-flex">
-              <%= link_to 'View', project, class: 'btn btn-outline-info' %>
-              <%= link_to 'Edit', edit_project_path(project), class: 'btn btn-outline-warning' %>
-              <%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="col-md-5"><label><%= Project.human_attribute_name :identifier %></label></th>
+        <th class="col-md-6"><label><%= Project.human_attribute_name :title %></label></th>
+        <th class="col-md-1"></th>
+      </tr>
+    </thead>
+    <tbody id="items">
+      <% @projects.each do |project| %>
+        <tr>
+          <td><%= project.identifier %></td>
+          <td><%= project.title %></td>
+          <td>
+            <div class="btn-group gap-2 d-flex">
+              <%= link_to(project,
+                          class: 'btn btn-outline-info',
+                          'data-bs-toggle': 'tooltip',
+                          'data-bs-placement': 'top',
+                          'title': 'View project') do %>
+                <i class="fa-solid fa-eye"></i>
+              <% end %>
+              <%= link_to(edit_project_path(project),
+                          class: 'btn btn-outline-warning',
+                          'data-bs-toggle': 'tooltip',
+                          'data-bs-placement': 'top',
+                          'title': 'Edit project') do %>
+                <i class="fa-solid fa-pencil"></i>
+              <% end %>
+              <%= link_to(project,
+                          method: :delete,
+                          data: { confirm: 'Are you sure?' },
+                          class: 'btn btn-outline-danger',
+                          'data-bs-toggle': 'tooltip',
+                          'data-bs-placement': 'top',
+                          'title': 'Delete project') do %>
+                <i class="fa-solid fa-trash-can"></i>
+              <% end %>
             </div>
-          </div>
-          <div class="card-body">
-            <div class="card-footer bg-transparent">
-              <%= project %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
-<br>
+<div class="container mt-3">
+<br/>
+<br/>
+<br/>

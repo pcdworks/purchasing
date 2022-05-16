@@ -1,9 +1,15 @@
 <h1>Viewing Project</h1>
 <br/>
 <div class="btn-group gap-2 d-flex">
-  <%= link_to 'Back', projects_path, class: 'btn btn-outline-secondary' %>
-  <%= link_to 'Edit', edit_project_path(@project), class: 'btn btn-outline-warning' %>
-  <%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+  <%= link_to(projects_path, class: 'btn btn-outline-secondary') do %>
+    <i class="fa-solid fa-angle-left"></i>
+  <% end %>
+  <%= link_to(edit_project_path(@project), class: 'btn btn-outline-warning') do %>
+    <i class="fa-solid fa-pencil"></i>
+  <% end %>
+  <%= link_to(@project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger') do %>
+    <i class="fa-solid fa-trash-can"></i>
+  <% end %>
 </div>
 <br/>
 <div class="card">
