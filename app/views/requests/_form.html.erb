@@ -34,7 +34,7 @@
             <strong><%= form.label :identifier %></strong>
             <%= form.text_field :identifier,
                                 class: 'form-control',
-                                disabled: form.object.new_record?,
+                                disabled: true,
                                 style: "text-transform:uppercase",
                                 placeholder: 'yyyymmddnnx',
                                 'data-bs-toggle': 'tooltip',
@@ -112,16 +112,6 @@
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :notes %></strong>
-            <%= form.text_area :notes, class: 'form-control', rows: 1 %>
-          </div>
-        </div>
-      </div>
-
 
 
     </div>
@@ -209,14 +199,6 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :attachment %></strong>
-            <%= form.file_field :attachment, multiple: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
 
     </div>
     <div class="col-md-3">
@@ -249,17 +231,6 @@
             </div>
           </div>
 
-          <% if !form.object.new_record? %>
-            <div class="row">
-              <div class="col">
-                <div class="field">
-                  <strong><%= form.label :created_at %></strong>
-                  <%= form.date_field :created_at, {class: 'form-control'} %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-
 
           <div class="row">
             <div class="col">
@@ -270,29 +241,14 @@
             </div>
           </div>
 
-
-
           <div class="row">
             <div class="col">
               <div class="field">
-                <strong><%= form.label :date_received %></strong>
-                <%= form.date_field :date_received, {class: 'form-control'} %>
+                <strong><%= form.label :notes %></strong>
+                <%= form.text_area :notes, class: 'form-control', rows: 4 %>
               </div>
             </div>
           </div>
-
-
-        <div class="row">
-          <div class="col">
-            <div class="field">
-              <strong><%= form.label :received_by_id %></strong>
-              <%= form.select(:received_by_id,
-                              Account.all.collect {|u| [u, u.id]},
-                              {include_blank: true},
-                              {class: 'form-select'})%>
-            </div>
-          </div>
-        </div>
 
         </div>
       </div>
@@ -325,6 +281,59 @@
     $(document).on("change", "#project", wbs);
     $(document).ready(wbs);
   </script>
+</div>
+<br/>
+<div class="d-grid gap-2">
+  <button class="btn btn-outline-primary full-width" type="button" data-bs-toggle="collapse" data-bs-target="#manualEdit" aria-expanded="false" aria-controls="manualEdit">
+    Manual Edit
+    <i class="fa-solid fa-edit"></i>
+  </button>
+</div>
+<div class="collapse" id="manualEdit">
+  <div class="full-width">
+    <% if !form.object.new_record? %>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><%= form.label :created_at %></strong>
+            <%= form.date_field :created_at, {class: 'form-control'} %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col">
+        <div class="field">
+          <strong><%= form.label :date_received %></strong>
+          <%= form.date_field :date_received, {class: 'form-control'} %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col">
+        <div class="field">
+          <strong><%= form.label :received_by_id %></strong>
+          <%= form.select(:received_by_id,
+                          Account.all.collect {|u| [u, u.id]},
+                          {include_blank: true},
+                          {class: 'form-select'})%>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="field">
+      <strong><%= form.label :attachment %></strong>
+      <%= form.file_field :attachment, multiple: true, class: 'form-control' %>
+    </div>
+  </div>
 </div>
 <br/>
 <div class="d-grid gap-2">
