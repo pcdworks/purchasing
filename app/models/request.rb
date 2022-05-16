@@ -13,6 +13,7 @@ class Request < ApplicationRecord
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
 
   validates :vendor, presence: true, allow_blank: false
+  validates :identifier, uniqueness: true
 
   # make sure the identifier follows the pattern
   validate do |request|
