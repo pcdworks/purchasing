@@ -92,23 +92,23 @@ ActiveRecord::Schema.define(version: 2022_05_16_173037) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.text "notes", default: "", null: false
-    t.text "reason_for_rejection", default: "", null: false
-    t.float "shipping_cost", default: 0.0, null: false
-    t.float "sales_tax", default: 0.0, null: false
-    t.float "import_tax", default: 0.0, null: false
+    t.text "notes"
+    t.text "reason_for_rejection"
+    t.float "shipping_cost"
+    t.float "sales_tax"
+    t.float "import_tax"
     t.datetime "date_received"
     t.datetime "date_approved"
     t.datetime "date_ordered"
     t.string "order_number"
-    t.integer "status", default: 0, null: false
+    t.integer "status"
     t.bigint "approved_by_id"
     t.bigint "project_id", null: false
     t.bigint "payment_method_id", null: false
     t.bigint "account_id", null: false
     t.bigint "requested_for_id", null: false
     t.integer "shipping_charges_paid_to"
-    t.string "vendor", default: "", null: false
+    t.string "vendor"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "seq", default: 0
