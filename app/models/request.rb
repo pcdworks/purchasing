@@ -52,7 +52,7 @@ class Request < ApplicationRecord
     end
 
     # make sure there is a created date so we can generate the identifier
-    self.created_at ||= DateTime.now
+    self.created_at ||= Date.today
 
     # figure out the sequence number
     if !self.seq || self.seq == 0 || self.use_requested_for_changed? || self.requested_for_id_changed? || self.created_at_changed?
@@ -61,10 +61,10 @@ class Request < ApplicationRecord
       else
         taccount_id = self.account_id
       end
-        self.seq = Request.where('account_id = ? and created_at > ?',
-                                taccount_id, DateTime.now - 12.hours).count +
-                   Request.where('account_id != ? and requested_for_id = ? and use_requested_for = true and created_at > ?',
-                                taccount_id, taccount_id, DateTime.now - 12.hours).count + 1
+        self.seq = Request.where('account_id = ? and created_at = ?',
+                                taccount_id, Date.today).count +
+                   Request.where('account_id != ? and requested_for_id = ? and use_requested_for = true and created_at = ?',
+                                taccount_id, taccount_id, Date.today).count + 1
     end
   
     # create identifier
