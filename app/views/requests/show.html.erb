@@ -388,7 +388,7 @@
         </tr>
       </thead>
       <tbody id="items">
-        <% @request.items.each_with_index do |item, index| %>
+        <% @request.items.reverse.each_with_index do |item, index| %>
           <tr>
             <td>
               <%= index + 1 %>
