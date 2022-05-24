@@ -59,11 +59,13 @@ class RequestMailer < ApplicationMailer
                 end # @to && @cc
             when :attached
                 Account.all.select { |a| a.validator?  }.each do |account|
-                    mail(
-                        from: @from,
-                        to: account.email,
-                        subject: "An attachment has been added to the purchase request: " + @request.to_s
-                    )
+                    if account.email != @current_account
+                        mail(
+                            from: @from,
+                            to: account.email,
+                            subject: "An attachment has been added to the purchase request: " + @request.to_s
+                        )
+                    end
                 end
         end # @type
     end
