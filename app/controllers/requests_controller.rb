@@ -3,7 +3,12 @@ class RequestsController < ApplicationController
 
   # GET /requests or /requests.json
   def index
-    @requests = Request.all.order(created_at: :desc).page(params[:page])
+    if params[:query] and params[:query] != ''
+      query = '%' + params[:query].to_s + '%'
+      @requests = Request.where('identifier ilike ? or vendor ilike ?', query, query).order(created_at: :desc).page(params[:page])
+    else
+      @requests = Request.all.order(created_at: :desc).page(params[:page])
+    end
   end
 
   # GET /requests/1 or /requests/1.json
