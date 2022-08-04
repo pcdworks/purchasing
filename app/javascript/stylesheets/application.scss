@@ -1,3 +1,10 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$theme-colors: (
+  primary: $purple-500
+);
+
 @import "~bootstrap/scss/bootstrap";
 
 body {

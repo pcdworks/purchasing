@@ -24,13 +24,12 @@ class RequestMailer < ApplicationMailer
             when nil
                 case @request.status
                 when 1
-                    Account.where(approver: true).each do |account|
-                        mail(
-                            from: @from,
-                            to: account.email,
-                            subject: "A new purchase request is awaiting approval: " + @request.to_s
-                        )
-                    end
+                    @to = Account.where(approver: true).pluck(:email).join(',')
+                    mail(
+                        from: @from,
+                        to: @to,
+                        subject: "A new purchase request is awaiting approval: " + @request.to_s
+                    )
                 when 2
                     mail(
                         from: @from,
@@ -58,14 +57,13 @@ class RequestMailer < ApplicationMailer
                     )
                 end # @to && @cc
             when :attached
-                Account.all.select { |a| a.validator?  }.each do |account|
-                    if account.email != @current_account
-                        mail(
-                            from: @from,
-                            to: account.email,
-                            subject: "An attachment has been added to the purchase request: " + @request.to_s
-                        )
-                    end
+                @to = Account.all.select { |a| a.validator?  }.pluck(:email).join(',')
+                if not @to.include?(@current_account)
+                    mail(
+                        from: @from,
+                        to: @to,
+                        subject: "An attachment has been added to the purchase request: " + @request.to_s
+                    )
                 end
         end # @type
     end
