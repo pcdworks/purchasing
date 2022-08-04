@@ -7,6 +7,16 @@
 
 @import "~bootstrap/scss/bootstrap";
 
+
+.btn-primary {
+    @include button-variant($purple-500, darken($purple-500, 7.5%));
+}
+
+
+.btn-outline-primary {
+    @include button-outline-variant($purple-500, #222222);
+}
+
 body {
     padding-top: 60px;
 }
