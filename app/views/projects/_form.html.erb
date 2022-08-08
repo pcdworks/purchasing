@@ -31,4 +31,8 @@
     <%= form.label :identifier %>
     <%= form.number_field :identifier, class: "form-control", step: 1, min: 0 %>
   </div>
+  <div class="form-check">
+    <%= form.check_box :active, class: 'form-check-input' %>
+    <%= form.label :active, class: 'form-check-label' %>
+  </div>
 <% end %>

@@ -96,7 +96,7 @@
           <div class="field">
             <strong><%= form.label :project_id %></strong>
             <%= form.select(:project_id,
-                            Project.order(identifier: :asc, title: :asc).collect {|u| [u, u.id]},
+                            Project.where(active: true).order(identifier: :asc, title: :asc).collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select', id: 'project'})%>
           </div>

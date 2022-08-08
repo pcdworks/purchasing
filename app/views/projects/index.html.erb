@@ -15,7 +15,8 @@
     <thead>
       <tr>
         <th class="col-md-5"><label><%= Project.human_attribute_name :identifier %></label></th>
-        <th class="col-md-6"><label><%= Project.human_attribute_name :title %></label></th>
+        <th class="col-md-5"><label><%= Project.human_attribute_name :title %></label></th>
+        <th class="col-md-1"><label><%= Project.human_attribute_name :active %></label></th>
         <th class="col-md-1"></th>
       </tr>
     </thead>
@@ -24,6 +25,7 @@
         <tr>
           <td><%= project.identifier %></td>
           <td><%= project.title %></td>
+          <td><%= check_box_tag :active, project.active, project.active, class: 'form-check-input', disabled: true %></td>
           <td>
             <div class="btn-group gap-2 d-flex">
               <%= link_to(project,

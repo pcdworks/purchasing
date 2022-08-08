@@ -15,7 +15,14 @@
 <div class="card">
   <div class="card-body">
     <div class="card-text bg-transparent">
-      <%= @project %>
+      <%= text_field_tag :title, @project, class: 'form-control', disabled: true %>
+      <br/>
+      <div class="form-check">
+      <%= check_box_tag :active, @project.active, @project.active, class: 'form-check-input', disabled: true %>
+        <label class="form-check-label">
+          <%= Project.human_attribute_name :active %>
+        </label>
+    </div>
     </div>
   </div>
 </div>
