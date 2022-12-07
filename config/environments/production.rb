@@ -75,7 +75,6 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = {
     host: ENV['MAILER_HOSTNAME'],
-    from: ENV['MAILER_FROM'],
   }
 
   # SMTP settings for gmail
