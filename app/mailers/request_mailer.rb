@@ -1,5 +1,5 @@
 class RequestMailer < ApplicationMailer
-    default :from => ENV['MAILER_USER_NAME']
+    default :from => ENV['MAILER_FROM']
     def new_request_email
         @request = params[:request]
         @type = params[:type]
@@ -7,7 +7,7 @@ class RequestMailer < ApplicationMailer
         @current_account = params[:current_account].email
         @requested_for = @request.requested_for.email
         @requested_by = @request.account.email
-        @from = ENV['MAILER_USER_NAME']
+        @from = ENV['MAILER_FROM']
 
         if @current_account != @requested_by && @current_account != @requested_for
             @to = @requested_by
