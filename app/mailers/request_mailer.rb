@@ -31,6 +31,12 @@ class RequestMailer < ApplicationMailer
                         subject: "A new purchase request is awaiting approval: " + @request.to_s
                     )
                 when 2
+                    if @to.nil?
+                        @to = @request.account.email
+                    end
+                    if @cc.nil?
+                        @cc = @request.requested_for.email
+                    end
                     mail(
                         from: @from,
                         to: @to,
