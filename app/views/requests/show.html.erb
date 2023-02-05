@@ -2,13 +2,50 @@
 <br/>
 <div>
   <div class="btn-group gap-2 d-flex">
-    <%= link_to(requests_path, class: 'btn btn-outline-secondary') do %>
+    <%= link_to(requests_path,
+                class: 'btn btn-outline-secondary',
+                'data-bs-toggle': 'tooltip',
+                'data-bs-placement': 'top',
+                'title': 'Go back') do %>
       <i class="fa-solid fa-angle-left"></i>
     <% end %>
-    <%= link_to(edit_request_path(@request), class: 'btn btn-outline-warning') do %>
+    <%= link_to(edit_request_path(@request),
+                class: 'btn btn-outline-info',
+                'data-bs-toggle': 'tooltip',
+                'data-bs-placement': 'top',
+                'title': 'Submit Request') do %>
+      <i class="fa-solid fa-envelope"></i>
+    <% end %>
+    <% if current_account.in_group?('approver') %>
+      <%= link_to(edit_request_path(@request),
+                  class: 'btn btn-outline-primary',
+                  'data-bs-toggle': 'tooltip',
+                  'data-bs-placement': 'top',
+                  'title': 'Approve Request') do %>
+        <i class="fa-solid fa-square-check"></i>
+      <% end %>
+      <%= link_to(edit_request_path(@request),
+                  class: 'btn btn-outline-dark',
+                  'data-bs-toggle': 'tooltip',
+                  'data-bs-placement': 'top',
+                  'title': 'Put Request on Hold') do %>
+        <i class="fa-solid fa-hand"></i>
+      <% end %>
+    <% end %>
+    <%= link_to(edit_request_path(@request),
+                class: 'btn btn-outline-warning',
+                'data-bs-toggle': 'tooltip',
+                'data-bs-placement': 'top',
+                'title': 'Edit Request') do %>
       <i class="fa-solid fa-pencil"></i>
     <% end %>
-    <%= link_to(@request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger') do %>
+    <%= link_to(@request,
+                method: :delete,
+                data: { confirm: 'Are you sure?' },
+                class: 'btn btn-outline-danger',
+                'data-bs-toggle': 'tooltip',
+                'data-bs-placement': 'top',
+                'title': 'Delete Request') do %>
       <i class="fa-solid fa-trash-can"></i>
     <% end %>
   </div>
@@ -366,7 +403,7 @@
                                     data: { confirm: 'Are you sure?' },
                                     'data-bs-toggle': 'tooltip',
                                     'data-bs-placement': 'top',
-                                    'title': 'Mark all items not received') do %>
+                                    'title': 'Mark All Items not Received') do %>
                     <i class="fa-solid fa-box-open"></i>
                     <% end %>
                 <% else %>
@@ -378,7 +415,7 @@
                                     data: { confirm: 'Are you sure?' },
                                     'data-bs-toggle': 'tooltip',
                                     'data-bs-placement': 'top',
-                                    'title': 'Mark all items received') do %>
+                                    'title': 'Mark All Items Received') do %>
                         <i class="fa-solid fa-box"></i>
                     <% end %>
                 <% end %>
@@ -423,7 +460,7 @@
                                   data: { confirm: 'Are you sure?' },
                                   'data-bs-toggle': 'tooltip',
                                   'data-bs-placement': 'top',
-                                  'title': 'Mark item not received') do %>
+                                  'title': 'Mark Item not Received') do %>
                       <i class="fa-solid fa-box-open"></i>
                     <% end %>
                   <% else %>
@@ -434,7 +471,7 @@
                                     style: 'width: 46px;',
                                     'data-bs-toggle': 'tooltip',
                                     'data-bs-placement': 'top',
-                                    'title': 'Mark item received') do %>
+                                    'title': 'Mark Item Received') do %>
                         <i class="fa-solid fa-box"></i>
                     <% end %>
                   <% end %>
@@ -445,7 +482,7 @@
                               target: "_blank",
                               'data-bs-toggle': 'tooltip',
                               'data-bs-placement': 'top',
-                              'title': 'Open link to item in new tab') do %>
+                              'title': 'Open Link to Item in New Tab') do %>
                     <i class="fa-solid fa-link"></i>
                   <% end %>
                 <% end %>

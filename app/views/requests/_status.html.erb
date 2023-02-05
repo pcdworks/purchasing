@@ -2,7 +2,8 @@
 
     <!-- if item is submitted -->
     <% if request.submitted? %>
-        <div data-bs-toggle="tooltip" title="Submitted on <%=I18n.l request.submitted_at.to_date if request.submitted_at %>">
+        <div data-bs-toggle="tooltip"
+            title="Submitted on <%=I18n.l request.submitted_at.to_date if request.submitted_at %>">
             <i class="text-success fa-solid fa-envelope"></i>
         </div>
     <% else %>
@@ -12,7 +13,9 @@
     <% end %>
     <!-- if item is approved -->
     <% if request.approved? %>
-        <div data-bs-toggle="tooltip" title="Approved on <%=I18n.l request.date_approved.to_date if request.date_approved %>">
+        <div data-bs-toggle="tooltip"
+            title="Approved by <%= request.approved_by %> on
+             <%=I18n.l request.date_approved.to_date if request.date_approved %>">
             <i class="text-success fa-solid fa-square-check"></i>
         </div>
     <% else %>
@@ -32,7 +35,8 @@
     <% end %>
     <!-- if item is ordered -->
     <% if request.ordered? %>
-        <div data-bs-toggle="tooltip" title="Ordered on <%= I18n.l request.date_ordered.to_date if request.date_ordered %>">
+        <div data-bs-toggle="tooltip"
+            title="Ordered on <%= I18n.l request.date_ordered.to_date if request.date_ordered %>">
             <i class="text-success fa-solid fa-truck-arrow-right"></i>
         </div>
     <% else %>
@@ -47,7 +51,8 @@
             <i class="text-warning fa-solid fa-box-open"></i>
         </div>
     <% elsif r[:all] %>
-        <div data-bs-toggle="tooltip" title="Fully Received on <%=I18n.l request.date_received.to_date %>">
+        <div data-bs-toggle="tooltip"
+            title="Fully Received on <%=I18n.l request.date_received.to_date %>">
             <i class="text-success fa-solid fa-box-open"></i>
         </div>
     <% else %>
