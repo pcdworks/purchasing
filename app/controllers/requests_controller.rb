@@ -5,7 +5,16 @@ class RequestsController < ApplicationController
   def index
     if params[:query] and params[:query] != ''
       query = '%' + params[:query].to_s + '%'
-      @requests = Request.where('identifier ilike ? or vendor ilike ?', query, query).order(created_at: :desc).page(params[:page])
+      @requests = Request.joins(:items).where(
+        'identifier ilike ?
+        or vendor ilike ?
+        or items.description ilike ?
+        or work_breakdown_structure ilike ?',
+        query,
+        query,
+        query,
+        query
+        ).order(created_at: :desc).page(params[:page])
     else
       @requests = Request.all.order(created_at: :desc).page(params[:page])
     end

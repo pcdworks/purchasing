@@ -29,6 +29,7 @@
         <th class="col-md-2"><label><%= Request.human_attribute_name :identifier %></label></th>
         <th class="col-md-3"><label><%= Request.human_attribute_name :vendor %></label></th>
         <th class="col-md-3"><label><%= Request.human_attribute_name :project %></label></th>
+        <th class="col-md-3"><label><%= Request.human_attribute_name :work_breakdown_structure %></label></th>
         <th class="col-md-3"><label><%= Request.human_attribute_name :status %></label></th>
         <th class="col-md-2"><label><%= Request.human_attribute_name :total %></label></th>
         <th class="col-md-1"></th>
@@ -40,6 +41,7 @@
           <td><%= request.identifier.upcase if request.identifier %></td>
           <td><%= request.vendor %></td>
           <td><%= request.project %></td>
+          <td><%= request.work_breakdown_structure %></td>
           <td>
             <%= render 'status', request: request %>
           </td>
