@@ -119,6 +119,7 @@ class ItemsController < ApplicationController
     def item_params
       params.require(:item).permit(:id, :description, :vendor_reference,
                                    :quantity, :price, :received_by_id,
+                                   :returned_at,
                                    :received_at, :link)
     end
 end

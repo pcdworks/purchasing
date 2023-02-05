@@ -23,6 +23,38 @@ class Request < ApplicationRecord
     request.errors.add(:base, "PO identifier must follow the pattern") unless po_good
   end
 
+  def submitted?
+    !self.submitted_at.nil?
+  end
+
+  def on_hold?
+    !self.on_hold_until.nil?
+  end
+
+  def approved?
+    !self.date_approved.nil?
+  end
+
+  def ordered?
+    !self.date_ordered.nil?
+  end
+
+  def received
+    r = self.items.count { |item| item.received? }, self.items.count
+    return {
+      all: r[0] == r[1] && r[0] != 0, 
+      some: r[0] != r[1] && r[0] != 0
+    }
+  end
+
+  def returned
+    r = self.items.count { |item| item.returned? }, self.items.count
+    return {
+      all: r[0] == r[1] && r[0] != 0, 
+      some: r[0] != r[1] && r[0] != 0
+    }
+  end
+
   def to_param
     self.identifier
   end

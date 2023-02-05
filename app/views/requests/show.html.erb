@@ -264,7 +264,7 @@
                 <%= Request.human_attribute_name :status %>
               </label>
             </strong>
-            <%= text_field_tag :status, statuses[@request.status], disabled: true, class: 'form-control' %>
+            <%= render 'status', request: @request %>
           </div>
         </div>
       </div>

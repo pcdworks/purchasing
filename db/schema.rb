@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_08_190218) do
+ActiveRecord::Schema.define(version: 2023_02_05_065924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2022_08_08_190218) do
     t.bigint "received_by_id"
     t.datetime "received_at"
     t.string "link", default: "", null: false
+    t.datetime "returned_at"
     t.index ["received_by_id"], name: "index_items_on_received_by_id"
     t.index ["request_id"], name: "index_items_on_request_id"
   end
@@ -118,6 +119,8 @@ ActiveRecord::Schema.define(version: 2022_08_08_190218) do
     t.string "identifier"
     t.bigint "received_by_id"
     t.boolean "use_requested_for", default: false
+    t.datetime "submitted_at"
+    t.datetime "on_hold_until"
     t.index ["account_id"], name: "index_requests_on_account_id"
     t.index ["approved_by_id"], name: "index_requests_on_approved_by_id"
     t.index ["payment_method_id"], name: "index_requests_on_payment_method_id"

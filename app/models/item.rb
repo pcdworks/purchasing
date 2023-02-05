@@ -28,6 +28,10 @@ class Item < ApplicationRecord
   end
 
   def received?
-    !self.received_by_id.nil?
+    !self.received_at.nil?
+  end
+
+  def returned?
+    !self.returned_at.nil?
   end
 end

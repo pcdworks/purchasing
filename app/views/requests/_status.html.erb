@@ -1,0 +1,82 @@
+<div class="btn-group gap-2 d-flex">
+
+    <!-- if item is submitted -->
+    <% if request.submitted? %>
+        <div data-bs-toggle="tooltip" title="Submitted on <%=I18n.l request.submitted_at.to_date if request.submitted_at %>">
+            <i class="text-success fa-solid fa-envelope"></i>
+        </div>
+    <% else %>
+        <div data-bs-toggle="tooltip" title="Draft">
+            <i class="fa-solid fa-envelope"></i>
+        </div>
+    <% end %>
+    <!-- if item is approved -->
+    <% if request.approved? %>
+        <div data-bs-toggle="tooltip" title="Approved on <%=I18n.l request.date_approved.to_date if request.date_approved %>">
+            <i class="text-success fa-solid fa-square-check"></i>
+        </div>
+    <% else %>
+        <div data-bs-toggle="tooltip" title="Not Approved">
+            <i class="fa-solid fa-square"></i>
+        </div>
+    <% end %>
+    <!-- if item is on hold -->
+    <% if request.on_hold? %>
+        <div data-bs-toggle="tooltip" title="On Hold">
+            <i class="text-danger fa-solid fa-hand"></i>
+        </div>
+    <% else %>
+        <div data-bs-toggle="tooltip" title="Good to Go">
+            <i class="text-success fa-solid fa-thumbs-up"></i>
+        </div>
+    <% end %>
+    <!-- if item is ordered -->
+    <% if request.ordered? %>
+        <div data-bs-toggle="tooltip" title="Ordered on <%= I18n.l request.date_ordered.to_date if request.date_ordered %>">
+            <i class="text-success fa-solid fa-truck-arrow-right"></i>
+        </div>
+    <% else %>
+        <div data-bs-toggle="tooltip" title="Not Ordered">
+            <i class="fa-solid fa-truck-arrow-right"></i>
+        </div>
+    <% end %>
+    <!-- if the item is received -->
+    <% r = request.received %>
+    <% if r[:some] %>
+        <div data-bs-toggle="tooltip" title="Partially Received">
+            <i class="text-warning fa-solid fa-box-open"></i>
+        </div>
+    <% elsif r[:all] %>
+        <div data-bs-toggle="tooltip" title="Fully Received on <%=I18n.l request.date_received.to_date %>">
+            <i class="text-success fa-solid fa-box-open"></i>
+        </div>
+    <% else %>
+        <div data-bs-toggle="tooltip" title="Not Received">
+            <i class="fa-solid fa-box"></i>
+        </div>
+    <% end %>
+    <!-- if item is returned -->
+    <% b = request.returned %>
+    <% if b[:some] %>
+        <div data-bs-toggle="tooltip" title="Partially Returned">
+            <i class="text-warning fa-solid fa-truck-ramp-box"></i>
+        </div>
+    <% elsif b[:all] %>
+        <div data-bs-toggle="tooltip" title="Fully Returned">
+            <i class="text-success fa-solid fa-truck-ramp-box"></i>
+        </div>
+    <% else %>
+        <div data-bs-toggle="tooltip" title="Not Returned">
+            <i class="fa-solid fa-truck-ramp-box"></i>
+        </div>
+    <% end %>
+    <% if request.attachment.attached? %>
+        <div data-bs-toggle="tooltip" title="Attached Files">
+            <i class="text-success fa-solid fa-paperclip"></i>
+        </div>
+    <% else %>
+        <div data-bs-toggle="tooltip" title="No Attached Files">
+            <i class="fa-solid fa-paperclip"></i>
+        </div>
+    <% end %>
+</div>
