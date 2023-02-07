@@ -1,0 +1,18 @@
+<%= button_tag(
+    type: "button",
+    id: "submit-button",
+    class: 'btn btn-outline-info',
+    'data-bs-toggle': 'tooltip',
+    'data-bs-placement': 'top',
+    'title': 'Submit Request') do %>
+    <i class="fa-solid fa-envelope"></i>
+<% end %>
+
+<script>
+  document.querySelector("#submit-button").addEventListener("click", function() {
+    const form = document.querySelector("#submit-form");
+    if(confirm('This will send an email to approvers, are you sure you wish to submit request?')) {
+        form.submit();
+    }
+  });
+</script>

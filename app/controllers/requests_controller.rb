@@ -65,7 +65,7 @@ class RequestsController < ApplicationController
       end
 
       update_items(request_params)
-      if @request.update(request_params.except(:received))
+      if @request.update(request_params.except(:received, :submitted, :approved))
         send_mail(@request, type)
         format.html { redirect_to request_url(@request), notice: "Request was successfully updated." }
         format.json { render :show, status: :ok, location: @request }
@@ -137,8 +137,10 @@ class RequestsController < ApplicationController
         :project_id, :payment_method_id, :account_id,
         :requested_for_id, :shipping_charges_paid_to, :vendor,
         :surcharge, :received_by_id, :identifier,
-        :received, :use_requested_for, :created_at,
+        :use_requested_for, :created_at,
         :submitted_at, :on_hold_until,
+        # conditional params
+        :submitted, :approved, :received,
         items_attributes: [:id, :description, :vendor_reference,
                            :quantity, :price, :received_by_id,
                            :received_at, :link, :_destroy],

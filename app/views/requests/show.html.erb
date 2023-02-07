@@ -1,6 +1,24 @@
 <h1>Viewing Request</h1>
 <br/>
 <div>
+<% approver = !current_account.in_group?('approver') %>
+<!-- submit function -->
+<%= form_for(@request, method: :put, html: {
+        id: "submit-form",
+        style: 'display: hidden;'
+    }) do |form| %>
+    <%= form.hidden_field :submitted, value: true %>
+<% end %>
+<!-- end submit function -->
+<!-- approve function -->
+<% if approver %>
+<%= form_for(@request, method: :put, html: {
+        id: "approve-form",
+    }) do |form| %>
+    <%= form.hidden_field :approved, value: true %>
+<% end %>
+<% end %>
+<!-- end approve function -->
   <div class="btn-group gap-2 d-flex">
     <%= link_to(requests_path,
                 class: 'btn btn-outline-secondary',
@@ -9,28 +27,9 @@
                 'title': 'Go back') do %>
       <i class="fa-solid fa-angle-left"></i>
     <% end %>
-    <%= link_to(edit_request_path(@request),
-                class: 'btn btn-outline-info',
-                'data-bs-toggle': 'tooltip',
-                'data-bs-placement': 'top',
-                'title': 'Submit Request') do %>
-      <i class="fa-solid fa-envelope"></i>
-    <% end %>
-    <% if current_account.in_group?('approver') %>
-      <%= link_to(edit_request_path(@request),
-                  class: 'btn btn-outline-primary',
-                  'data-bs-toggle': 'tooltip',
-                  'data-bs-placement': 'top',
-                  'title': 'Approve Request') do %>
-        <i class="fa-solid fa-square-check"></i>
-      <% end %>
-      <%= link_to(edit_request_path(@request),
-                  class: 'btn btn-outline-dark',
-                  'data-bs-toggle': 'tooltip',
-                  'data-bs-placement': 'top',
-                  'title': 'Put Request on Hold') do %>
-        <i class="fa-solid fa-hand"></i>
-      <% end %>
+    <%= render 'submit' %>
+    <% if approver %>
+        <%= render 'approve'%>
     <% end %>
     <%= link_to(edit_request_path(@request),
                 class: 'btn btn-outline-warning',
@@ -395,7 +394,6 @@
             <%= form_for(@request, method: :put) do |form| %>
               <div class="d-grid gap-2">
                 <% if @request.received? %>
-                    <%= form.hidden_field :status, value:  4 %>
                     <%= form.hidden_field :received, value: false %>
                     <%= form.hidden_field :received_by_id, value: nil %>
                     <%= form.hidden_field :date_received, value: nil %>
@@ -407,7 +405,6 @@
                     <i class="fa-solid fa-box-open"></i>
                     <% end %>
                 <% else %>
-                    <%= form.hidden_field :status, value: 5 %>
                     <%= form.hidden_field :received, value: true %>
                     <%= form.hidden_field :received_by_id, value: current_account.id %>
                     <%= form.hidden_field :date_received, value: DateTime.now %>

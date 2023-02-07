@@ -225,16 +225,6 @@
           <div class="row">
             <div class="col">
               <div class="field">
-                <strong><%= form.label :status %></strong>
-                <%= form.select :status, options_from_collection_for_select(statuses, :first, :last, form.object.status), {}, {class: 'form-control'} %>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row">
-            <div class="col">
-              <div class="field">
                 <strong><%= form.label :date_ordered %></strong>
                 <%= form.date_field :date_ordered, {class: 'form-control'} %>
               </div>
