@@ -72,39 +72,34 @@ class ItemsController < ApplicationController
       dates = request.items.map(&:received_at)
       past_time = DateTime.now - 10.minutes
 
+      # if the request was updated in less than the last 10 minutes
+      # then don't send an email
       send_it = dates.collect do |d|
         !d.nil? && d > past_time
-      end.count(true) == 1
+      end.count(true) >= 1
 
       # nothing is received
       if dates.all?(&:nil?)
-        unless request.status == 4 && request.received_by_id.nil? && request.date_received.nil?
-          request.status = 4
+        unless request.received_by_id.nil? && request.date_received.nil?
           request.received_by_id = nil
           request.date_received = nil
           request.save
         end
       # everything is receivied
       elsif dates.none?(&:nil?)
-        unless request.status == 5 && !request.received_by_id.nil? && !request.date_received.nil?
-          request.status = 5
+        if request.received_by_id.nil? || request.date_received.nil?
           request.received_by_id = current_account.id
           request.date_received = DateTime.now
+          request.save
           if send_it
             send_mail(request, :received)
           end
-          request.save
         end
 
       # must be partial
       else
-        # don't save unless you have to
-        unless request.status == 6
-          request.status = 6
-          if send_it
-            send_mail(request, :partial_received)
-          end
-          request.save
+        if send_it
+          send_mail(request, :received)
         end
       end
 

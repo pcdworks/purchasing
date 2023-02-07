@@ -113,7 +113,7 @@ class RequestsController < ApplicationController
       end
     end
 
-    def send_mail(req, type = nil)
+    def send_mail(req, type)
       rm = RequestMailer.with(
         request: req,
         type: type,
@@ -138,6 +138,7 @@ class RequestsController < ApplicationController
         :requested_for_id, :shipping_charges_paid_to, :vendor,
         :surcharge, :received_by_id, :identifier,
         :received, :use_requested_for, :created_at,
+        :submitted_at, :on_hold_until,
         items_attributes: [:id, :description, :vendor_reference,
                            :quantity, :price, :received_by_id,
                            :received_at, :link, :_destroy],
