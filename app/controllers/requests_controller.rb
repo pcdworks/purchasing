@@ -60,6 +60,10 @@ class RequestsController < ApplicationController
       
       if request_params[:attachment]
         type = :attached
+      elsif request_params[:submitted]
+        type = :submitted
+      elsif request_params[:approved]
+        type = :approved
       else
         type = nil
       end

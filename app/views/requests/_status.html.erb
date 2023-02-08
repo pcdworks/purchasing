@@ -24,6 +24,7 @@
         </div>
     <% end %>
     <!-- if item is on hold -->
+    <!-- 
     <% if request.on_hold? %>
         <div data-bs-toggle="tooltip" title="On Hold">
             <i class="text-danger fa-solid fa-hand"></i>
@@ -33,6 +34,7 @@
             <i class="text-success fa-solid fa-thumbs-up"></i>
         </div>
     <% end %>
+    -->
     <!-- if item is ordered -->
     <% if request.ordered? %>
         <div data-bs-toggle="tooltip"
@@ -60,6 +62,16 @@
             <i class="fa-solid fa-box"></i>
         </div>
     <% end %>
+    <!-- if item has a file attached -->
+    <% if request.attachment.attached? %>
+        <div data-bs-toggle="tooltip" title="Attached Files">
+            <i class="text-success fa-solid fa-paperclip"></i>
+        </div>
+    <% else %>
+        <div data-bs-toggle="tooltip" title="No Attached Files">
+            <i class="fa-solid fa-paperclip"></i>
+        </div>
+    <% end %>
     <!-- if item is returned -->
     <% b = request.returned %>
     <% if b[:some] %>
@@ -73,15 +85,6 @@
     <% else %>
         <div data-bs-toggle="tooltip" title="Not Returned">
             <i class="fa-solid fa-truck-ramp-box"></i>
-        </div>
-    <% end %>
-    <% if request.attachment.attached? %>
-        <div data-bs-toggle="tooltip" title="Attached Files">
-            <i class="text-success fa-solid fa-paperclip"></i>
-        </div>
-    <% else %>
-        <div data-bs-toggle="tooltip" title="No Attached Files">
-            <i class="fa-solid fa-paperclip"></i>
         </div>
     <% end %>
 </div>

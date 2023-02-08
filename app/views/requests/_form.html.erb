@@ -204,24 +204,6 @@
     <div class="col-md-3">
       <div class="row">
         <div class="col">
-          <% if current_account.in_group?('approver') %>
-            <div class="field">
-              <strong><%= form.label :approved_by_id %></strong>
-              <%= form.select(:approved_by_id,
-                              options_from_collection_for_select([current_account], :id, :to_s, form.object.approved_by_id),
-                              {include_blank: true},
-                              {class: 'form-select', disabled: false})%>
-            </div>
-          <% else %>
-            <div class="field">
-              <strong><%= form.label :approved_by_id %></strong>
-              <%= form.select(:approved_by_id,
-                              Account.all.collect {|u| [u, u.id]},
-                              {include_blank: true},
-                              {class: 'form-select', disabled: true})%>
-            </div>
-          <% end %>
-
           <div class="row">
             <div class="col">
               <div class="field">
@@ -235,11 +217,10 @@
             <div class="col">
               <div class="field">
                 <strong><%= form.label :notes %></strong>
-                <%= form.text_area :notes, class: 'form-control', rows: 4 %>
+                <%= form.text_area :notes, class: 'form-control', rows: 9 %>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

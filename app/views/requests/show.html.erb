@@ -1,22 +1,29 @@
 <h1>Viewing Request</h1>
 <br/>
 <div>
-<% approver = !current_account.in_group?('approver') %>
+
 <!-- submit function -->
-<%= form_for(@request, method: :put, html: {
-        id: "submit-form",
-        style: 'display: hidden;'
-    }) do |form| %>
-    <%= form.hidden_field :submitted, value: true %>
+<% partof = current_account.id == @request.account_id || current_account.id == @request.requested_for_id %>
+<% if partof %>
+  <%= form_for(@request, method: :put, html: {
+          id: "submit-form",
+          style: 'display: hidden;'
+      }) do |form| %>
+      <%= form.hidden_field :submitted, value: true %>
+      <%= form.hidden_field :submitted_at, value: DateTime.now %>
+  <% end %>
 <% end %>
 <!-- end submit function -->
 <!-- approve function -->
+<% approver = current_account.in_group?('approver') %>
 <% if approver %>
-<%= form_for(@request, method: :put, html: {
-        id: "approve-form",
-    }) do |form| %>
-    <%= form.hidden_field :approved, value: true %>
-<% end %>
+  <%= form_for(@request, method: :put, html: {
+          id: "approve-form",
+      }) do |form| %>
+      <%= form.hidden_field :approved, value: true %>
+      <%= form.hidden_field :approved_by_id, value: current_account.id %>
+      <%= form.hidden_field :date_approved, value: DateTime.now %>
+  <% end %>
 <% end %>
 <!-- end approve function -->
   <div class="btn-group gap-2 d-flex">
@@ -27,7 +34,9 @@
                 'title': 'Go back') do %>
       <i class="fa-solid fa-angle-left"></i>
     <% end %>
-    <%= render 'submit' %>
+    <% if partof %>
+      <%= render 'submit' %>
+    <% end %>
     <% if approver %>
         <%= render 'approve'%>
     <% end %>
