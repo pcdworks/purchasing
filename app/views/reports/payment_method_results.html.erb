@@ -1,0 +1,34 @@
+<h1>Payment Method Report</h1>
+<br/>
+<div class="btn-group gap-2 d-flex">
+    <%= link_to("javascript:history.back()",
+                class: 'btn btn-outline-secondary',
+                'data-bs-toggle': 'tooltip',
+                'data-bs-placement': 'top',
+                'title': 'Go back') do %>
+    <i class="fa-solid fa-angle-left"></i>
+    <% end %>
+</div>
+<%= render partial: 'parameters' %>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Payment Method</th>
+            <th>Total</th>
+        </tr>
+    </tr>
+    <% @results.each do |x| %>
+    <tr>
+        <td><%= x[0] %></td>
+        <!-- display in currencys -->
+        <td><%= number_to_currency x[1] %></td>
+    </tr>
+    <% end %>
+    <tfoot>
+        <tr>
+            <th>Total</th>
+            <th><%= number_to_currency @total %></th>
+        </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,55 @@
+
+<% if @start_date.present? && @end_date.present? %>
+    <div class="row">
+        <div class="col">
+            <div class="field">
+                <strong>
+                    <label>Start Date</label>
+                </strong>
+                <%= date_field_tag :start, @start_date, class: 'form-control', disabled: true %>
+            </div>
+        </div>
+        <div class="col">
+            <div class="field">
+                <strong>
+                    <label>End Date</label>
+                </strong>
+                <%= date_field_tag :end, @end_date, class: 'form-control', disabled: true %>
+            </div>
+        </div>
+    </div>
+<% end %>
+<% if @projects.present? && !@projects.reject{|c| c.empty?}.empty? %>
+    <div class="row">
+        <div class="col">
+            <div class="field">
+                <strong><label>Projects</label></strong>
+                <%= select_tag 'projects[]',
+                    options_from_collection_for_select(Project.where(id: @projects), :id, :to_s),
+                    class: 'form-control', multiple: true, size: @projects.length, disabled: true %>
+            </div>
+        </div>
+    </div>
+<% end %>
+<div class="row">
+    <% if @requested_by.present? && !@requested_by.reject{|c| c.empty?}.empty? %>
+        <div class="col">
+            <div class="field">
+                <strong><label>Requested By</label></strong>
+                <%= select_tag 'requested_by[]',
+                    options_from_collection_for_select(Account.where(id: @requested_by), :id, :to_s),
+                    class: 'form-control', multiple: true, size: @requested_by.size, disabled: true %>
+            </div>
+        </div>
+    <% end %>
+    <% if @requested_for.present? && !@requested_for.reject{|c| c.empty?}.empty? %>
+        <div class="col">
+            <div class="field">
+                <strong><label>Requested For</label></strong>
+                <%= select_tag 'requested_for[]',
+                    options_from_collection_for_select(Account.where(id: @requested_for), :id, :to_s),
+                    class: 'form-control', multiple: true, size: @requested_for.size, disabled: true %>
+            </div>
+        </div>
+    <% end %>
+</div>

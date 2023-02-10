@@ -1,0 +1,64 @@
+<h1>Summarized Requests Report</h1>
+<br/>
+<div class="btn-group gap-2 d-flex">
+    <%= link_to("javascript:history.back()",
+                class: 'btn btn-outline-secondary',
+                'data-bs-toggle': 'tooltip',
+                'data-bs-placement': 'top',
+                'title': 'Go back') do %>
+    <i class="fa-solid fa-angle-left"></i>
+    <% end %>
+</div>
+<%= render partial: 'parameters' %>
+<br/>
+<% @results.each do |p| %>
+    <% project_total = 0.0 %>
+    <h2><%= p[0] %></h2>
+    <table class="table table-striped">
+        <% p[1].each do |r| %>
+            <thead>
+                <tr>
+                    <th>
+                        WBS: <%= r[0] == "" ? "Undefined" : r[0]%>
+                        <% wbs_total = 0.0 %>
+                    </th>
+                </tr>
+            </thead>
+            <thead>
+                <tr>
+                    <th>Identifier</th>
+                    <th>Vendor</th>
+                    <th>Date</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% r[1].each do |q| %>
+                    <tr>
+                        <td><%= q.identifier %></td>
+                        <td><%= q.vendor %></td>
+                        <td><%= I18n.l q.created_at.to_date %></td>
+                        <td><%= number_to_currency(q.total)%></td>
+                    </tr>
+                    <% wbs_total += q.total %>
+                <% end %>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>WBS Total</th>
+                    <th><%= number_to_currency(wbs_total) %></th>
+                </tr>
+                <% project_total += wbs_total %>
+            </tbody>
+        <% end %>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Project Total</th>
+                <th><%= number_to_currency(project_total) %></th>
+            </tr>
+        </tfoot>
+    </table>
+    <br/>
+<% end %>

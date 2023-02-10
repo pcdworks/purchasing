@@ -1,0 +1,79 @@
+<h1>Reports Builder</h1>
+<br/>
+<%= form_tag(reports_builder_path, method: 'get') do %>
+    <div class="row">
+        <div class="col">
+            <div class="field">
+                <strong><label>Type</label></strong>
+                <%= select_tag 'type', options_for_select({
+                    "Payment Method": "payment_method",
+                    "Itemized Requests": "itemized_requests",
+                    "Summarized Requests": "summarized_requests"
+                    }), class: 'form-control' %>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="field">
+                <strong>
+                    <label>Start Date</label>
+                </strong>
+                <%= date_field_tag :start, nil, class: 'form-control' %>
+            </div>
+        </div>
+        <div class="col">
+            <div class="field">
+                <strong>
+                    <label>End Date</label>
+                </strong>
+                <%= date_field_tag :end, nil, class: 'form-control' %>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="field">
+                <strong>    <label>Payment Methods</label></strong>
+                <%= select_tag 'payment_methods[]',
+                    options_from_collection_for_select(PaymentMethod.where(active: true), :id, :to_s),
+                    class: 'form-control', multiple: true, prompt: 'All', size: 8 %>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="field">
+                <strong>    <label>Projects</label></strong>
+                <%= select_tag 'projects[]',
+                    options_from_collection_for_select(Project.where(active: true), :id, :to_s),
+                    class: 'form-control', multiple: true, prompt: 'All', size: 8 %>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="field">
+                <strong><label>Requested By</label></strong>
+                <%= select_tag 'requested_by[]',
+                    options_from_collection_for_select(Account.where({}), :id, :to_s),
+                    class: 'form-control', multiple: true, prompt: 'All', size: 8 %>
+            </div>
+        </div>
+        <div class="col">
+            <div class="field">
+                <strong><label>Requested For</label></strong>
+                <%= select_tag 'requested_for[]',
+                    options_from_collection_for_select(Account.where({}), :id, :to_s),
+                    class: 'form-control', multiple: true, prompt: 'All', size: 8 %>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="d-grid gap-2">
+        <%= button_tag(:type => 'submit', class: 'btn btn-default btn-primary') do %>
+            <i class="fa-solid fa-save"></i>
+        <% end %>
+    </div>
+
+<% end %>
