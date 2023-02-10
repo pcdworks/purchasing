@@ -3,9 +3,16 @@ class RequestsController < ApplicationController
 
   # GET /requests or /requests.json
   def index
+    sort_order = [
+      date_received: :desc,
+      date_ordered: :desc,
+      date_approved: :desc,
+      submitted_at: :desc,
+      created_at: :desc
+    ]
     if params[:query] and params[:query] != ''
       query = '%' + params[:query].to_s + '%'
-      @requests = Request.joins(:items).where(
+      @requests = Request.includes(:items, :active_storage_attachments).where(
         'identifier ilike ?
         or vendor ilike ?
         or items.description ilike ?
@@ -14,9 +21,9 @@ class RequestsController < ApplicationController
         query,
         query,
         query
-        ).order(created_at: :desc).page(params[:page])
+        ).order(sort_order).page(params[:page])
     else
-      @requests = Request.all.order(created_at: :desc).page(params[:page])
+      @requests = Request.all.order(sort_order).page(params[:page])
     end
   end
 
