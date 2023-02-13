@@ -35,7 +35,9 @@
             <tbody>
                 <% r[1].each do |q| %>
                     <tr>
-                        <td><%= q.identifier %></td>
+                        <td>
+                            <%= link_to(q.identifier, q, target: :_blank ) %>
+                        </td>
                         <td><%= q.vendor %></td>
                         <td><%= I18n.l q.created_at.to_date %></td>
                         <td><%= number_to_currency(q.total)%></td>

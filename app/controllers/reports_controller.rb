@@ -29,6 +29,13 @@ class ReportsController < ApplicationController
   end
 
   def itemized_requests_results
+    @results = Request.where(@query)
+    .includes(:items, :payment_method, :project)
+    .group_by(&:project)
+    .collect  do |x|
+      t = x[1].group_by(&:work_breakdown_structure)
+      [x[0], t]
+    end
   end
 
   def summarized_requests_results
