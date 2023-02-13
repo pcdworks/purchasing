@@ -12,7 +12,7 @@ class RequestsController < ApplicationController
     ]
     if params[:query] and params[:query] != ''
       query = '%' + params[:query].to_s + '%'
-      @requests = Request.includes(:items, :active_storage_attachments).where(
+      @requests = Request.joins(:items).includes(:items).where(
         'identifier ilike ?
         or vendor ilike ?
         or items.description ilike ?
