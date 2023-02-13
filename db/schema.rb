@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_05_101631) do
+ActiveRecord::Schema.define(version: 2023_02_13_062632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 2023_02_05_101631) do
     t.boolean "use_requested_for", default: false
     t.datetime "submitted_at"
     t.datetime "on_hold_until"
+    t.integer "completion", default: 0, null: false
     t.index ["account_id"], name: "index_requests_on_account_id"
     t.index ["approved_by_id"], name: "index_requests_on_approved_by_id"
     t.index ["payment_method_id"], name: "index_requests_on_payment_method_id"

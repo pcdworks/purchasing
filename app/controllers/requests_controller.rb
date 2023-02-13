@@ -4,10 +4,7 @@ class RequestsController < ApplicationController
   # GET /requests or /requests.json
   def index
     sort_order = [
-      date_received: :desc,
-      date_ordered: :desc,
-      date_approved: :desc,
-      submitted_at: :desc,
+      completion: :asc,
       created_at: :desc
     ]
     if params[:query] and params[:query] != ''

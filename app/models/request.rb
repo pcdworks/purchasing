@@ -141,6 +141,13 @@ class Request < ApplicationRecord
     self.reason_for_rejection = self.reason_for_rejection.strip unless self.reason_for_rejection.nil?
     self.work_breakdown_structure = self.work_breakdown_structure.strip unless self.work_breakdown_structure.nil?
 
+    # update completion
+    self.completion = [
+      self.date_ordered.nil?,
+      self.date_received.nil?,
+      self.submitted_at.nil?,
+      self.date_approved.nil?
+    ].count(false)
 
   end
 
