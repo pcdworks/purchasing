@@ -20,7 +20,7 @@ class RequestsController < ApplicationController
         query
         ).order(sort_order).page(params[:page])
     else
-      @requests = Request.all.order(sort_order).page(params[:page])
+      @requests = Request.joins(:items).includes(:items).order(sort_order).page(params[:page])
     end
   end
 

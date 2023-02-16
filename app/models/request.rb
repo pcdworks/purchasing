@@ -40,10 +40,10 @@ class Request < ApplicationRecord
   end
 
   def received
-    r = self.items.count { |item| item.received? }, self.items.count
+    r = self.items.where.not(received_at: nil).count, self.items.count
     return {
-      all: r[0] == r[1] && r[0] != 0, 
-      some: r[0] != r[1] && r[0] != 0
+      all: (r[0] == r[1]) && (r[0] != 0), 
+      some: (r[0] != r[1]) && (r[0] != 0)
     }
   end
 
@@ -69,7 +69,7 @@ class Request < ApplicationRecord
   end
 
   def subtotal
-    self.items.sum(&:total)
+    self.items.sum('price * quantity')
   end
 
   def total
