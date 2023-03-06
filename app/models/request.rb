@@ -157,7 +157,7 @@ class Request < ApplicationRecord
         return ''
       end
     else
-      return 'table-success'
+      return ''
     end # not finished
   end
 end
