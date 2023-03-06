@@ -37,7 +37,7 @@
     </thead>
     <tbody id="items">
       <% @requests.each do |request| %>
-        <tr>
+        <tr class=<%= request.column_class %>>
           <td><%= request.identifier.upcase if request.identifier %></td>
           <td><%= request.vendor %></td>
           <td><%= request.project %></td>

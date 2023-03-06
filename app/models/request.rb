@@ -119,21 +119,6 @@ class Request < ApplicationRecord
       self.date_approved = DateTime.now
     end
 
-    # auto update the status to approved for the approver
-    if self.status == 1 && self.approved_by
-      self.status = 2
-    end
-
-    # Don't allow unapproval
-    if self.date_approved && self.status < 2
-      self.status = 2
-    end
-
-    # Don't allow by passing approval
-    if !self.date_approved && self.status > 1
-      self.status = 1
-    end
-
     # clean up fields
     self.vendor = self.vendor.strip unless self.vendor.nil?
     self.order_number = self.order_number.strip unless self.order_number.nil?
@@ -143,16 +128,36 @@ class Request < ApplicationRecord
 
     # update completion
     self.completion = [
-      self.date_ordered.nil?,
-      self.date_received.nil?,
-      self.submitted_at.nil?,
-      self.date_approved.nil?
-    ].count(false)
-
+      self.date_ordered.nil? ? 0 : 8,
+      self.date_received.nil? ? 0 : 4,
+      self.date_approved.nil? ? 0 : 2,
+      self.submitted_at.nil? ? 0 : 1,
+  ].sum()
   end
 
   def received?
     !self.received_by_id.nil?
   end
 
+  def column_class
+    two_weeks_ago = DateTime.now - 2.weeks
+    four_weeks_ago = DateTime.now - 4.weeks
+    not_finished = self.completion < 15
+    if not_finished
+      # if the order has not been received in the last four weeks and it has been orderd then set to danger
+      if self.date_received.nil? && !self.date_ordered.nil? && self.date_ordered < four_weeks_ago
+        return 'table-danger'
+      # if the order has been created and not finished in the last four weeks then set to danger
+      elsif self.created_at < four_weeks_ago
+        return 'table-danger'
+      # if the order has been received and not finished in the last two weeks then set to warning
+      elsif self.created_at <  two_weeks_ago
+        return 'table-warning'
+      else
+        return ''
+      end
+    else
+      return 'table-success'
+    end # not finished
+  end
 end

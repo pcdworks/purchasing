@@ -13,7 +13,9 @@ class RequestsController < ApplicationController
         'identifier ilike ?
         or vendor ilike ?
         or items.description ilike ?
+        or items.vendor_reference ilike ?
         or work_breakdown_structure ilike ?',
+        query,
         query,
         query,
         query,
