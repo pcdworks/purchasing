@@ -13,7 +13,11 @@ class Account < ApplicationRecord
   end
 
   def groups
-    self.ldap_entry.memberof || []
+    if self.ldap_entry
+      self.ldap_entry.memberof || []
+    else
+      []
+    end
   end
 
   def in_group?(group_name)

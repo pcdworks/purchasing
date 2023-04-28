@@ -15,13 +15,6 @@ class Request < ApplicationRecord
   validates :vendor, presence: true, allow_blank: false
   validates :identifier, uniqueness: true
 
-  # make sure the identifier follows the pattern
-  validate do |request|
-    po_good = request.identifier.to_s == '' ||
-    (request.identifier.count('a-zA-Z') == 3 &&
-     request.identifier.count('0123456789') >= 6)
-    request.errors.add(:base, "PO identifier must follow the pattern") unless po_good
-  end
 
   def submitted?
     !self.submitted_at.nil?
