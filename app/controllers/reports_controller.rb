@@ -20,17 +20,20 @@ class ReportsController < ApplicationController
     @total = 0.0
     @results = Request.where(@query)
                       .includes(:items, :payment_method, :project)
+                      .order('payment_methods.title ASC')
                       .group_by(&:payment_method)
                       .collect  do |x|
                         t = x[1].sum(&:total)
                         @total += t
                         [x[0], t]
                       end
+
   end
 
   def itemized_requests_results
     @results = Request.where(@query)
     .includes(:items, :payment_method, :project)
+    .order(identifier: :desc)
     .group_by(&:project)
     .collect  do |x|
       t = x[1].group_by(&:work_breakdown_structure)
@@ -41,6 +44,7 @@ class ReportsController < ApplicationController
   def summarized_requests_results
     @results = Request.where(@query)
                       .includes(:items, :payment_method, :project)
+                      .order(identifier: :desc)
                       .group_by(&:project)
                       .collect  do |x|
                         t = x[1].group_by(&:work_breakdown_structure)
