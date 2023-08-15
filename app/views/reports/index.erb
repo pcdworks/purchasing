@@ -36,7 +36,7 @@
             <div class="field">
                 <strong>    <label>Payment Methods</label></strong>
                 <%= select_tag 'payment_methods[]',
-                    options_from_collection_for_select(PaymentMethod.where(active: true), :id, :to_s),
+                    options_from_collection_for_select(PaymentMethod.order(active: :desc, title: :asc), :id, :to_s),
                     class: 'form-control', multiple: true, prompt: 'All', size: 8 %>
             </div>
         </div>
@@ -46,7 +46,7 @@
             <div class="field">
                 <strong>    <label>Projects</label></strong>
                 <%= select_tag 'projects[]',
-                    options_from_collection_for_select(Project.where(active: true), :id, :to_s),
+                    options_from_collection_for_select(Project.order(active: :desc, title: :asc), :id, :to_s),
                     class: 'form-control', multiple: true, prompt: 'All', size: 8 %>
             </div>
         </div>
