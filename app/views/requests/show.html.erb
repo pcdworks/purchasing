@@ -1,31 +1,30 @@
 <h1>Viewing Request</h1>
 <br/>
 <div>
-
-<!-- submit function -->
-<% partof = current_account.id == @request.account_id || current_account.id == @request.requested_for_id %>
-<% if partof %>
-  <%= form_for(@request, method: :put, html: {
+  <!-- submit function -->
+  <% partof = current_account.id == @request.account_id || current_account.id == @request.requested_for_id %>
+  <% if partof %>
+    <%= form_for(@request, method: :put, html: {
           id: "submit-form",
           style: 'display: hidden;'
       }) do |form| %>
       <%= form.hidden_field :submitted, value: true %>
       <%= form.hidden_field :submitted_at, value: DateTime.now %>
+    <% end %>
   <% end %>
-<% end %>
-<!-- end submit function -->
-<!-- approve function -->
-<% approver = current_account.in_group?('approver') %>
-<% if approver %>
-  <%= form_for(@request, method: :put, html: {
+  <!-- end submit function -->
+  <!-- approve function -->
+  <% approver = current_account.in_group?('approver') %>
+  <% if approver %>
+    <%= form_for(@request, method: :put, html: {
           id: "approve-form",
       }) do |form| %>
       <%= form.hidden_field :approved, value: true %>
       <%= form.hidden_field :approved_by_id, value: current_account.id %>
       <%= form.hidden_field :date_approved, value: DateTime.now %>
+    <% end %>
   <% end %>
-<% end %>
-<!-- end approve function -->
+  <!-- end approve function -->
   <div class="btn-group gap-2 d-flex">
     <%= link_to(requests_path,
                 class: 'btn btn-outline-secondary',
@@ -38,7 +37,7 @@
       <%= render 'submit' %>
     <% end %>
     <% if approver %>
-        <%= render 'approve'%>
+      <%= render 'approve'%>
     <% end %>
     <%= link_to(edit_request_path(@request),
                 class: 'btn btn-outline-warning',
@@ -60,7 +59,6 @@
   <br/>
   <div class="row">
     <div class="col-md-3">
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -69,238 +67,6 @@
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><label><%= Request.human_attribute_name :account_id %></label></strong>
-            <%= text_field_tag :account_id, @request.account, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :requested_for_id %>
-              </label>
-            </strong>
-            <%= text_field_tag :requested_for_id, @request.requested_for, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :project_id %>
-              </label>
-            </strong>
-            <%= text_field_tag :project_id, @request.project, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :work_breakdown_structure %>
-              </label>
-            </strong>
-            <%= text_field_tag :work_breakdown_structure, @request.work_breakdown_structure, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-    <div class="col-md-3">
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :vendor %>
-              </label>
-            </strong>
-            <%= text_field_tag :vendor, @request.vendor, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :order_number %>
-              </label>
-            </strong>
-            <%= text_field_tag :order_number, @request.order_number, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :payment_method_id %>
-              </label>
-            </strong>
-            <%= text_field_tag :payment_method_id, @request.payment_method, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :shipping_charges_paid_to %>
-              </label>
-            </strong>
-            <%= text_field_tag :shipping_charges_paid_to, shipping_charges[@request.shipping_charges_paid_to], disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :reason_for_rejection %>
-              </label>
-            </strong>
-            <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', rows: 1 %>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="col-md-3">
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :sales_tax %>
-              </label>
-            </strong>
-            <%= text_field_tag :sales_tax, (number_to_currency @request.sales_tax), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :import_tax %>
-              </label>
-            </strong>
-            <%= text_field_tag :import_tax, (number_to_currency @request.import_tax), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :shipping_cost %>
-              </label>
-            </strong>
-            <%= text_field_tag :shipping_cost, (number_to_currency @request.shipping_cost), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :surcharge %>
-              </label>
-            </strong>
-            <%= text_field_tag :surcharge, (number_to_currency @request.surcharge), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :subtotal %>
-              </label>
-            </strong>
-            <%= text_field_tag :subtotal, (number_to_currency @request.subtotal), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :total %>
-              </label>
-            </strong>
-            <%= text_field_tag :total, (number_to_currency @request.total), disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-
-
-    <div class="col-md-3">
-    
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :approved_by_id %>
-              </label>
-            </strong>
-            <%= text_field_tag :approved_by_id, @request.approved_by, disabled: true, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -313,8 +79,200 @@
           </div>
         </div>
       </div>
-
-
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong><label><%= Request.human_attribute_name :account_id %></label></strong>
+            <%= text_field_tag :account_id, @request.account, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :requested_for_id %>
+              </label>
+            </strong>
+            <%= text_field_tag :requested_for_id, @request.requested_for, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :project_id %>
+              </label>
+            </strong>
+            <%= text_field_tag :project_id, @request.project, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :work_breakdown_structure %>
+              </label>
+            </strong>
+            <%= text_field_tag :work_breakdown_structure, @request.work_breakdown_structure, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :vendor %>
+              </label>
+            </strong>
+            <%= text_field_tag :vendor, @request.vendor, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :order_number %>
+              </label>
+            </strong>
+            <%= text_field_tag :order_number, @request.order_number, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :payment_method_id %>
+              </label>
+            </strong>
+            <%= text_field_tag :payment_method_id, @request.payment_method, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :shipping_charges_paid_to %>
+              </label>
+            </strong>
+            <%= text_field_tag :shipping_charges_paid_to, shipping_charges[@request.shipping_charges_paid_to], disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :reason_for_rejection %>
+              </label>
+            </strong>
+            <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', rows: 1 %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :sales_tax %>
+              </label>
+            </strong>
+            <%= text_field_tag :sales_tax, (number_to_currency @request.sales_tax), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :import_tax %>
+              </label>
+            </strong>
+            <%= text_field_tag :import_tax, (number_to_currency @request.import_tax), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :shipping_cost %>
+              </label>
+            </strong>
+            <%= text_field_tag :shipping_cost, (number_to_currency @request.shipping_cost), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :surcharge %>
+              </label>
+            </strong>
+            <%= text_field_tag :surcharge, (number_to_currency @request.surcharge), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :subtotal %>
+              </label>
+            </strong>
+            <%= text_field_tag :subtotal, (number_to_currency @request.subtotal), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :total %>
+              </label>
+            </strong>
+            <%= text_field_tag :total, (number_to_currency @request.total), disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :approved_by_id %>
+              </label>
+            </strong>
+            <%= text_field_tag :approved_by_id, @request.approved_by, disabled: true, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col">
           <div class="field">
@@ -327,7 +285,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -336,13 +293,10 @@
                 <%= Request.human_attribute_name :date_ordered %>
               </label>
             </strong>
-            <%= text_field_tag :date_ordered, (I18n.l @request.date_ordered.to_date if @request.date_ordered), disabled: true, class: 'form-control' %>
+            <%= text_field_tag :date_ordered, (I18n.l @request.date_ordered if @request.date_ordered), disabled: true, class: 'form-control' %>
           </div>
         </div>
       </div>
-
-
-
       <div class="row">
         <div class="col">
           <div class="field">
@@ -351,11 +305,10 @@
                 <%= Request.human_attribute_name :date_received %>
               </label>
             </strong>
-            <%= text_field_tag :date_received, (I18n.l @request.date_received.to_date if @request.date_received), disabled: true, class: 'form-control' %>
+            <%= text_field_tag :date_received, (I18n.l @request.date_received if @request.date_received), disabled: true, class: 'form-control' %>
           </div>
         </div>
       </div>
-
       <!--
         <div class="row">
           <div class="col">
@@ -370,22 +323,19 @@
           </div>
         </div>
       -->
-    
-    <div class="row">
-      <div class="col">
-        <div class="field">
-          <strong>
-            <label>
-              <%= Request.human_attribute_name :notes %>
-            </label>
-          </strong>
-          <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', rows: 1 %>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <strong>
+              <label>
+                <%= Request.human_attribute_name :notes %>
+              </label>
+            </strong>
+            <%= text_area_tag :notes, @request.notes, disabled: true, class: 'form-control', rows: 3 %>
+          </div>
         </div>
       </div>
     </div>
-
-    </div>
-
   </div>
   <br/>
   <div class="table-responsive">
@@ -393,37 +343,37 @@
       <thead>
         <tr>
           <th class="col-md-1"><label>#</label></th>
-          <th class="col-md-4"><label><%= Item.human_attribute_name :description %></label></th>
-          <th class="col-md-3"><label><%= Item.human_attribute_name :vendor_reference %></label></th>
+          <th class="col-md-3"><label><%= Item.human_attribute_name :description %></label></th>
+          <th class="col-md-2"><label><%= Item.human_attribute_name :vendor_reference %></label></th>
           <th class="col-md-2"><label><%= Item.human_attribute_name :quantity %></label></th>
-          <th class="col-md-3"><label><%= Item.human_attribute_name :price %></label></th>
-          <th class="col-md-2"><label><%= Item.human_attribute_name :total %></label></th>
-          <th class="col-md-2"><label><%= Item.human_attribute_name :received_by %></label></th>
+          <th class="col-md-1"><label><%= Item.human_attribute_name :price %></label></th>
+          <th class="col-md-1"><label><%= Item.human_attribute_name :total %></label></th>
+          <th class="col-md-1"><label><%= Item.human_attribute_name :received_by %></label></th>
           <th class="col-md-1">
             <%= form_for(@request, method: :put) do |form| %>
               <div class="d-grid gap-2">
                 <% if @request.received? %>
-                    <%= form.hidden_field :received, value: false %>
-                    <%= form.hidden_field :received_by_id, value: nil %>
-                    <%= form.hidden_field :date_received, value: nil %>
-                    <%= form.button(class: 'btn btn-outline-secondary',
+                  <%= form.hidden_field :received, value: false %>
+                  <%= form.hidden_field :received_by_id, value: nil %>
+                  <%= form.hidden_field :date_received, value: nil %>
+                  <%= form.button(class: 'btn btn-outline-secondary',
                                     data: { confirm: 'Are you sure?' },
                                     'data-bs-toggle': 'tooltip',
                                     'data-bs-placement': 'top',
                                     'title': 'Mark All Items not Received') do %>
                     <i class="fa-solid fa-box-open"></i>
-                    <% end %>
+                  <% end %>
                 <% else %>
-                    <%= form.hidden_field :received, value: true %>
-                    <%= form.hidden_field :received_by_id, value: current_account.id %>
-                    <%= form.hidden_field :date_received, value: DateTime.now %>
-                    <%= form.button(class: 'btn btn-outline-secondary',
+                  <%= form.hidden_field :received, value: true %>
+                  <%= form.hidden_field :received_by_id, value: current_account.id %>
+                  <%= form.hidden_field :date_received, value: DateTime.now %>
+                  <%= form.button(class: 'btn btn-outline-secondary',
                                     data: { confirm: 'Are you sure?' },
                                     'data-bs-toggle': 'tooltip',
                                     'data-bs-placement': 'top',
                                     'title': 'Mark All Items Received') do %>
-                        <i class="fa-solid fa-box"></i>
-                    <% end %>
+                    <i class="fa-solid fa-box"></i>
+                  <% end %>
                 <% end %>
               </div>
             <% end %>
@@ -453,35 +403,16 @@
             </td>
             <td>
               <% if item.received_by %>
-                <%= item.received_by.initials %>
+                <div data-bs-toggle=tooltip data-bs-placement=top 
+                title='<%= I18n.l item.received_at if item.received_at %>'>
+                  <center><%= item.received_by.initials %></center>
+                </div>
               <% end %>
             </td>
             <td style="text-align: right;">
               <div class="btn-group gap-2 d-flex">
-                <%= form_for(item, method: :put) do |form| %>
-                  <% if item.received? %>
-                    <%= form.hidden_field :received_by_id, value: nil %>
-                    <%= form.hidden_field :received_at, value: nil %>
-                    <%= form.button(class: 'btn btn-outline-secondary',
-                                  data: { confirm: 'Are you sure?' },
-                                  'data-bs-toggle': 'tooltip',
-                                  'data-bs-placement': 'top',
-                                  'title': 'Mark Item not Received') do %>
-                      <i class="fa-solid fa-box-open"></i>
-                    <% end %>
-                  <% else %>
-                    <%= form.hidden_field :received_by_id, value: current_account.id %>
-                    <%= form.hidden_field :received_at, value: DateTime.now %>
-                    <%= form.button(class: 'btn btn-outline-secondary',
-                                    data: { confirm: 'Are you sure?' },
-                                    style: 'width: 46px;',
-                                    'data-bs-toggle': 'tooltip',
-                                    'data-bs-placement': 'top',
-                                    'title': 'Mark Item Received') do %>
-                        <i class="fa-solid fa-box"></i>
-                    <% end %>
-                  <% end %>
-                <% end %>
+                <%= render 'return', item: item %>
+                <%= render 'receive', item: item %>
                 <% if item.link? %>
                   <%= link_to(item.link,
                               class: 'btn btn-outline-secondary',

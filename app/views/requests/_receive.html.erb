@@ -1,0 +1,24 @@
+<%= form_for(item, method: :put) do |form| %>
+  <% if item.received? %>
+    <%= form.hidden_field :received_by_id, value: nil %>
+    <%= form.hidden_field :received_at, value: nil %>
+    <%= form.button(class: 'btn btn-outline-secondary',
+                                  data: { confirm: 'Are you sure?' },
+                                  'data-bs-toggle': 'tooltip',
+                                  'data-bs-placement': 'top',
+                                  'title': 'Mark Item not Received') do %>
+      <i class="fa-solid fa-box-open"></i>
+    <% end %>
+  <% else %>
+    <%= form.hidden_field :received_by_id, value: current_account.id %>
+    <%= form.hidden_field :received_at, value: DateTime.now %>
+    <%= form.button(class: 'btn btn-outline-secondary',
+                                    data: { confirm: 'Are you sure?' },
+                                    style: 'width: 46px;',
+                                    'data-bs-toggle': 'tooltip',
+                                    'data-bs-placement': 'top',
+                                    'title': 'Mark Item Received') do %>
+      <i class="fa-solid fa-box"></i>
+    <% end %>
+  <% end %>
+<% end %>

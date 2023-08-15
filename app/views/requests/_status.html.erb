@@ -53,7 +53,8 @@
     </div>
   <% elsif r[:all] %>
     <div data-bs-toggle="tooltip"
-            title="Fully Received on <%=I18n.l request.date_received.to_date if request.date_received %>">
+            data-bs-html=true 
+            title="Fully Received at <br/><%=I18n.l request.date_received if request.date_received %>">
       <i class="text-success fa-solid fa-box-open fa-lg"></i>
     </div>
   <% else %>
