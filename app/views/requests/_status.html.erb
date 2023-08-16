@@ -18,7 +18,7 @@
       <i class="text-success fa-solid fa-square-check fa-lg"></i>
     </div>
   <% else %>
-    <div data-bs-toggle="tooltip" title="Not Approved">
+    <div data-bs-toggle="tooltip" title="Not approved">
       <i class="fa-solid fa-square fa-lg"></i>
     </div>
   <% end %>
@@ -41,20 +41,21 @@
       <i class="text-success fa-solid fa-truck-arrow-right fa-lg"></i>
     </div>
   <% else %>
-    <div data-bs-toggle="tooltip" title="Not Ordered">
+    <div data-bs-toggle="tooltip" title="Not ordered">
       <i class="fa-solid fa-truck-arrow-right fa-lg"></i>
     </div>
   <% end %>
   <!-- if the item is received -->
   <% r = request.received %>
   <% if r[:some] %>
-    <div data-bs-toggle="tooltip" title="Partially Received">
+    <div data-bs-toggle="tooltip" data-bs-html=true
+         title="Partially received at<br/><%=(I18n.l request.received_at) if request.received_at %>">
       <i class="text-warning fa-solid fa-box-open fa-lg"></i>
     </div>
   <% elsif r[:all] %>
     <div data-bs-toggle="tooltip"
-            data-bs-html=true 
-            title="Fully Received at <br/><%=I18n.l request.date_received if request.date_received %>">
+         data-bs-html=true 
+         title="Fully received at <br/><%=(I18n.l request.received_at) if request.received_at %>">
       <i class="text-success fa-solid fa-box-open fa-lg"></i>
     </div>
   <% else %>
@@ -64,22 +65,24 @@
   <% end %>
   <!-- if item has a file attached -->
   <% if request.attachment.attached? %>
-    <div data-bs-toggle="tooltip" title="Attached Files">
+    <div data-bs-toggle="tooltip" title="Attached files">
       <i class="text-success fa-solid fa-paperclip fa-lg"></i>
     </div>
   <% else %>
-    <div data-bs-toggle="tooltip" title="No Attached Files">
+    <div data-bs-toggle="tooltip" title="No attached files">
       <i class="fa-solid fa-paperclip fa-lg"></i>
     </div>
   <% end %>
   <!-- if item is returned -->
   <% b = request.returned %>
   <% if b[:some] %>
-    <div data-bs-toggle="tooltip" title="Partially Returned">
+    <div data-bs-toggle="tooltip" data-bs-html=true
+         title="Partially returned at<br/><%=(I18n.l request.returned_at) if request.returned_at %>">
       <i class="text-warning fa-solid fa-truck-ramp-box fa-lg"></i>
     </div>
   <% elsif b[:all] %>
-    <div data-bs-toggle="tooltip" title="Fully Returned">
+    <div data-bs-toggle="tooltip" data-bs-html=true
+         title="Fully returned at<br/><%=(I18n.l request.returned_at) if request.returned_at %>">
       <i class="text-success fa-solid fa-truck-ramp-box fa-lg"></i>
     </div>
   <% else %>

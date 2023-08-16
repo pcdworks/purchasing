@@ -173,18 +173,6 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong>
-              <label>
-                <%= Request.human_attribute_name :reason_for_rejection %>
-              </label>
-            </strong>
-            <%= text_area_tag :reason_for_rejection, @request.reason_for_rejection, disabled: true, class: 'form-control', rows: 1 %>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="col-md-3">
       <div class="row">
@@ -297,7 +285,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <!--<div class="row">
         <div class="col">
           <div class="field">
             <strong>
@@ -308,7 +296,7 @@
             <%= text_field_tag :date_received, (I18n.l @request.date_received if @request.date_received), disabled: true, class: 'form-control' %>
           </div>
         </div>
-      </div>
+      </div>-->
       <!--
         <div class="row">
           <div class="col">
@@ -403,8 +391,9 @@
             </td>
             <td>
               <% if item.received_by %>
-                <div data-bs-toggle=tooltip data-bs-placement=top 
-                title='<%= I18n.l item.received_at if item.received_at %>'>
+                <div data-bs-toggle=tooltip data-bs-placement=top
+                data-bs-html=true 
+                title='Received at<br/><%= I18n.l item.received_at if item.received_at %>'>
                   <center><%= item.received_by.initials %></center>
                 </div>
               <% end %>

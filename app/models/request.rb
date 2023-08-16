@@ -15,7 +15,6 @@ class Request < ApplicationRecord
   validates :vendor, presence: true, allow_blank: false
   validates :identifier, uniqueness: true
 
-
   def submitted?
     !self.submitted_at.nil?
   end
@@ -35,34 +34,41 @@ class Request < ApplicationRecord
   def received
     r = self.items.where.not(received_at: nil).count, self.items.count
     return {
-      all: (r[0] == r[1]) && (r[0] != 0), 
-      some: (r[0] != r[1]) && (r[0] != 0)
-    }
+             all: (r[0] == r[1]) && (r[0] != 0),
+             some: (r[0] != r[1]) && (r[0] != 0),
+           }
+  end
+
+  def received_at
+    self.items.where.not(received_at: nil).order(received_at: :desc).first.received_at
+  end
+
+  def returned_at
+    self.items.where.not(returned_at: nil).order(returned_at: :desc).first.returned_at
   end
 
   def returned
     r = self.items.count { |item| item.returned? }, self.items.count
     return {
-      all: r[0] == r[1] && r[0] != 0, 
-      some: r[0] != r[1] && r[0] != 0
-    }
+             all: r[0] == r[1] && r[0] != 0,
+             some: r[0] != r[1] && r[0] != 0,
+           }
   end
 
   def to_param
     self.identifier
   end
 
-
   def to_s
     if self.identifier
       self.identifier.titleize
     else
-      self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i+64).chr.to_s
-    end + '-' + self.vendor.gsub(' ', '_')
+      self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i + 64).chr.to_s
+    end + "-" + self.vendor.gsub(" ", "_")
   end
 
   def subtotal
-    self.items.sum('price * quantity')
+    self.items.sum("price * quantity")
   end
 
   def total
@@ -86,20 +92,20 @@ class Request < ApplicationRecord
       else
         taccount_id = self.account_id
       end
-        self.seq = Request.where('account_id = ? and created_at = ?',
-                                taccount_id, Date.today).count +
-                   Request.where('account_id != ? and requested_for_id = ? and use_requested_for = true and created_at = ?',
-                                taccount_id, taccount_id, Date.today).count + 1
-    end
-  
-    # create identifier
-    if self.use_requested_for
-      ident = (self.created_at.strftime("%Y%m%d") + self.requested_for.initials + (self.seq.to_i+64).chr.to_s).downcase
-    else
-      ident = (self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i+64).chr.to_s).downcase
+      self.seq = Request.where("account_id = ? and created_at = ?",
+                               taccount_id, Date.today).count +
+                 Request.where("account_id != ? and requested_for_id = ? and use_requested_for = true and created_at = ?",
+                               taccount_id, taccount_id, Date.today).count + 1
     end
 
-    if self.identifier.nil? || self.identifier == '' || self.identifier != ident
+    # create identifier
+    if self.use_requested_for
+      ident = (self.created_at.strftime("%Y%m%d") + self.requested_for.initials + (self.seq.to_i + 64).chr.to_s).downcase
+    else
+      ident = (self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i + 64).chr.to_s).downcase
+    end
+
+    if self.identifier.nil? || self.identifier == "" || self.identifier != ident
       if Request.exists?(identifier: ident)
         ident[-1] = (ident[-1].ord + 1).chr
       end
@@ -125,7 +131,7 @@ class Request < ApplicationRecord
       self.date_received.nil? ? 0 : 4,
       self.date_approved.nil? ? 0 : 2,
       self.submitted_at.nil? ? 0 : 1,
-  ].sum()
+    ].sum()
   end
 
   def received?
@@ -139,18 +145,18 @@ class Request < ApplicationRecord
     if not_finished
       # if the order has not been received in the last four weeks and it has been orderd then set to danger
       if self.date_received.nil? && !self.date_ordered.nil? && self.date_ordered < four_weeks_ago
-        return 'table-danger'
-      # if the order has been created and not finished in the last four weeks then set to danger
+        return "table-danger"
+        # if the order has been created and not finished in the last four weeks then set to danger
       elsif self.created_at < four_weeks_ago
-        return 'table-danger'
-      # if the order has been received and not finished in the last two weeks then set to warning
-      elsif self.created_at <  two_weeks_ago
-        return 'table-warning'
+        return "table-danger"
+        # if the order has been received and not finished in the last two weeks then set to warning
+      elsif self.created_at < two_weeks_ago
+        return "table-warning"
       else
-        return ''
+        return ""
       end
     else
-      return ''
+      return ""
     end # not finished
   end
 end

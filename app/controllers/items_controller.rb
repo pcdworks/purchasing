@@ -60,61 +60,63 @@ class ItemsController < ApplicationController
 
   private
 
-    def send_mail(req, type)
-      rm = RequestMailer.with(
-        request: req,
-        type: type,
-        current_account: current_account).new_request_email.deliver_now
-    end
+  def send_mail(req, type)
+    rm = RequestMailer.with(
+      request: req,
+      type: type,
+      current_account: current_account,
+    ).new_request_email.deliver_now
+  end
 
-    def check_request
-      request = @item.request
-      dates = request.items.map(&:received_at)
-      past_time = DateTime.now - 10.minutes
+  def check_request
+    request = @item.request
+    dates = request.items.map(&:received_at)
+    past_time = DateTime.now - 10.minutes
 
-      # if the request was updated in less than the last 10 minutes
-      # then don't send an email
-      send_it = dates.collect do |d|
-        !d.nil? && d > past_time
-      end.count(true) >= 1
+    # if the request was updated in less than the last 10 minutes
+    # then don't send an email
+    send_it = dates.collect do |d|
+      !d.nil? && d > past_time
+    end.count(true) >= 1
 
-      # nothing is received
-      if dates.all?(&:nil?)
-        unless request.received_by_id.nil? && request.date_received.nil?
-          request.received_by_id = nil
-          request.date_received = nil
-          request.save
-        end
+    # nothing is received
+    if dates.all?(&:nil?)
+      unless request.received_by_id.nil? && request.date_received.nil?
+        request.received_by_id = nil
+        request.date_received = nil
+        request.save
+      end
       # everything is receivied
-      elsif dates.none?(&:nil?)
-        if request.received_by_id.nil? || request.date_received.nil?
-          request.received_by_id = current_account.id
-          request.date_received = DateTime.now
-          request.save
-          if send_it
-            send_mail(request, :received)
-          end
-        end
-
-      # must be partial
-      else
+    elsif dates.none?(&:nil?)
+      if request.received_by_id.nil? || request.date_received.nil?
+        request.received_by_id = current_account.id
+        request.date_received = DateTime.now
+        request.save
         if send_it
           send_mail(request, :received)
         end
       end
 
+      # must be partial
+    else
+      if send_it
+        send_mail(request, :received)
+      end
     end
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_item
-      @item = Item.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_item
+    @item = Item.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def item_params
-      params.require(:item).permit(:id, :description, :vendor_reference,
-                                   :quantity, :price, :received_by_id,
-                                   :returned_at,
-                                   :received_at, :link)
-    end
+  # Only allow a list of trusted parameters through.
+  def item_params
+    params.require(:item).permit(:id, :description, :vendor_reference,
+                                 :quantity, :price, :received_by_id,
+                                 :returned_at,
+                                 :received_at, :link,
+                                 :reason_for_rejection,
+                                 :returned_by_id)
+  end
 end
