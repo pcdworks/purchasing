@@ -13,6 +13,8 @@ module Purchasing
 
     config.active_storage.replace_on_assign_to_many = false
 
+    config.time_zone = ENV['TIME_ZONE'] || 'Central Time (US & Canada)'
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

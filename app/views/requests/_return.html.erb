@@ -1,0 +1,92 @@
+<div>
+  <% if item.returned? %>
+    <div data-bs-toggle="tooltip" data-bs-placement="top"
+         title='Edit or undo return'>
+      <button type="button"
+          class="btn btn-outline-secondary"
+          data-bs-toggle="modal"
+          data-bs-target="#returnModal<%=item.id%>">
+        <i class="fa-solid fa-person-walking-arrow-right"></i>
+      </button>
+    </div>
+  <%else%>
+    <div data-bs-toggle="tooltip" data-bs-placement="top"
+         title='Return item'>
+      <button type="button"
+          class="btn btn-outline-secondary"
+          data-bs-toggle="modal"
+          data-bs-target="#returnModal<%=item.id%>">
+        <i class="fa-solid fa-person-walking-arrow-loop-left"></i>
+      </button>
+    </div>
+  <%end%>
+  <!-- Modal -->
+  <div class="modal fade" id="returnModal<%=item.id%>" tabindex="-1"
+      aria-labelledby="<%=item.id%>" aria-hidden="true"
+      data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <%= form_for(item) do |form| %>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Reason for return</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <%= form.hidden_field :id, value: item.id %>
+              <%= form.text_area :reason_for_rejection, class: 'form-control', rows: 10 %>
+              <%= form.hidden_field :returned_by_id, value: current_account.id %>
+              <%= form.hidden_field :returned_at, value: DateTime.now %>
+            </div>
+          </div>
+        <% end %>
+        <div class="modal-footer">
+          <button type="button"
+                  class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Close dialog">Close</button>
+          <%if item.returned? %>
+            <%= form_for(item) do |form| %>
+              <%= form.hidden_field :id, value: item.id %>
+              <%= form.hidden_field :returned_by_id, value: nil %>
+              <%= form.hidden_field :returned_at, value: nil %>
+              <%= form.hidden_field :reason_for_rejection, value: nil %>
+              <%= form.button(class: 'btn btn-outline-secondary',
+                          data: { confirm: 'Are you sure?' },
+                          'data-bs-toggle': 'tooltip',
+                          'data-bs-placement': 'top',
+                          'title': 'Undo return') do %>
+                Undo return
+              <% end %>
+            <% end %>
+          <% end %>
+          <% if item.returned? %>
+            <button class="btn btn-outline-primary"
+                    data-bs-dismiss="modal"
+                    type="submit"
+                    value="Submit"
+                    form="edit_item_<%=item.id%>"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Update return">
+              Update return
+            </button>
+          <%else%>
+            <button class="btn btn-outline-primary"
+                    data-bs-dismiss="modal"
+                    type="submit"
+                    value="Submit"
+                    form="edit_item_<%=item.id%>"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Return item">
+              Return item
+            </button>
+          <%end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
