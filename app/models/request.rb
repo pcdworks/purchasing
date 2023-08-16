@@ -126,9 +126,11 @@ class Request < ApplicationRecord
     self.work_breakdown_structure = self.work_breakdown_structure.strip unless self.work_breakdown_structure.nil?
 
     # update completion
+    completed = self.items.where.not(received_at: nil).or(self.items.where.not(returned_at: nil)).count
+    total = self.items.count
     self.completion = [
       self.date_ordered.nil? ? 0 : 8,
-      self.date_received.nil? ? 0 : 4,
+      completed != total ? 0 : 4,
       self.date_approved.nil? ? 0 : 2,
       self.submitted_at.nil? ? 0 : 1,
     ].sum()

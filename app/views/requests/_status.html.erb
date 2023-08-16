@@ -2,7 +2,7 @@
   <!-- if item is submitted -->
   <% if request.submitted? %>
     <div data-bs-toggle="tooltip"
-            title="Submitted on <%=I18n.l request.submitted_at.to_date if request.submitted_at %>">
+            title="Submitted on <%=I18n.l request.submitted_at if request.submitted_at %>">
       <i class="text-success fa-solid fa-envelope fa-lg"></i>
     </div>
   <% else %>
@@ -14,7 +14,7 @@
   <% if request.approved? %>
     <div data-bs-toggle="tooltip"
             title="Approved by <%= request.approved_by %> on
-             <%=I18n.l request.date_approved.to_date if request.date_approved %>">
+             <%=I18n.l request.date_approved if request.date_approved %>">
       <i class="text-success fa-solid fa-square-check fa-lg"></i>
     </div>
   <% else %>
@@ -37,7 +37,7 @@
   <!-- if item is ordered -->
   <% if request.ordered? %>
     <div data-bs-toggle="tooltip"
-            title="Ordered on <%= I18n.l request.date_ordered.to_date if request.date_ordered %>">
+            title="Ordered on <%= I18n.l request.date_ordered if request.date_ordered %>">
       <i class="text-success fa-solid fa-truck-arrow-right fa-lg"></i>
     </div>
   <% else %>
