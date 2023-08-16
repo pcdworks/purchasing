@@ -38,9 +38,10 @@ ENV LDAP_BASE=
 ENV LDAP_USER=
 ENV LDAP_PASS=
 ENV TIME_ZONE=
-
+ENV LOGO=
 
 VOLUME [ "/app/storage" ]
+VOLUME [ "/app/public/style"]
 
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
