@@ -92,10 +92,9 @@ class Request < ApplicationRecord
       else
         taccount_id = self.account_id
       end
-      self.seq = Request.where("account_id = ? and created_at = ?",
-                               taccount_id, Date.today).count +
-                 Request.where("account_id != ? and requested_for_id = ? and use_requested_for = true and created_at = ?",
-                               taccount_id, taccount_id, Date.today).count + 1
+      ran = DateTime.now.beginning_of_day..DateTime.now.end_of_day
+      self.seq = Request.where(account_id: taccount_id, created_at: ran).count +
+                 Request.where.not(account_id: taccount_id).where(requested_for_id: taccount_id, use_requested_for: true, created_at: ran).count + 1
     end
 
     # create identifier
