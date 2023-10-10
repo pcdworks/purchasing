@@ -92,7 +92,7 @@ class Request < ApplicationRecord
       else
         taccount_id = self.account_id
       end
-      ran = DateTime.now.beginning_of_day..DateTime.now.end_of_day
+      ran = self.created_at.beginning_of_day..self.created_at.end_of_day
       self.seq = Request.where(account_id: taccount_id, created_at: ran).count +
                  Request.where.not(account_id: taccount_id).where(requested_for_id: taccount_id, use_requested_for: true, created_at: ran).count + 1
     end
