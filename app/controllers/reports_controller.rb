@@ -62,6 +62,7 @@ class ReportsController < ApplicationController
       @requested_by = params[:requested_by]
       @requested_for = params[:requested_for]
 
+      @query[:completion] = 11,15
       if @start_date.present? && @end_date.present? && !@start_date.nil? && !@end_date.nil?
         @query[:created_at] = Date.parse(@start_date).beginning_of_day..Date.parse(@end_date).end_of_day
       end

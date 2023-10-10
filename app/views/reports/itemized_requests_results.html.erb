@@ -1,76 +1,76 @@
 <h1>Itemized Requests Report</h1>
 <br/>
 <div class="btn-group gap-2 d-flex">
-    <%= link_to("javascript:history.back()",
+  <%= link_to("javascript:history.back()",
                 class: 'btn btn-outline-secondary',
                 'data-bs-toggle': 'tooltip',
                 'data-bs-placement': 'top',
                 'title': 'Go back') do %>
     <i class="fa-solid fa-angle-left"></i>
-    <% end %>
+  <% end %>
 </div>
 <%= render partial: 'parameters' %>
 <br/>
 <% list_total = 0.0 %>
 <!-- Project -->
 <% @results.each do |p| %>
-    <% project_total = 0.0 %>
-    <h2><%= p[0] %></h2>
-        <!-- WBS -->
-        <% p[1].each do |r| %>
-        <% wbs_total = 0.0 %>
-            <h3>WBS: <%= r[0] == "" ? "Undefined" : r[0]%></h3>
-            <!-- Requests -->
-            <% r[1].each do |q| %>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <%= link_to(q.identifier, q, target: :_blank ) %>
-                        </h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <strong>Vendor:</strong>
-                            <%= q.vendor %>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Date Ordered: </strong>
-                            <%=l q.date_ordered.to_date if q.date_ordered %>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Date Received: </strong>
-                            <%=l q.date_received.to_date if q.date_received %>
-                        </li>
-                    </ul>
-                    <%= render partial: 'items', locals: {request: q} %>
-                    <div class="card-footer">
-                        <% rt = q.total%>
-                        <% wbs_total += rt %>
-                        <div class="float-end">
-                            Total: <%= number_to_currency(rt) %>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-            <% end %> <!-- end of request -->
-            <hr>
-            <div class="float-end">
-                <% project_total += wbs_total %>
-                <strong>WBS Total: </strong>
-                <%= number_to_currency(wbs_total) %>
-            </div>
-            <br/>
-        <% end %> <!-- end of wbs -->
-        <hr>
-        <div class="float-end">
-            <% list_total += project_total %>
-            <strong>Project Total: </strong>
-            <%= number_to_currency(project_total) %>
+  <% project_total = 0.0 %>
+  <h2><%= p[0] %></h2>
+  <!-- WBS -->
+  <% p[1].each do |r| %>
+    <% wbs_total = 0.0 %>
+    <h3>WBS: <%= r[0] == "" ? "Undefined" : r[0]%></h3>
+    <!-- Requests -->
+    <% r[1].each do |q| %>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= link_to(q.identifier, q, target: :_blank ) %>
+          </h5>
         </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Vendor:</strong>
+            <%= q.vendor %>
+          </li>
+          <li class="list-group-item">
+            <strong>Date Ordered: </strong>
+            <%=l q.date_ordered.to_date if q.date_ordered %>
+          </li>
+          <li class="list-group-item">
+            <strong>Date Received: </strong>
+            <%=l q.date_received.to_date if q.date_received %>
+          </li>
+        </ul>
+        <%= render partial: 'items', locals: {request: q} %>
+        <div class="card-footer">
+          <% rt = q.total%>
+          <% wbs_total += rt %>
+          <div class="float-end">
+            Total: <%= number_to_currency(rt) %>
+          </div>
+        </div>
+      </div>
+      <br/>
+    <% end %> <!-- end of request -->
+    <hr>
+    <div class="float-end">
+      <% project_total += wbs_total %>
+      <strong>WBS Total: </strong>
+      <%= number_to_currency(wbs_total) %>
+    </div>
     <br/>
+  <% end %> <!-- end of wbs -->
+  <hr>
+  <div class="float-end">
+    <% list_total += project_total %>
+    <strong>Project Total: </strong>
+    <%= number_to_currency(project_total) %>
+  </div>
+  <br/>
 <% end %>
 <hr>
 <div class="float-end">
-    <strong>List Total: </strong>
-    <%= number_to_currency(list_total) %>
+  <strong>Report Total: </strong>
+  <%= number_to_currency(list_total) %>
 </div>
