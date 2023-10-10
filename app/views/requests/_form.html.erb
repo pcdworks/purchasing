@@ -93,7 +93,7 @@
           <div class="field">
             <strong><%= form.label :project_id %></strong>
             <%= form.select(:project_id,
-                            Project.where(active: true).order(identifier: :asc, title: :asc).collect {|u| [u, u.id]},
+                            Project.where(active: true).or(Project.where(id: form.object.project_id)).order(identifier: :asc, title: :asc).collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select', id: 'project'})%>
           </div>
@@ -132,7 +132,7 @@
           <div class="field">
             <strong><%= form.label :payment_method_id %></strong>
             <%= form.select(:payment_method_id,
-                            PaymentMethod.where(active: true).collect {|u| [u, u.id]},
+                            PaymentMethod.where(active: true).or(PaymentMethod.where(id: form.object.id)).collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select'})%>
           </div>
