@@ -5,7 +5,11 @@ class Project < ApplicationRecord
 
     def to_s
         if self.identifier.to_i == 0
-            self.title
+            if self.client.nil?
+                self.title
+            else
+                self.client.to_s + "/" + self.title
+            end
         else
             if self.client.nil?
             ("%06d" % self.identifier) + '-' + self.title
