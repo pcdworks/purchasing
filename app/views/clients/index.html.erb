@@ -1,11 +1,11 @@
-<h1>Projects</h1>
+<h1>Clients</h1>
 <br/>
 <div class="d-grid gap-2">
-  <%= link_to(new_project_path,
+  <%= link_to(new_client_path,
               class: 'btn btn-primary text-light',
               'data-bs-toggle': 'tooltip',
               'data-bs-placement': 'top',
-              'title': 'Create new project') do %>
+              'title': 'Create new client') do %>
     <i class="fa-solid fa-plus"></i>
   <% end %>
 </div>
@@ -14,43 +14,39 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="col-md-4"><label><%= Project.human_attribute_name :client_id %></label></th>
-        <th class="col-md-2"><label><%= Project.human_attribute_name :identifier %></label></th>
-        <th class="col-md-5"><label><%= Project.human_attribute_name :title %></label></th>
-        <th class="col-md-1"><label><%= Project.human_attribute_name :active %></label></th>
+        <th class="col-md-5"><label><%= Client.human_attribute_name :title %></label></th>
+        <th class="col-md-1"><label><%= Client.human_attribute_name :active %></label></th>
         <th class="col-md-1"></th>
       </tr>
     </thead>
     <tbody id="items">
-      <% @projects.each do |project| %>
+      <% @clients.each do |client| %>
         <tr>
-          <td><%= project.client %> </td>
-          <td><%= ("%06d" % project.identifier) %></td>
-          <td><%= project.title %></td>
-          <td><%= check_box_tag :active, project.active, project.active, class: 'form-check-input', disabled: true %></td>
+          <td><%= client.title %></td>
+          <td><%= check_box_tag :active, client.active, client.active, class: 'form-check-input', disabled: true %></td>
           <td>
             <div class="btn-group gap-2 d-flex">
-              <%= link_to(project,
+              <%= link_to(client,
                           class: 'btn btn-outline-info',
                           'data-bs-toggle': 'tooltip',
                           'data-bs-placement': 'top',
-                          'title': 'View project') do %>
+                          'title': 'View client') do %>
                 <i class="fa-solid fa-eye"></i>
               <% end %>
-              <%= link_to(edit_project_path(project),
+              <%= link_to(edit_client_path(client),
                           class: 'btn btn-outline-warning',
                           'data-bs-toggle': 'tooltip',
                           'data-bs-placement': 'top',
-                          'title': 'Edit project') do %>
+                          'title': 'Edit client') do %>
                 <i class="fa-solid fa-pencil"></i>
               <% end %>
-              <%= link_to(project,
+              <%= link_to(client,
                           method: :delete,
                           data: { confirm: 'Are you sure?' },
                           class: 'btn btn-outline-danger',
                           'data-bs-toggle': 'tooltip',
                           'data-bs-placement': 'top',
-                          'title': 'Delete project') do %>
+                          'title': 'Delete client') do %>
                 <i class="fa-solid fa-trash-can"></i>
               <% end %>
             </div>

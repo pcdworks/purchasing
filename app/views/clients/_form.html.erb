@@ -1,6 +1,6 @@
-<%= form_with(model: project) do |form| %>
+<%= form_with(model: client) do |form| %>
   <div class="btn-group gap-2 d-flex">
-    <%= link_to(projects_path, class: 'btn btn-outline-secondary')  do %>
+    <%= link_to(clients_path, class: 'btn btn-outline-secondary')  do %>
       <i class="fa-solid fa-angle-left"></i>
     <% end %>
     <% if !form.object.new_record? %>
@@ -13,11 +13,11 @@
     <% end %>
   </div>
   <br/>
-  <% if project.errors.any? %>
+  <% if client.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <h2><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h2>
       <ul>
-        <% project.errors.each do |error| %>
+        <% client.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -26,17 +26,6 @@
   <div class="mb-3">
     <%= form.label :title %>
     <%= form.text_field :title, class: "form-control" %>
-  </div>
-  <div class="mb-3">
-    <%= form.label :identifier %>
-    <%= form.number_field :identifier, class: "form-control", step: 1, min: 0 %>
-  </div>
-  <div class="mb-3">
-    <strong><%= form.label :client_id %></strong>
-    <%= form.select(:client_id,
-                            Client.where(active: true).or(Client.where(id: form.object.client_id)).order(title: :asc).collect {|u| [u, u.id]},
-                            {include_blank: true},
-                            {class: 'form-select', id: 'client'})%>
   </div>
   <div class="form-check">
     <%= form.check_box :active, class: 'form-check-input' %>

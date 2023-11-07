@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :clients
   get 'reports', to: 'reports#index'
   get 'reports/builder'
   get 'reports/payment_method_results'

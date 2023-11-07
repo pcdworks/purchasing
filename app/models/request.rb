@@ -123,6 +123,10 @@ class Request < ApplicationRecord
     self.notes = self.notes.strip unless self.notes.nil?
     self.reason_for_rejection = self.reason_for_rejection.strip unless self.reason_for_rejection.nil?
     self.work_breakdown_structure = self.work_breakdown_structure.strip unless self.work_breakdown_structure.nil?
+    self.shipping_cost = self.shipping_cost.to_f
+    self.import_tax = self.import_tax.to_f
+    self.sales_tax = self.sales_tax.to_f
+    self.surcharge = self.surcharge.to_f
 
     # update completion
     completed = self.items.where.not(received_at: nil).or(self.items.where.not(returned_at: nil)).count
