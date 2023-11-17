@@ -32,8 +32,8 @@ class ReportsController < ApplicationController
 
   def itemized_requests_results
     @results = Request.where(@query)
-    .includes(:items, :payment_method, :project)
-    .order(identifier: :desc)
+    .includes(:items, :payment_method, project: [:client])
+    .order("clients.title asc, projects.identifier asc, projects.title asc, requests.identifier desc")
     .group_by(&:project)
     .collect  do |x|
       t = x[1].group_by(&:work_breakdown_structure)
@@ -43,8 +43,8 @@ class ReportsController < ApplicationController
 
   def summarized_requests_results
     @results = Request.where(@query)
-                      .includes(:items, :payment_method, :project)
-                      .order(identifier: :desc)
+                      .includes(:items, :payment_method, project: [:client])
+                      .order("clients.title asc, projects.identifier asc, projects.title asc, requests.identifier desc")
                       .group_by(&:project)
                       .collect  do |x|
                         t = x[1].group_by(&:work_breakdown_structure)

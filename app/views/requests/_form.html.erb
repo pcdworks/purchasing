@@ -93,7 +93,9 @@
           <div class="field">
             <strong><%= form.label :project_id %></strong>
             <%= form.select(:project_id,
-                            Project.where(active: true).or(Project.where(id: form.object.project_id)).order(identifier: :asc, title: :asc).collect {|u| [u, u.id]},
+                            Project.where(active: true).or(Project.where(id: form.object.project_id))
+                            .includes(:client)
+                            .order("clients.title asc, projects.identifier asc, projects.title asc").collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select', id: 'project'})%>
           </div>

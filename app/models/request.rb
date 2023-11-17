@@ -60,11 +60,11 @@ class Request < ApplicationRecord
   end
 
   def to_s
-    if self.identifier
-      self.identifier.titleize
+    if self.identifier.to_s  != ''
+      self.identifier.upcase
     else
       self.created_at.strftime("%Y%m%d") + self.account.initials + (self.seq.to_i + 64).chr.to_s
-    end + "-" + self.vendor.gsub(" ", "_")
+    end
   end
 
   def subtotal
@@ -144,18 +144,18 @@ class Request < ApplicationRecord
   end
 
   def column_class
-    two_weeks_ago = DateTime.now - 2.weeks
-    four_weeks_ago = DateTime.now - 4.weeks
+    warning_weeks_ago = DateTime.now - 3.weeks
+    danger_weeks_ago = DateTime.now - 5.weeks
     not_finished = self.completion < 15
     if not_finished
       # if the order has not been received in the last four weeks and it has been orderd then set to danger
-      if self.date_received.nil? && !self.date_ordered.nil? && self.date_ordered < four_weeks_ago
+      if self.date_received.nil? && !self.date_ordered.nil? && self.date_ordered < danger_weeks_ago
         return "table-danger"
         # if the order has been created and not finished in the last four weeks then set to danger
-      elsif self.created_at < four_weeks_ago
+      elsif self.created_at < danger_weeks_ago
         return "table-danger"
         # if the order has been received and not finished in the last two weeks then set to warning
-      elsif self.created_at < two_weeks_ago
+      elsif self.created_at < warning_weeks_ago
         return "table-warning"
       else
         return ""

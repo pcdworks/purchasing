@@ -37,7 +37,7 @@
         <% r[1].each do |q| %>
           <tr>
             <td>
-              <%= link_to(q.identifier, q, target: :_blank ) %>
+              <%= link_to(q, q, target: :_blank ) %>
             </td>
             <td><%= q.vendor %></td>
             <td><%= I18n.l q.created_at.to_date %></td>
