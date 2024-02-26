@@ -45,6 +45,7 @@ en:
         identifier: 'PO identifier'
         items_count: 'Number of items'
         use_requested_for: "Use 'Requested for' in Identifier"
+        account_id: "Requested by"
       item:
         total: 'Line total'
         link: 'Link'

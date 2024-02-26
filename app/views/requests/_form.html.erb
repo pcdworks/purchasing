@@ -25,14 +25,12 @@
   <% end %>
   <div class="row">
     <div class="col-md-3">
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <% unless form.object.new_record? %>
-              <%= form.hidden_field :id %>
-            <% end %>
-            <strong><%= form.label :identifier %></strong>
-            <%= form.text_field :identifier,
+      <div class="field">
+        <% unless form.object.new_record? %>
+          <%= form.hidden_field :id %>
+        <% end %>
+        <strong><%= form.label :identifier %></strong>
+        <%= form.text_field :identifier,
                                 class: 'form-control',
                                 disabled: true,
                                 style: "text-transform:uppercase",
@@ -49,165 +47,127 @@
                                 NN: initials<br>
                                 X: counter for how many requests you\'ve made today
                                 </p>' %>
-          </div>
+      </div>
+      <div class="field">
+        <div class="form-check form-switch">
+          <%= form.check_box :use_requested_for, class: 'form-check-input' %>
+          <%= form.label :use_requested_for, class: 'form-check-label' %>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <% if form.object.new_record? %>
-              <%= form.hidden_field :account_id, value: current_account.id %>
-            <% end %>
-            <strong><%= form.label "Requested by" %></strong>
-            <%= form.select(:account_id,
+    </div>
+    <div class="col-md-3">
+      <div class="field">
+        <% if form.object.new_record? %>
+          <%= form.hidden_field :account_id, value: current_account.id %>
+        <% end %>
+        <strong><%= form.label Request.human_attribute_name :account_id %></strong>
+        <%= form.select(:account_id,
               options_for_select(Account.all.collect {|u| [u, u.id]},
               (form.object.new_record? ? current_account.id : form.object.account_id)),
               {include_blank: true},
               {class: 'form-select', disabled: true})%>
-          </div>
-        </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :requested_for_id %></strong>
-            <%= form.select(:requested_for_id,
+    </div>
+    <div class="col-md-3">
+      <div class="field">
+        <strong><%= form.label :requested_for_id %></strong>
+        <%= form.select(:requested_for_id,
                             Account.all.collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select'})%>
-          </div>
-        </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <div class="form-check form-switch">
-              <%= form.check_box :use_requested_for, class: 'form-check-input' %>
-              <%= form.label :use_requested_for, class: 'form-check-label' %>
-            </div>
-          </div>
-        </div>
+    </div>
+    <div class="col-md-3">
+      <div class="field">
+        <strong><%= form.label :vendor %></strong>
+        <%= form.text_field :vendor, class: 'form-control' %>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :project_id %></strong>
-            <%= form.select(:project_id,
+    </div>
+    <!-- row -->
+    <div class="col-md-3">
+      <div class="field">
+        <strong><%= form.label :project_id %></strong>
+        <%= form.select(:project_id,
                             Project.where(active: true).or(Project.where(id: form.object.project_id))
                             .includes(:client)
                             .order("clients.title asc, projects.identifier asc, projects.title asc").collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select', id: 'project'})%>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :work_breakdown_structure %></strong>
-            <%= form.text_field :work_breakdown_structure, class: 'form-select', list: 'wbs', autocomplete: 'off' %>
-            <datalist id="wbs">
-            </datalist>
-          </div>
-        </div>
       </div>
     </div>
     <div class="col-md-3">
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :vendor %></strong>
-            <%= form.text_field :vendor, class: 'form-control' %>
-          </div>
-        </div>
+      <div class="field">
+        <strong><%= form.label :work_breakdown_structure %></strong>
+        <%= form.text_field :work_breakdown_structure, class: 'form-select', list: 'wbs', autocomplete: 'off' %>
+        <datalist id="wbs">
+        </datalist>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :order_number %></strong>
-            <%= form.text_field :order_number, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :payment_method_id %></strong>
-            <%= form.select(:payment_method_id,
+    </div>
+    <div class="col-md-3">
+      <div class="field">
+        <strong><%= form.label :payment_method_id %></strong>
+        <%= form.select(:payment_method_id,
                             PaymentMethod.where(active: true).or(PaymentMethod.where(id: form.object.id)).collect {|u| [u, u.id]},
                             {include_blank: true},
                             {class: 'form-select'})%>
-          </div>
-        </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :shipping_charges_paid_to %></strong>
-            <%= form.select :shipping_charges_paid_to,
+    </div>
+    <div class="col-md-3">
+      <div class="field">
+        <strong><%= form.label :shipping_charges_paid_to %></strong>
+        <%= form.select :shipping_charges_paid_to,
                             options_from_collection_for_select(shipping_charges, :first, :last, form.object.shipping_charges_paid_to),
                             {},
                             {class: 'form-control'}  %>
-          </div>
-        </div>
+      </div>
+    </div>
+    <!-- row -->
+    <div class="col-md-3">
+      <div class="field">
+        <strong><%= form.label :shipping_cost %></strong>
+        <%= form.number_field :shipping_cost, step: 0.01, min: 0.00, class: 'form-control' %>
       </div>
     </div>
     <div class="col-md-3">
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :sales_tax %></strong>
-            <%= form.number_field :sales_tax, step: 0.01, min: 0.00, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :import_tax %></strong>
-            <%= form.number_field :import_tax, step: 0.01, min: 0.00, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :shipping_cost %></strong>
-            <%= form.number_field :shipping_cost, step: 0.01, min: 0.00, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="field">
-            <strong><%= form.label :surcharge %></strong>
-            <%= form.number_field :surcharge, step: 0.01, class: 'form-control' %>
-          </div>
-        </div>
+      <div class="field">
+        <strong><%= form.label :sales_tax %></strong>
+        <%= form.number_field :sales_tax, step: 0.01, min: 0.00, class: 'form-control' %>
       </div>
     </div>
     <div class="col-md-3">
-      <div class="row">
-        <div class="col">
-          <div class="row">
-            <div class="col">
-              <div class="field">
-                <strong><%= form.label :date_ordered %></strong>
-                <%= form.date_field :date_ordered, {class: 'form-control'} %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="field">
-                <strong><%= form.label :notes %></strong>
-                <%= form.text_area :notes, class: 'form-control', rows: 9 %>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="field">
+        <strong><%= form.label :import_tax %></strong>
+        <%= form.number_field :import_tax, step: 0.01, min: 0.00, class: 'form-control' %>
       </div>
     </div>
+    <div class="col-md-3">
+      <div class="field">
+        <strong><%= form.label :surcharge %></strong>
+        <%= form.number_field :surcharge, step: 0.01, class: 'form-control' %>
+      </div>
+    </div>
+    <!-- row -->
+    <div class="col-md-12">
+      <div class="field">
+        <strong><%= form.label :notes %></strong>
+        <%= form.text_area :notes, class: 'form-control', rows: 3 %>
+      </div>
+    </div>
+    <!-- row -->
+    <% if form.object.approved? %>
+      <div class="col-md-3">
+        <div class="field">
+          <strong><%= form.label :order_number %></strong>
+          <%= form.text_field :order_number, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="field">
+          <strong><%= form.label :date_ordered %></strong>
+          <%= form.date_field :date_ordered, {class: 'form-control'} %>
+        </div>
+      </div>
+    <% end %>
   </div>
   <script>
     function wbs(){
