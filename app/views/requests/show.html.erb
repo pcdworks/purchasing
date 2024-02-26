@@ -36,7 +36,7 @@
     <% if partof %>
       <%= render 'submit' %>
     <% end %>
-    <% if approver %>
+    <% if approver && @request.submitted? %>
       <%= render 'approve'%>
     <% end %>
     <%= link_to(edit_request_path(@request),
