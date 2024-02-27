@@ -97,6 +97,6 @@ class ItemsController < ApplicationController
                                  :returned_at,
                                  :received_at, :link,
                                  :reason_for_rejection,
-                                 :returned_by_id)
+                                 :returned_by_id, :refund)
   end
 end

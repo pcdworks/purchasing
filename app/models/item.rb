@@ -14,6 +14,10 @@ class Item < ApplicationRecord
     self.price.to_f * self.quantity.to_i
   end
 
+  def refund_value
+    -self.refund.to_f
+  end
+
   def clean_up
     self.description = self.description.strip unless self.description.nil?
     self.vendor_reference = self.vendor_reference.strip unless self.vendor_reference.nil?

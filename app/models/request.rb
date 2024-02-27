@@ -68,7 +68,7 @@ class Request < ApplicationRecord
   end
 
   def subtotal
-    self.items.sum("price * quantity")
+    self.items.sum("price * quantity") - self.items.sum("refund")
   end
 
   def total

@@ -207,7 +207,7 @@
             <%= Request.human_attribute_name :date_ordered %>
           </label>
         </strong>
-        <%= text_field_tag :date_ordered, (I18n.l @request.date_ordered if @request.date_ordered), disabled: true, class: 'form-control' %>
+        <%= text_field_tag :date_ordered, (I18n.l @request.date_ordered.to_date if @request.date_ordered), disabled: true, class: 'form-control' %>
       </div>
     </div>
     <div class="col-md-3">
@@ -259,10 +259,10 @@
           <th class="col-md-1"><label>#</label></th>
           <th class="col-md-3"><label><%= Item.human_attribute_name :description %></label></th>
           <th class="col-md-2"><label><%= Item.human_attribute_name :vendor_reference %></label></th>
-          <th class="col-md-2"><label><%= Item.human_attribute_name :quantity %></label></th>
+          <th class="col-md-1"><label><%= Item.human_attribute_name :quantity %></label></th>
           <th class="col-md-1"><label><%= Item.human_attribute_name :price %></label></th>
-          <th class="col-md-1"><label><%= Item.human_attribute_name :total %></label></th>
-          <th class="col-md-1"><label><%= Item.human_attribute_name :received_by %></label></th>
+          <th class="col-md-2"><label><%= Item.human_attribute_name :total %></label></th>
+          <th class="col-md-2"><label><%= Item.human_attribute_name :received_by %></label></th>
           <th class="col-md-1">
             <% if @request.ordered? %>
               <%= form_for(@request, method: :put) do |form| %>
@@ -315,7 +315,12 @@
               <%= number_to_currency(item.price) %>
             </td>
             <td>
-              <%= number_to_currency(item.total) %>
+              <% if item.refund_value < 0 %>
+                <%= number_to_currency(item.total) %>
+                (<span style="color: red;"><%= number_to_currency(item.refund_value) %></span>)
+              <% else %>
+                <%= number_to_currency(item.total) %>
+              <% end %>
             </td>
             <td>
               <% if item.received_by %>

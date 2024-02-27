@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_07_172238) do
+ActiveRecord::Schema.define(version: 2024_02_27_161911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2023_11_07_172238) do
     t.datetime "returned_at"
     t.bigint "returned_by_id"
     t.string "reason_for_rejection", default: ""
+    t.float "refund"
     t.index ["received_by_id"], name: "index_items_on_received_by_id"
     t.index ["request_id"], name: "index_items_on_request_id"
     t.index ["returned_by_id"], name: "index_items_on_returned_by_id"

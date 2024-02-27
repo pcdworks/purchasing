@@ -50,6 +50,8 @@ en:
         total: 'Line total'
         link: 'Link'
         vendor_reference: 'Vendor reference'
+        refund: 'Value'
+        reason_for_rejection: 'Reason'
   views:
     pagination:
       next: '<i class="fas fa-angle-right"></i>'

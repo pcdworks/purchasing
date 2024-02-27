@@ -1,7 +1,7 @@
 <div>
   <% if item.returned? %>
     <div data-bs-toggle="tooltip" data-bs-placement="top"
-         title='Edit or undo return'>
+         title='Edit or undo refund'>
       <button type="button"
           class="btn btn-outline-secondary"
           data-bs-toggle="modal"
@@ -11,7 +11,7 @@
     </div>
   <%else%>
     <div data-bs-toggle="tooltip" data-bs-placement="top"
-         title='Return item'>
+         title='refund item'>
       <button type="button"
           class="btn btn-outline-secondary"
           data-bs-toggle="modal"
@@ -29,12 +29,18 @@
       <div class="modal-content">
         <%= form_for(item) do |form| %>
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Reason for return</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Return / Refund / Cancel</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" style="text-align: left;">
+            <div class="field">
+              <strong><%= form.label :refund %></strong>
+              <%= form.number_field :refund, step: 0.01, min: 0.00, class: 'form-control' %>
+            </div>
+            <br/>
             <div class="mb-3">
               <%= form.hidden_field :id, value: item.id %>
+              <strong><%= form.label :reason_for_rejection %></strong>
               <%= form.text_area :reason_for_rejection, class: 'form-control', rows: 10 %>
               <%= form.hidden_field :returned_by_id, value: current_account.id %>
               <%= form.hidden_field :returned_at, value: DateTime.now %>
