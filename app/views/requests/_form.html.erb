@@ -216,25 +216,6 @@
         </div>
       </div>
     <% end %>
-    <div class="row">
-      <div class="col">
-        <div class="field">
-          <strong><%= form.label :date_received %></strong>
-          <%= form.date_field :date_received, {class: 'form-control'} %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="field">
-          <strong><%= form.label :received_by_id %></strong>
-          <%= form.select(:received_by_id,
-                          Account.all.collect {|u| [u, u.id]},
-                          {include_blank: true},
-                          {class: 'form-select'})%>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 <div class="row">

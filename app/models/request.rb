@@ -77,11 +77,6 @@ class Request < ApplicationRecord
 
   def clean_up
 
-    # if received by someone then set the date if they forgot to
-    if !self.date_received && self.received_by
-      self.date_received = DateTime.now
-    end
-
     # make sure there is a created date so we can generate the identifier
     self.created_at ||= Date.today
 
@@ -140,7 +135,15 @@ class Request < ApplicationRecord
   end
 
   def received?
-    !self.received_by_id.nil?
+    self.items.where.not(received_at: nil).count == self.items.count
+  end
+
+  def returned?
+    self.items.where.not(returned_at: nil).count == self.items.count
+  end
+
+  def received_or_returned?
+    self.items.where.not(received_at: nil).or(self.items.where.not(returned_at: nil)).count == self.items.count
   end
 
   def column_class
@@ -149,7 +152,7 @@ class Request < ApplicationRecord
     not_finished = self.completion < 15
     if not_finished
       # if the order has not been received in the last four weeks and it has been orderd then set to danger
-      if self.date_received.nil? && !self.date_ordered.nil? && self.date_ordered < danger_weeks_ago
+      if !self.received_or_returned? && !self.date_ordered.nil? && self.date_ordered < danger_weeks_ago
         return "table-danger"
         # if the order has been created and not finished in the last four weeks then set to danger
       elsif self.created_at < danger_weeks_ago

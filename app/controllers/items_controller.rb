@@ -78,30 +78,10 @@ class ItemsController < ApplicationController
     send_it = dates.collect do |d|
       !d.nil? && d > past_time
     end.count(true) >= 1
+    request.save!
 
-    # nothing is received
-    if dates.all?(&:nil?)
-      unless request.received_by_id.nil? && request.date_received.nil?
-        request.received_by_id = nil
-        request.date_received = nil
-        request.save
-      end
-      # everything is receivied
-    elsif dates.none?(&:nil?)
-      if request.received_by_id.nil? || request.date_received.nil?
-        request.received_by_id = current_account.id
-        request.date_received = DateTime.now
-        request.save
-        if send_it
-          send_mail(request, :received)
-        end
-      end
-
-      # must be partial
-    else
-      if send_it
-        send_mail(request, :received)
-      end
+    if send_it
+      send_mail(request, :received)
     end
   end
 

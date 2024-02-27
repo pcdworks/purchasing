@@ -267,7 +267,7 @@
             <% if @request.ordered? %>
               <%= form_for(@request, method: :put) do |form| %>
                 <div class="d-grid gap-2">
-                  <% if @request.received? %>
+                  <% if @request.received_or_returned? %>
                     <%= form.hidden_field :received, value: false %>
                     <%= form.hidden_field :received_by_id, value: nil %>
                     <%= form.hidden_field :date_received, value: nil %>
