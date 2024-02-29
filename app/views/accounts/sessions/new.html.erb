@@ -28,3 +28,7 @@
     <%= f.submit "Log in", class: 'btn btn-primary' %>
   </div>
 <% end %>
+<br/>
+<div class="d-grid gap-2">
+  <%= link_to "Login with #{ENV['OAUTH_OC_PROVIDER']}", account_openid_connect_omniauth_authorize_path, method: :post, class: 'btn btn-primary full-width', data: { turbolinks: false }  %>
+</div>

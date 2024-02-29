@@ -1,8 +1,43 @@
 class Account < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :validatable and :omniauthable, :recoverable, :rememberable
-  devise :ldap_authenticatable, :trackable
+  devise :ldap_authenticatable, :trackable, :omniauthable, omniauth_providers: %i[openid_connect]
   before_save :set_fields
+
+
+  def self.from_omniauth(auth)
+    #puts auth
+    account = where(email: auth.info.email).first
+    if account
+      return account
+    else
+      name =  auth.extra.raw_info.name.split(' ')
+      groups = auth.extra.raw_info.groups
+      approver = groups.include?('approver')
+      givenname = ""
+      surname = ""
+      initials = ""
+      if name.length > 1
+        givenname = name[0]
+        surname = name[1]
+        initials = name[0][0] + name[1][0]
+      else
+        givenname = name[0]
+        initials = name[0][0]
+      end
+      return Account.create(
+        {
+          email: auth.info.email,
+          password: Devise.friendly_token[0, 20],
+          username: auth.extra.raw_info.preferred_username,
+          givenname: givenname,
+          surname: surname,
+          initials: initials,
+          approver: approver
+        }
+      )
+    end
+  end
 
   def to_s
     self.username
@@ -30,20 +65,17 @@ class Account < ApplicationRecord
 
   def set_fields
     entry = self.entry
-    self.surname = entry.sn[0]
-    self.givenname = entry.givenname[0]
-    self.initials = entry.initials[0]
-    self.email = entry.mail[0]
-
-    if self.in_group?('approver')
-      self.approver = true
-    else
-      self.approver = false
+    unless entry.nil?
+      self.surname = entry.sn[0]
+      self.givenname = entry.givenname[0]
+      self.initials = entry.initials[0]
+      self.email = entry.mail[0]
+      self.approver = self.in_group?('approver')
     end
   end
 
   def approver?
-    self.in_group?('approver')
+    self.approver
   end
 
   def validator?

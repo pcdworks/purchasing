@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   resources :projects
   resources :payment_methods
   devise_for :accounts, controllers: {
-    sessions: 'accounts/sessions'
+    sessions: 'accounts/sessions',
+    omniauth_callbacks: 'accounts/omniauth_callbacks'
   }
   devise_scope :account do
     root to: 'accounts/sessions#new'
