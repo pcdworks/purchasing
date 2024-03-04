@@ -1,0 +1,8 @@
+<script>
+  $(document).ready(function() {
+    document.getElementById("login").submit();
+  });
+</script>
+<%= form_tag(account_openid_connect_omniauth_authorize_path, id: 'login') do  %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<% end %>
