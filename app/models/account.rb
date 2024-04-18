@@ -2,7 +2,9 @@ class Account < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :validatable and :omniauthable, :recoverable, :rememberable
   devise :ldap_authenticatable, :trackable, :omniauthable, omniauth_providers: %i[openid_connect]
-  before_save :set_fields
+  if !ENV['LDAP_HOST'].nil? && !ENV['LDAP_HOST'].empty?
+    before_save :set_fields
+  end
 
   def self.from_omniauth(auth)
     account = where(email: auth.info.email).first
