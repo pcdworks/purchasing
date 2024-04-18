@@ -13,13 +13,7 @@ Devise.setup do |config|
   config.ldap_logger = true
   config.ldap_create_user = true
   config.ldap_update_password = false
-  # config.ldap_config = "#{Rails.root}/config/ldap.yml"
-  # config.ldap_check_group_membership = true
-  # config.ldap_check_group_membership_without_admin = false
-  # config.ldap_check_attributes = false
-  # config.ldap_check_attributes_presence = true
   config.ldap_use_admin_to_bind = true
-  # config.ldap_ad_group_check = false
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
@@ -76,7 +70,7 @@ Devise.setup do |config|
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [:username]
+  config.strip_whitespace_keys = [:username, :email]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
@@ -308,6 +302,25 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+  if ENV["OAUTH_OC_PROVIDER"]
+    config.omniauth :openid_connect, {
+      name: :openid_connect,
+      scope: [:openid, :email, :profile, :address],
+      response_type: :code,
+      uid_field: "preferred_username",
+      send_nonce: false,
+      discovery: true,
+      issuer: ENV["OAUTH_OC_HOST"],
+      client_options: {
+        port: ENV["OAUTH_OC_PORT"].to_i,
+        scheme: ENV["OAUTH_OC_SCHEME"],
+        host: ENV["OAUTH_OC_HOST"],
+        identifier: ENV["OAUTH_OC_CLIENT_ID"],
+        secret: ENV["OPAUTH_OC_SECRET_KEY"],
+        redirect_uri: ENV["OAUTH_OC_REDIRECT_URI"],
+      },
+    }
+  end
 
   # ==> Turbolinks configuration
   # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
