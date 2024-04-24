@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_27_161911) do
+ActiveRecord::Schema.define(version: 2024_03_04_164946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2024_02_27_161911) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "approver", default: false
+    t.jsonb "groups", default: [], null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["username"], name: "index_accounts_on_username", unique: true
   end

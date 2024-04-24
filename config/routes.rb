@@ -7,12 +7,14 @@ Rails.application.routes.draw do
   get 'reports/summarized_requests_results'
   resources :items, only: [:update]
   get 'pages/browsers'
+  get 'pages/launch'
   get 'work_breakdown_structures', to: 'pages#work_breakdown_structures'
   resources :requests, param: :identifier
   resources :projects
   resources :payment_methods
   devise_for :accounts, controllers: {
-    sessions: 'accounts/sessions'
+    sessions: 'accounts/sessions',
+    omniauth_callbacks: 'accounts/omniauth_callbacks'
   }
   devise_scope :account do
     root to: 'accounts/sessions#new'
