@@ -81,15 +81,21 @@ class Request < ApplicationRecord
     self.created_at ||= Date.today
 
     # figure out the sequence number
-    if !self.seq || self.seq == 0 || self.use_requested_for_changed? || self.requested_for_id_changed? || self.created_at_changed?
+    if !self.seq ||
+        self.seq == 0 ||
+        (self.use_requested_for_changed? && self.requested_for_id_changed?) ||
+        self.created_at_changed?
       if self.use_requested_for
         taccount_id = self.requested_for_id
       else
         taccount_id = self.account_id
       end
+      id = self.identifier
       ran = self.created_at.beginning_of_day..self.created_at.end_of_day
-      self.seq = Request.where(account_id: taccount_id, created_at: ran).count +
-                 Request.where.not(account_id: taccount_id).where(requested_for_id: taccount_id, use_requested_for: true, created_at: ran).count + 1
+      self.seq = Request.where.not(identifier: id)
+                        .where(account_id: taccount_id, created_at: ran).count +
+                 Request.where.not(account_id: taccount_id, identifier: id)
+                        .where(requested_for_id: taccount_id, use_requested_for: true, created_at: ran).count + 1
     end
 
     # create identifier
@@ -155,10 +161,10 @@ class Request < ApplicationRecord
       if !self.received_or_returned? && !self.date_ordered.nil? && self.date_ordered < danger_weeks_ago
         return "table-danger"
         # if the order has been created and not finished in the last four weeks then set to danger
-      elsif self.created_at < danger_weeks_ago
+      elsif self.updated_at < danger_weeks_ago
         return "table-danger"
         # if the order has been received and not finished in the last two weeks then set to warning
-      elsif self.created_at < warning_weeks_ago
+      elsif self.updated_at < warning_weeks_ago
         return "table-warning"
       else
         return ""
