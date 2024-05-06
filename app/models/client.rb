@@ -1,6 +1,7 @@
 class Client < ApplicationRecord
     before_save :clean_up
     validates :title, presence: true, allow_blank: false
+    validates :title, uniqueness: true
     has_many :projects
 
 

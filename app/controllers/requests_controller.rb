@@ -5,7 +5,8 @@ class RequestsController < ApplicationController
   def index
     sort_order = [
       completion: :asc,
-      created_at: :desc
+      created_at: :desc,
+      seq: :desc
     ]
     if params[:query] and params[:query] != ''
       query = '%' + params[:query].to_s + '%'
@@ -20,9 +21,9 @@ class RequestsController < ApplicationController
         query,
         query,
         query
-        ).order(sort_order).page(params[:page])
+        ).order(*sort_order).page(params[:page])
     else
-      @requests = Request.includes(:items).order(sort_order).page(params[:page])
+      @requests = Request.includes(:items).order(*sort_order).page(params[:page])
     end
   end
 
