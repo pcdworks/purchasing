@@ -1,10 +1,14 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby ">=3.0.0"
+ruby ">=3.3.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem "rails", "~> 6.1.4", ">= 6.1.4.4"
+# Extracted from Ruby stdlib in 3.1+ — required by ActionMailer
+gem "net-smtp", require: false
+gem "net-imap", require: false
+gem "net-pop", require: false
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 # Use Puma as the app server
