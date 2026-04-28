@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'reports/summarized_requests_results'
   resources :items, only: [:update]
   get 'pages/browsers'
-  get 'pages/launch'
+  get '/sso', to: 'pages#launch', as: :sso
   get 'work_breakdown_structures', to: 'pages#work_breakdown_structures'
   resources :requests, param: :identifier
   resources :projects

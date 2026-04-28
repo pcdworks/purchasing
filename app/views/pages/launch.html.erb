@@ -1,8 +1,8 @@
+<%= form_tag(account_openid_connect_omniauth_authorize_path, id: 'login', data: { turbo: false }) do %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<% end %>
 <script>
-  $(document).ready(function() {
+  window.addEventListener("DOMContentLoaded", function () {
     document.getElementById("login").submit();
   });
 </script>
-<%= form_tag(account_openid_connect_omniauth_authorize_path, id: 'login') do  %>
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-<% end %>
