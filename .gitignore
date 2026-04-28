@@ -41,3 +41,8 @@ yarn-debug.log*
 docker/purchasing-binddn.update
 docker/variables.env
 docker/volumes
+
+# jsbundling/cssbundling build outputs
+/app/assets/builds/*
+!/app/assets/builds/.keep
+/node_modules
