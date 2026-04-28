@@ -5,7 +5,7 @@ ruby ">=3.3.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem "rails", "~> 8.0.0"
-# Extracted from Ruby stdlib in 3.1+ — required by ActionMailer
+# Extracted from Ruby stdlib in 3.1+: required by ActionMailer
 gem "net-smtp", require: false
 gem "net-imap", require: false
 gem "net-pop", require: false

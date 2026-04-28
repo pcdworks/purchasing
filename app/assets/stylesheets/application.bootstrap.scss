@@ -25,6 +25,42 @@ $fa-font-path: "/fonts";
     @include button-outline-variant($purple-500, var(--bs-body-color));
 }
 
+// Hold buttons use orange so they don't fight visually with the yellow
+// edit button right next to the trigger.
+.btn-outline-hold {
+  --bs-btn-color: #fd7e14;            // bootstrap $orange
+  --bs-btn-border-color: #fd7e14;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #fd7e14;
+  --bs-btn-hover-border-color: #fd7e14;
+  --bs-btn-focus-shadow-rgb: 253, 126, 20;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: #fd7e14;
+  --bs-btn-active-border-color: #fd7e14;
+  --bs-gradient: none;
+}
+
+.btn-hold {
+  --bs-btn-color: #ffffff;
+  --bs-btn-bg: #fd7e14;
+  --bs-btn-border-color: #fd7e14;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #e36c0a;          // ~7.5% darken
+  --bs-btn-hover-border-color: #d96409;
+  --bs-btn-focus-shadow-rgb: 253, 126, 20;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: #d96409;
+  --bs-btn-active-border-color: #cc5d08;
+  --bs-gradient: none;
+}
+
+// Bootstrap removes border-radius from buttons that are direct children of
+// a btn-group, but our clear-hold button lives inside a <form> wrapper:
+// the selector doesn't reach it. Apply the same flatten manually.
+.btn-group > form > .btn {
+  border-radius: 0;
+}
+
 // Boost navbar text contrast against the purple bg-primary background.
 // Bootstrap's default navbar-dark colors are tuned for #000-ish backgrounds
 // and look muted on a saturated brand color.

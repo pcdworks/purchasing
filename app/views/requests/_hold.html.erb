@@ -1,0 +1,33 @@
+<% if @request.on_hold? %>
+  <%= form_for(@request, method: :put, html: {
+        class: "flex-fill",
+        data: { turbo_confirm: "Clear the hold and resume normal processing?" }
+      }) do |form| %>
+    <%= form.hidden_field :on_hold_until, value: "" %>
+    <%= form.button(type: :submit,
+                    class: 'btn btn-outline-success w-100',
+                    'data-bs-toggle': 'tooltip',
+                    'data-bs-placement': 'top',
+                    'title': 'Clear hold') do %>
+      <i class="fa-solid fa-circle-play"></i>
+    <% end %>
+  <% end %>
+<% else %>
+  <div class="btn-group flex-fill">
+    <button type="button" class="btn btn-outline-hold dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            title="Put on hold">
+      <i class="fa-solid fa-hand"></i>
+    </button>
+    <div class="dropdown-menu dropdown-menu-end p-3" style="min-width: 240px;">
+      <%= form_for(@request, method: :put) do |form| %>
+        <%= form.label :on_hold_until, "Hold until", class: "form-label" %>
+        <%= form.date_field :on_hold_until,
+                            class: 'form-control mb-2',
+                            required: true,
+                            min: Date.tomorrow.to_s %>
+        <%= form.submit "Put on hold", class: "btn btn-hold w-100" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

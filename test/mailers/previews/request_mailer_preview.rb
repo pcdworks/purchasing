@@ -20,6 +20,22 @@ class RequestMailerPreview < ActionMailer::Preview
     new_request_email_with(:attached)
   end
 
+  def new_request_email_on_hold
+    request = Request.first
+    request.define_singleton_method(:on_hold_until) { 2.weeks.from_now }
+    RequestMailer
+      .with(request: request, type: :on_hold, current_account: Account.first)
+      .new_request_email
+  end
+
+  def new_request_email_hold_expired_approver
+    new_request_email_with(:hold_expired_approver)
+  end
+
+  def new_request_email_hold_expired_owner
+    new_request_email_with(:hold_expired_owner)
+  end
+
   def pending_digest
     account = Account.first
     requests = pending_requests_for_preview

@@ -72,13 +72,18 @@ class RequestsController < ApplicationController
   # PATCH/PUT /requests/1 or /requests/1.json
   def update
     respond_to do |format|
-      
+      was_on_hold       = @request.on_hold?
+      hold_until_param  = request_params[:on_hold_until]
+      newly_on_hold     = !was_on_hold && hold_until_param.present?
+
       if request_params[:attachment]
         type = :attached
       elsif request_params[:submitted]
         type = :submitted
       elsif request_params[:approved]
         type = :approved
+      elsif newly_on_hold
+        type = :on_hold
       else
         type = nil
       end

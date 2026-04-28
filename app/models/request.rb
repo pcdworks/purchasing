@@ -157,6 +157,7 @@ class Request < ApplicationRecord
   end
 
   def column_class
+    return "" if on_hold?
     warning_weeks_ago = DateTime.now - 3.weeks
     danger_weeks_ago = DateTime.now - 5.weeks
     not_finished = self.completion < 15

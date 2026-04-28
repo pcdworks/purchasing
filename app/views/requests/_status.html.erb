@@ -25,17 +25,17 @@
     </div>
   <% end %>
   <!-- if item is on hold -->
-  <!-- 
-    <% if request.on_hold? %>
-        <div data-bs-toggle="tooltip" title="On Hold">
-            <i class="text-danger fa-solid fa-hand"></i>
-        </div>
-    <% else %>
-        <div data-bs-toggle="tooltip" title="Good to Go">
-            <i class="text-success fa-solid fa-thumbs-up"></i>
-        </div>
-    <% end %>
-    -->
+  <% if request.on_hold? %>
+    <div data-bs-toggle="tooltip"
+         data-bs-html=true
+         title="On hold until<br/><%= I18n.l request.on_hold_until.to_date %>">
+      <i class="text-danger fa-solid fa-hand fa-lg"></i>
+    </div>
+  <% else %>
+    <div data-bs-toggle="tooltip" title="Not on hold">
+      <i class="fa-solid fa-hand fa-lg"></i>
+    </div>
+  <% end %>
   <!-- if item is ordered -->
   <% if request.ordered? %>
     <div data-bs-toggle="tooltip"

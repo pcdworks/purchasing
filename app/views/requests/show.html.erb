@@ -39,6 +39,9 @@
     <% if approver && @request.submitted? %>
       <%= render 'approve'%>
     <% end %>
+    <% if approver %>
+      <%= render 'hold' %>
+    <% end %>
     <%= link_to(edit_request_path(@request),
                 class: 'btn btn-outline-warning',
                 'data-bs-toggle': 'tooltip',

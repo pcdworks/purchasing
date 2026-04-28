@@ -16,7 +16,7 @@ ENV RAILS_LOG_TO_STDOUT=true
 #   2. Split containers:   leave SOLID_QUEUE_IN_PUMA unset and run a second
 #                          container with `bin/jobs` against the same image.
 # Setting both (=true plus a separate bin/jobs container) doubles every
-# scheduled job — don't do that.
+# scheduled job: don't do that.
 
 
 ADD . /app

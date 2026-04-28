@@ -88,6 +88,30 @@ class RequestMailer < ApplicationMailer
                         subject: "An attachment has been added to the purchase request: " + @request.to_s
                     )
                 end
+            when :on_hold
+                @to = [@requested_by, @requested_for].uniq.join(',')
+                mail(
+                    from: @from,
+                    reply_to: @from,
+                    to: @to,
+                    subject: "Purchase request put on hold: " + @request.to_s
+                )
+            when :hold_expired_approver
+                @to = Account.where(approver: true).pluck(:email).join(',')
+                mail(
+                    from: @from,
+                    reply_to: @from,
+                    to: @to,
+                    subject: "Hold ended, awaits approval: " + @request.to_s
+                )
+            when :hold_expired_owner
+                @to = [@requested_by, @requested_for].uniq.join(',')
+                mail(
+                    from: @from,
+                    reply_to: @from,
+                    to: @to,
+                    subject: "Hold ended, ready for next step: " + @request.to_s
+                )
         end # @type
     end
 end

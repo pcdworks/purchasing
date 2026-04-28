@@ -21,6 +21,22 @@
     headline = "An attachment was added to a request"
     blurb = "A file was attached to the request and may need your review."
     cta = "Open request"
+  when :on_hold
+    eyebrow = "On hold"
+    headline = "Your purchase request has been put on hold"
+    until_str = @request.on_hold_until ? I18n.l(@request.on_hold_until.to_date) : ""
+    blurb = "An approver has placed this request on hold until #{until_str}. You'll be notified when the hold ends."
+    cta = "View request"
+  when :hold_expired_approver
+    eyebrow = "Hold ended"
+    headline = "A hold has ended; the request awaits approval"
+    blurb = "The hold on this purchase request has ended and it now needs an approver review."
+    cta = "Review request"
+  when :hold_expired_owner
+    eyebrow = "Hold ended"
+    headline = "Your purchase request is no longer on hold"
+    blurb = "The hold has ended and the request is ready for its next step."
+    cta = "Open request"
   else
     eyebrow = "Notification"
     headline = "Purchase request update"
