@@ -13,6 +13,7 @@ import "@popperjs/core"
 import "bootstrap"
 import { Tooltip, Popover } from "bootstrap"
 import "./theme"
+import "./searchable_select"
 
 document.addEventListener("turbo:load", () => {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

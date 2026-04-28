@@ -65,7 +65,7 @@
               options_for_select(Account.all.collect {|u| [u, u.id]},
               (form.object.new_record? ? current_account.id : form.object.account_id)),
               {include_blank: true},
-              {class: 'form-select', disabled: true})%>
+              {class: 'form-select js-searchable-select', disabled: true})%>
       </div>
     </div>
     <div class="col-md-3">
@@ -74,7 +74,7 @@
         <%= form.select(:requested_for_id,
                             Account.all.collect {|u| [u, u.id]},
                             {include_blank: true},
-                            {class: 'form-select'})%>
+                            {class: 'form-select js-searchable-select'})%>
       </div>
     </div>
     <div class="col-md-3">
@@ -92,15 +92,19 @@
                             .includes(:client)
                             .order("clients.title asc, projects.identifier asc, projects.title asc").collect {|u| [u, u.id]},
                             {include_blank: true},
-                            {class: 'form-select', id: 'project'})%>
+                            {class: 'form-select js-searchable-select', id: 'project'})%>
       </div>
     </div>
     <div class="col-md-3">
       <div class="field">
         <strong><%= form.label :work_breakdown_structure %></strong>
-        <%= form.text_field :work_breakdown_structure, class: 'form-select', list: 'wbs', autocomplete: 'off' %>
-        <datalist id="wbs">
-        </datalist>
+        <% current_wbs = form.object.work_breakdown_structure %>
+        <%= form.select :work_breakdown_structure,
+                        current_wbs.present? ? [[current_wbs, current_wbs]] : [],
+                        { include_blank: true },
+                        { class: 'form-select js-searchable-select',
+                          id: 'wbs',
+                          data: { allow_create: 'true' } } %>
       </div>
     </div>
     <div class="col-md-3">
@@ -109,7 +113,7 @@
         <%= form.select(:payment_method_id,
                             PaymentMethod.where(active: true).or(PaymentMethod.where(id: form.object.id)).collect {|u| [u, u.id]},
                             {include_blank: true},
-                            {class: 'form-select'})%>
+                            {class: 'form-select js-searchable-select'})%>
       </div>
     </div>
     <div class="col-md-3">
@@ -118,7 +122,7 @@
         <%= form.select :shipping_charges_paid_to,
                             options_from_collection_for_select(shipping_charges, :first, :last, form.object.shipping_charges_paid_to),
                             {},
-                            {class: 'form-control'}  %>
+                            {class: 'form-select js-searchable-select'}  %>
       </div>
     </div>
     <!-- row -->
@@ -171,8 +175,10 @@
   </div>
   <script>
     function wbs(){
-      var project = document.getElementById("project").value;
-      // console.log(project)
+      var projectEl = document.getElementById("project");
+      var wbsEl = document.getElementById("wbs");
+      if (!projectEl || !wbsEl) return;
+      var project = projectEl.value;
       $.ajax({
         url: "/work_breakdown_structures",
         method: "GET",
@@ -182,19 +188,23 @@
           console.error('AJAX Error: ' + status + error);
         },
         success: function (response) {
-          // console.log(response);
-          var wbs = response;
-          $("#wbs").empty();
-
-          $("#wbs").append('<option></option>');
-          for(var i=0; i< wbs.length; i++){
-            $("#wbs").append('<option value="' + wbs[i]['id'] + '">' + wbs[i]['title'] + '</option>');
+          var ts = wbsEl.tomselect;
+          if (!ts) return;
+          var current = ts.getValue();
+          ts.clearOptions();
+          if (current) {
+            ts.addOption({ value: current, text: current });
           }
+          response.forEach(function (item) {
+            ts.addOption({ value: item.id, text: item.title });
+          });
+          ts.refreshOptions(false);
+          if (current) ts.setValue(current, true);
         }
       });
     }
     $(document).on("change", "#project", wbs);
-    $(document).ready(wbs);
+    $(document).on("turbo:load", wbs);
   </script>
 </div>
 <br/>

@@ -9,6 +9,9 @@ $primary: #6f42c1; // bootstrap's $purple-500
 
 @import "bootstrap/scss/bootstrap";
 
+// Searchable select widgets (TomSelect, Bootstrap 5 styled).
+@import "tom-select/dist/scss/tom-select.bootstrap5";
+
 $fa-font-path: "/fonts";
 @import "@fortawesome/fontawesome-free/scss/fontawesome";
 @import "@fortawesome/fontawesome-free/scss/solid";
