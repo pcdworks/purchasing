@@ -20,7 +20,6 @@ gem "jbuilder", "~> 2.7"
 
 # Devise for accounts
 gem "devise"
-gem 'devise_ldap_authenticatable'
 
 # OmniAuth
 gem 'omniauth', '~> 2.1', '>= 2.1.2'

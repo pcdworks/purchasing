@@ -92,9 +92,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise_ldap_authenticatable (0.8.7)
-      devise (>= 3.4.1)
-      net-ldap (>= 0.16.0)
     email_validator (2.2.4)
       activemodel
     erubi (1.10.0)
@@ -150,7 +147,6 @@ GEM
     msgpack (1.4.4)
     net-http (0.4.1)
       uri
-    net-ldap (0.17.0)
     nio4r (2.5.8)
     nokogiri (1.13.1-x86_64-linux)
       racc (~> 1.4)
@@ -317,7 +313,6 @@ DEPENDENCIES
   capybara (>= 3.26)
   cocoon
   devise
-  devise_ldap_authenticatable
   jbuilder (~> 2.7)
   kaminari
   libxml-ruby (= 3.0)

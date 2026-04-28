@@ -1,10 +1,7 @@
 class Account < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :validatable and :omniauthable, :recoverable, :rememberable
-  devise :ldap_authenticatable, :trackable, :omniauthable, omniauth_providers: %i[openid_connect]
-  if !ENV['LDAP_HOST'].nil? && !ENV['LDAP_HOST'].empty?
-    before_save :set_fields
-  end
+  devise :trackable, :omniauthable, omniauth_providers: %i[openid_connect]
 
   def self.from_omniauth(auth)
     account = where(email: auth.info.email).first
@@ -35,7 +32,6 @@ class Account < ApplicationRecord
       return Account.create(
         {
           email: auth.info.email,
-          password: Devise.friendly_token[0, 20],
           username: auth.extra.raw_info.preferred_username,
           givenname: givenname,
           surname: surname,
@@ -53,22 +49,6 @@ class Account < ApplicationRecord
 
   def in_group?(group_name)
     self.groups.include?(group_name)
-  end
-
-  def set_fields
-    entry = self.ldap_entry
-    unless entry.nil?
-      self.surname = entry.sn[0]
-      self.givenname = entry.givenname[0]
-      self.initials = entry.initials[0]
-      self.email = entry.mail[0]
-      self.approver = self.in_group?('approver')
-      self.groups = entry.memberof.collect do |group|
-        unless group.include?('pbac')
-          group[/#{'cn='}(.*?)#{','}/m, 1]
-        end
-      end.compact
-    end
   end
 
   def approver?
