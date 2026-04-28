@@ -12,6 +12,7 @@ ActiveStorage.start()
 import "@popperjs/core"
 import "bootstrap"
 import { Tooltip, Popover } from "bootstrap"
+import "./theme"
 
 document.addEventListener("turbo:load", () => {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

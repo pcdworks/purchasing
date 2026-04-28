@@ -1,4 +1,10 @@
 @import "bootstrap/scss/functions";
+
+// Override the theme primary color BEFORE Bootstrap loads its variables.
+// Drives btn-primary, bg-primary, text-primary, border-primary,
+// --bs-primary-rgb, etc. across the app.
+$primary: #6f42c1; // bootstrap's $purple-500
+
 @import "bootstrap/scss/variables";
 
 @import "bootstrap/scss/bootstrap";
@@ -16,7 +22,19 @@ $fa-font-path: "/fonts";
 
 
 .btn-outline-primary {
-    @include button-outline-variant($purple-500, #222222);
+    @include button-outline-variant($purple-500, var(--bs-body-color));
+}
+
+// Boost navbar text contrast against the purple bg-primary background.
+// Bootstrap's default navbar-dark colors are tuned for #000-ish backgrounds
+// and look muted on a saturated brand color.
+.navbar.bg-primary {
+    --bs-navbar-color: rgba(255, 255, 255, 0.92);
+    --bs-navbar-hover-color: #ffffff;
+    --bs-navbar-active-color: #ffffff;
+    --bs-navbar-brand-color: #ffffff;
+    --bs-navbar-brand-hover-color: #ffffff;
+    --bs-navbar-disabled-color: rgba(255, 255, 255, 0.55);
 }
 
 body {
@@ -31,24 +49,18 @@ body {
     width: 100%;
 }
 
-input#em {
-    background: none;
-    border: none;
-    width: 100%;
-}
-input#em:focus {
-    background: white;
-    border: 1px solid grey;
-}
-
+input#em,
 textarea#em {
     background: none;
     border: none;
     width: 100%;
+    color: inherit;
 }
+input#em:focus,
 textarea#em:focus {
-    background: white;
-    border: 1px solid grey;
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    color: var(--bs-body-color);
 }
 
 .attachment {

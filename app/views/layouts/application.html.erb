@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <script>
+      // Apply the saved theme before paint so there's no flash. Must stay
+      // inline + non-deferred for that reason.
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme') || 'auto';
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = stored === 'auto' ? (systemDark ? 'dark' : 'light') : stored;
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        } catch (e) { /* localStorage may be blocked; fall back to default */ }
+      })();
+    </script>
     <%= stylesheet_link_tag "application", media: "all", 'data-turbo-track': "reload" %>
     <%= javascript_include_tag "application", 'data-turbo-track': "reload", defer: true %>
     <%= render 'application/favicon' %>
@@ -21,7 +33,7 @@
   </head>
   <body class="d-flex flex-column min-vh-100">
     <% if current_account %>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <nav class="navbar navbar-expand-md fixed-top bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +59,28 @@
               </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="themeMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Theme">
+                  <i id="theme-toggle-icon" class="fa-solid fa-circle-half-stroke"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeMenu">
+                  <li>
+                    <button type="button" class="dropdown-item" data-bs-theme-value="light">
+                      <i class="fa-solid fa-sun me-2"></i>Light
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item" data-bs-theme-value="dark">
+                      <i class="fa-solid fa-moon me-2"></i>Dark
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item" data-bs-theme-value="auto">
+                      <i class="fa-solid fa-circle-half-stroke me-2"></i>Auto
+                    </button>
+                  </li>
+                </ul>
+              </li>
               <li class="nav-item">
                 <% if current_account %>
                   <%= link_to(accounts_sign_out_path, class: 'nav-link') do %>
@@ -78,7 +112,7 @@
       <% end %>
       <%= yield %>
     </main>
-    <footer class="footer mt-auto py-3 bg-light">
+    <footer class="footer mt-auto py-3 bg-body-tertiary">
       <div class="container">
         <div class="row">
           <span class="col-md-6">
