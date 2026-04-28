@@ -28,6 +28,12 @@ class ReportsController < ApplicationController
                         [x[0], t]
                       end
 
+    respond_to do |format|
+      format.html
+      format.ods do
+        send_data build_payment_method_ods, filename: ods_filename("payment-method"), type: :ods
+      end
+    end
   end
 
   def itemized_requests_results
@@ -38,6 +44,13 @@ class ReportsController < ApplicationController
     .collect  do |x|
       t = x[1].group_by(&:work_breakdown_structure)
       [x[0], t]
+    end
+
+    respond_to do |format|
+      format.html
+      format.ods do
+        send_data build_itemized_requests_ods, filename: ods_filename("itemized-requests"), type: :ods
+      end
     end
   end
 
@@ -50,9 +63,131 @@ class ReportsController < ApplicationController
                         t = x[1].group_by(&:work_breakdown_structure)
                         [x[0], t]
                       end
+
+    respond_to do |format|
+      format.html
+      format.ods do
+        send_data build_summarized_requests_ods, filename: ods_filename("summarized-requests"), type: :ods
+      end
+    end
   end
 
   private
+    def ods_filename(slug)
+      range = [@start_date, @end_date].compact.join("_to_")
+      base  = ["report", slug, range].reject(&:blank?).join("-")
+      "#{base}.ods"
+    end
+
+    def build_payment_method_ods
+      ss = RODF::Spreadsheet.new
+      OdsStyles.apply(ss)
+
+      ss.set_column_widths(
+        table: ss.table("Payment Method") do |t|
+          t.row do |r|
+            r.cell "Payment Method", style: "header"
+            r.cell "Total",          style: "header"
+          end
+          @results.each do |pm, total|
+            t.row do |r|
+              r.cell pm.to_s,            style: "cell"
+              r.cell total.to_f, type: :currency, style: "currency"
+            end
+          end
+          t.row do |r|
+            r.cell "Total",              style: "total"
+            r.cell @total.to_f, type: :currency, style: "total"
+          end
+        end,
+        column_widths: [{ "column-width" => "8cm" }, { "column-width" => "4cm" }]
+      )
+      ss.bytes
+    end
+
+    def build_summarized_requests_ods
+      ss = RODF::Spreadsheet.new
+      OdsStyles.apply(ss)
+
+      ss.set_column_widths(
+        table: ss.table("Summarized Requests") do |t|
+          t.row do |r|
+            %w[Project WBS Identifier Vendor Date Cost].each do |h|
+              r.cell h, style: "header"
+            end
+          end
+
+          @results.each do |project, wbs_groups|
+            wbs_groups.each do |wbs, requests|
+              requests.each do |q|
+                t.row do |r|
+                  r.cell project.to_s,                   style: "cell"
+                  r.cell wbs.presence || "Undefined",    style: "cell"
+                  r.cell q.identifier.to_s.upcase,       style: "cell"
+                  r.cell q.vendor.to_s,                  style: "cell"
+                  r.cell q.created_at.to_date,           style: "cell", type: :date
+                  r.cell q.total.to_f, type: :currency,  style: "currency"
+                end
+              end
+            end
+          end
+        end,
+        column_widths: [
+          { "column-width" => "5cm" }, { "column-width" => "4cm" },
+          { "column-width" => "3.5cm" }, { "column-width" => "5cm" },
+          { "column-width" => "2.5cm" }, { "column-width" => "3cm" }
+        ]
+      )
+      ss.bytes
+    end
+
+    def build_itemized_requests_ods
+      ss = RODF::Spreadsheet.new
+      OdsStyles.apply(ss)
+
+      ss.set_column_widths(
+        table: ss.table("Itemized Requests") do |t|
+          t.row do |r|
+            %w[Project WBS Request Vendor DateOrdered DateReceived # Description VendorRef Qty Price Total].each do |h|
+              r.cell h, style: "header"
+            end
+          end
+
+          @results.each do |project, wbs_groups|
+            wbs_groups.each do |wbs, requests|
+              requests.each do |q|
+                q.items.reverse.each_with_index do |item, idx|
+                  t.row do |r|
+                    r.cell project.to_s,                       style: "cell"
+                    r.cell wbs.presence || "Undefined",        style: "cell"
+                    r.cell q.identifier.to_s.upcase,           style: "cell"
+                    r.cell q.vendor.to_s,                      style: "cell"
+                    r.cell (q.date_ordered ? q.date_ordered.to_date : ""),  style: "cell", type: q.date_ordered ? :date : :string
+                    r.cell (q.date_received ? q.date_received.to_date : ""), style: "cell", type: q.date_received ? :date : :string
+                    r.cell idx + 1,                            style: "cell", type: :float
+                    r.cell item.description.to_s,              style: "cell"
+                    r.cell item.vendor_reference.to_s,         style: "cell"
+                    r.cell item.quantity.to_f,                 style: "cell", type: :float
+                    r.cell item.price.to_f, type: :currency,   style: "currency"
+                    r.cell item.total.to_f, type: :currency,   style: "currency"
+                  end
+                end
+              end
+            end
+          end
+        end,
+        column_widths: [
+          { "column-width" => "4.5cm" }, { "column-width" => "3.5cm" },
+          { "column-width" => "3cm" },   { "column-width" => "4.5cm" },
+          { "column-width" => "2.5cm" }, { "column-width" => "2.5cm" },
+          { "column-width" => "1cm" },   { "column-width" => "6cm" },
+          { "column-width" => "3cm" },   { "column-width" => "1.5cm" },
+          { "column-width" => "2.5cm" }, { "column-width" => "2.5cm" }
+        ]
+      )
+      ss.bytes
+    end
+
     def set_query
       @query = {}
       @start_date = params[:start]

@@ -29,6 +29,14 @@ class RequestsController < ApplicationController
 
   # GET /requests/1 or /requests/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.ods do
+        send_data build_request_ods(@request),
+                  filename: "#{@request.identifier}.ods",
+                  type: :ods
+      end
+    end
   end
 
   # GET /requests/new
@@ -100,6 +108,100 @@ class RequestsController < ApplicationController
   end
 
   private
+
+    def build_request_ods(req)
+      ss = RODF::Spreadsheet.new
+      OdsStyles.apply(ss)
+
+      meta = [
+        ["Identifier",     req.identifier.to_s.upcase],
+        ["Vendor",         req.vendor.to_s],
+        ["Order Number",   req.order_number.to_s],
+        ["Project",        req.project.to_s],
+        ["WBS",            req.work_breakdown_structure.to_s],
+        ["Payment Method", req.payment_method.to_s],
+        ["Requested By",   req.account.to_s],
+        ["Requested For",  req.requested_for.to_s],
+        ["Date Created",   (req.created_at  ? req.created_at.to_date  : nil)],
+        ["Date Ordered",   (req.date_ordered ? req.date_ordered.to_date : nil)],
+        ["Date Received",  (req.date_received ? req.date_received.to_date : nil)],
+        ["Date Approved",  (req.date_approved ? req.date_approved.to_date : nil)],
+        ["Approved By",    req.approved_by.to_s],
+      ]
+
+      totals = [
+        ["Subtotal",   req.subtotal.to_f],
+        ["Shipping",   req.shipping_cost.to_f],
+        ["Sales Tax",  req.sales_tax.to_f],
+        ["Import Tax", req.import_tax.to_f],
+        ["Surcharge",  req.surcharge.to_f],
+        ["Total",      req.total.to_f],
+      ]
+
+      ss.set_column_widths(
+        table: ss.table(req.identifier.to_s.upcase) do |t|
+          meta.each do |label, value|
+            t.row do |r|
+              r.cell label, style: "subheader"
+              if value.is_a?(Date)
+                r.cell value, style: "cell", type: :date
+              else
+                r.cell value.to_s, style: "cell"
+              end
+            end
+          end
+
+          t.row { |r| r.cell "" }
+
+          t.row do |r|
+            %w[# Description VendorRef Qty Price Total].each do |h|
+              r.cell h, style: "header"
+            end
+          end
+          req.items.reverse.each_with_index do |item, idx|
+            t.row do |r|
+              r.cell idx + 1,                             style: "cell", type: :float
+              r.cell item.description.to_s,               style: "cell"
+              r.cell item.vendor_reference.to_s,          style: "cell"
+              r.cell item.quantity.to_f,                  style: "cell", type: :float
+              r.cell item.price.to_f, type: :currency,    style: "currency"
+              r.cell item.total.to_f, type: :currency,    style: "currency"
+            end
+          end
+
+          t.row { |r| r.cell "" }
+
+          totals.each do |label, amount|
+            style = label == "Total" ? "header" : "subheader"
+            t.row do |r|
+              4.times { r.cell "", style: style }
+              r.cell label, style: style
+              r.cell amount, type: :currency, style: style
+            end
+          end
+
+          if req.notes.present?
+            t.row { |r| r.cell "" }
+            t.row do |r|
+              r.cell "Notes", style: "subheader"
+              r.cell req.notes.to_s, style: "cell"
+            end
+          end
+          if req.reason_for_rejection.present?
+            t.row do |r|
+              r.cell "Reason for Rejection", style: "subheader"
+              r.cell req.reason_for_rejection.to_s, style: "cell"
+            end
+          end
+        end,
+        column_widths: [
+          { "column-width" => "1cm" },   { "column-width" => "8cm" },
+          { "column-width" => "4cm" },   { "column-width" => "1.5cm" },
+          { "column-width" => "3cm" },   { "column-width" => "3cm" }
+        ]
+      )
+      ss.bytes
+    end
 
     def update_items(request_params)
       received = request_params[:received]

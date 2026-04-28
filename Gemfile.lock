@@ -297,6 +297,9 @@ GEM
       actionpack (>= 7.0)
       railties (>= 7.0)
     rexml (3.2.5)
+    rodf (1.2.0)
+      builder (>= 3.0)
+      rubyzip (>= 1.0)
     rubyzip (2.3.2)
     securerandom (0.4.1)
     selenium-webdriver (4.1.0)
@@ -378,6 +381,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 8.0.0)
   rails_real_favicon
+  rodf
   selenium-webdriver
   sprockets-rails
   turbo-rails

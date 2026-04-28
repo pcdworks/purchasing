@@ -46,6 +46,14 @@
                 'title': 'Edit Request') do %>
       <i class="fa-solid fa-pencil"></i>
     <% end %>
+    <%= link_to(request_path(@request, format: :ods),
+                class: 'btn btn-outline-primary',
+                'data-bs-toggle': 'tooltip',
+                'data-bs-placement': 'top',
+                'data-turbo': false,
+                'title': 'Download as ODS') do %>
+      <i class="fa-solid fa-file-arrow-down"></i>
+    <% end %>
     <%= link_to(@request,
                 method: :delete,
                 data: { confirm: 'Are you sure?' },

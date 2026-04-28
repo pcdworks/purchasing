@@ -36,6 +36,9 @@ gem 'omniauth_openid_connect', '~> 0.7.1'
 # OpenID Connect CSRF Protection
 gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.1'
 
+# ODS spreadsheet export
+gem 'rodf'
+
 # Pagination
 gem 'kaminari'
 

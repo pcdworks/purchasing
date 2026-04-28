@@ -8,6 +8,14 @@
                 'title': 'Go back') do %>
     <i class="fa-solid fa-angle-left"></i>
   <% end %>
+  <%= link_to(url_for(format: :ods),
+              class: 'btn btn-outline-primary',
+              'data-bs-toggle': 'tooltip',
+              'data-bs-placement': 'top',
+              'data-turbo': false,
+              'title': 'Download as ODS') do %>
+    <i class="fa-solid fa-file-arrow-down"></i>
+  <% end %>
 </div>
 <%= render partial: 'parameters' %>
 <br/>
