@@ -1,6 +1,31 @@
 class RequestMailer < ApplicationMailer
     default :from => ENV['MAILER_FROM'],
             :reply_to => ENV['MAILER_FROM']
+
+    # Daily/weekly digest to a request owner with their pending PRs.
+    def pending_digest
+      @account  = params[:account]
+      @requests = Array(params[:requests]).sort_by { |r| [r.column_class == "table-danger" ? 0 : 1, r.created_at] }
+      return if @requests.empty?
+
+      mail(
+        to: @account.email,
+        subject: "You have #{@requests.size} pending purchase #{'request'.pluralize(@requests.size)}"
+      )
+    end
+
+    # Daily/weekly digest to an approver listing PRs awaiting approval.
+    def approver_digest
+      @account  = params[:account]
+      @requests = Array(params[:requests]).sort_by { |r| [r.column_class == "table-danger" ? 0 : 1, r.created_at] }
+      return if @requests.empty?
+
+      mail(
+        to: @account.email,
+        subject: "#{@requests.size} purchase #{'request'.pluralize(@requests.size)} awaiting approval"
+      )
+    end
+
     def new_request_email
         @request = params[:request]
         @type = params[:type]

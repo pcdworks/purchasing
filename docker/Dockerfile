@@ -11,6 +11,13 @@ ENV NODE_ENV=production
 ENV RAILS_SERVE_STATIC_FILES=true
 ENV RAILS_LOG_TO_STDOUT=true
 
+# Background-jobs deployment is opt-in. Pick ONE mode at deploy time:
+#   1. Single-container:   set SOLID_QUEUE_IN_PUMA=true (puma starts a worker)
+#   2. Split containers:   leave SOLID_QUEUE_IN_PUMA unset and run a second
+#                          container with `bin/jobs` against the same image.
+# Setting both (=true plus a separate bin/jobs container) doubles every
+# scheduled job — don't do that.
+
 
 ADD . /app
 WORKDIR /app

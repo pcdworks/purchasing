@@ -1,11 +1,89 @@
+<%
+  case @type
+  when :submitted
+    eyebrow = "New request"
+    headline = "A request is awaiting approval"
+    blurb = "#{@request.account} submitted a purchase request that needs an approver review."
+    cta = "Review request"
+  when :approved
+    eyebrow = "Approved"
+    headline = "Your purchase request was approved"
+    blurb = "Your request has been approved and is ready to be ordered."
+    cta = "Open request"
+  when :received
+    r = @request.received
+    eyebrow = "Items received"
+    headline = r[:all] ? "All items have been received" : "Some items have been received"
+    blurb = "Items for the request have been marked as received."
+    cta = "View request"
+  when :attached
+    eyebrow = "Attachment added"
+    headline = "An attachment was added to a request"
+    blurb = "A file was attached to the request and may need your review."
+    cta = "Open request"
+  else
+    eyebrow = "Notification"
+    headline = "Purchase request update"
+    blurb = "There's an update on the request below."
+    cta = "View request"
+  end
+%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= headline %></title>
   </head>
-  <body>
-    <p>
-      Purchase request available at: <%= link_to url_for(@request), url_for(@request)%>
-    </p>
+  <body style="margin:0;padding:0;background-color:#f3f4f6;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;color:#111827;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:32px 0;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background-color:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 18px 45px rgba(15,23,42,0.14);">
+            <tr>
+              <td style="padding:40px 48px 32px;background:linear-gradient(135deg,#6f42c1,#5a35a0);color:#f9fafb;">
+                <p style="margin:0 0 8px;font-size:14px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.9;"><%= eyebrow %></p>
+                <h1 style="margin:0;font-size:28px;"><%= headline %></h1>
+                <p style="margin:12px 0 0;font-size:16px;opacity:0.9;color:#f9fafb;"><%= blurb %></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:36px 48px 16px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:28px;">
+                  <tbody>
+                    <tr>
+                      <td style="padding:14px 18px;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#475569;background-color:#f8fafc;width:140px;">Identifier</td>
+                      <td style="padding:14px 18px;font-size:15px;font-weight:700;color:#0f172a;"><%= @request.to_s %></td>
+                    </tr>
+                    <tr style="border-top:1px solid #e2e8f0;">
+                      <td style="padding:14px 18px;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#475569;background-color:#f8fafc;">Vendor</td>
+                      <td style="padding:14px 18px;font-size:15px;color:#0f172a;"><%= @request.vendor %></td>
+                    </tr>
+                    <tr style="border-top:1px solid #e2e8f0;">
+                      <td style="padding:14px 18px;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#475569;background-color:#f8fafc;">Project</td>
+                      <td style="padding:14px 18px;font-size:15px;color:#0f172a;"><%= @request.project %></td>
+                    </tr>
+                    <tr style="border-top:1px solid #e2e8f0;">
+                      <td style="padding:14px 18px;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#475569;background-color:#f8fafc;">Requested by</td>
+                      <td style="padding:14px 18px;font-size:15px;color:#0f172a;"><%= @request.account %></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style="text-align:center;margin-bottom:8px;">
+                  <a href="<%= url_for(@request) %>" style="display:inline-block;padding:14px 28px;border-radius:9999px;background-color:#6f42c1;color:#f9fafb;text-decoration:none;font-weight:700;font-size:15px;">
+                    <%= cta %>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:20px 48px 28px;background-color:#f8fafc;color:#94a3b8;font-size:12px;text-align:center;">
+                <p style="margin:0;">PCDworks Purchasing • Notification</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>

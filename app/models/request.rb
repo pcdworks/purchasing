@@ -1,4 +1,8 @@
 class Request < ApplicationRecord
+  # Bitfield value when a request has progressed through every stage
+  # (submitted=1, approved=2, all-items received-or-returned=4, ordered=8).
+  COMPLETE_FLAG_TOTAL = 15
+
   belongs_to :approved_by, class_name: "Account", optional: true
   belongs_to :project
   belongs_to :payment_method

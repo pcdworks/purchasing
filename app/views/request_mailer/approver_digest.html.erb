@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Purchase requests awaiting approval</title>
+  </head>
+  <body style="margin:0;padding:0;background-color:#f3f4f6;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;color:#111827;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:32px 0;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background-color:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 18px 45px rgba(15,23,42,0.14);">
+            <tr>
+              <td style="padding:40px 48px 32px;background:linear-gradient(135deg,#6f42c1,#5a35a0);color:#f9fafb;">
+                <p style="margin:0 0 8px;font-size:14px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.9;">Approval queue</p>
+                <h1 style="font-size:28px;margin:0 0 12px;"><%= @requests.size %> purchase <%= "request".pluralize(@requests.size) %> awaiting approval</h1>
+                <p style="margin:0;font-size:16px;opacity:0.9;color:#f9fafb;">Hi <%= @account.givenname || @account.username %>, the following <%= @requests.size == 1 ? "request has" : "requests have" %> been submitted and need an approver review.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:36px 48px 16px;">
+                <p style="font-size:15px;line-height:1.6;margin:0 0 24px;color:#475569;">
+                  Red rows have been waiting 5+ weeks; yellow rows have been pending 3+ weeks. Click an identifier to review.
+                </p>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+                  <thead>
+                    <tr style="background-color:#f8fafc;color:#475569;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;">
+                      <th align="left" style="padding:12px 16px;">Identifier</th>
+                      <th align="left" style="padding:12px 16px;">Vendor</th>
+                      <th align="left" style="padding:12px 16px;">Project</th>
+                      <th align="left" style="padding:12px 16px;">Requested by</th>
+                      <th align="left" style="padding:12px 16px;">Submitted</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @requests.each do |r| %>
+                      <% urgent = r.column_class == "table-danger" %>
+                      <tr style="border-top:1px solid #e2e8f0;background-color:<%= urgent ? '#fef2f2' : '#fff8e6' %>;">
+                        <td style="padding:14px 16px;font-size:15px;font-weight:700;">
+                          <a href="<%= url_for(r) %>" style="color:#6f42c1;text-decoration:none;"><%= r.to_s %></a>
+                        </td>
+                        <td style="padding:14px 16px;font-size:14px;color:#0f172a;"><%= r.vendor %></td>
+                        <td style="padding:14px 16px;font-size:14px;color:#0f172a;"><%= r.project %></td>
+                        <td style="padding:14px 16px;font-size:14px;color:#0f172a;"><%= r.account %></td>
+                        <td style="padding:14px 16px;font-size:14px;color:<%= urgent ? '#991b1b' : '#92400e' %>;font-weight:600;"><%= r.submitted_at ? I18n.l(r.submitted_at.to_date) : "—" %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+                <div style="text-align:center;margin:32px 0 8px;">
+                  <a href="<%= requests_url %>" style="display:inline-block;padding:14px 28px;border-radius:9999px;background-color:#6f42c1;color:#f9fafb;text-decoration:none;font-weight:700;font-size:15px;">
+                    Open approval queue
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:20px 48px 28px;background-color:#f8fafc;color:#94a3b8;font-size:12px;text-align:center;">
+                <p style="margin:0;">PCDworks Purchasing • Approval queue</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

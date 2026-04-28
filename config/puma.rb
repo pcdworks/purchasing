@@ -41,3 +41,8 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# Run Solid Queue worker(s) as a sibling process of puma in production so
+# the Docker image only needs one process to run both the web app and jobs.
+# In development we use bin/dev / Procfile.dev which starts bin/jobs separately.
+plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]

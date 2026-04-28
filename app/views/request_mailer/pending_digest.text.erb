@@ -1,0 +1,10 @@
+Hi <%= @account.givenname || @account.username %>,
+
+You have <%= @requests.size %> purchase <%= "request".pluralize(@requests.size) %> that need your attention.
+(! = overdue 5+ weeks, * = pending 3+ weeks)
+
+<% @requests.each do |r| -%>
+  <%= r.column_class == "table-danger" ? "!" : "*" %> <%= r.to_s %> — <%= r.vendor %> — <%= r.project %> — <%= I18n.l r.created_at.to_date %>
+    <%= url_for(r) %>
+    Status: <%= request_status_label(r) %>
+<% end -%>

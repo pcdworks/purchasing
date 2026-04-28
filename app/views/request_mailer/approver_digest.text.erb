@@ -1,0 +1,9 @@
+Hi <%= @account.givenname || @account.username %>,
+
+<%= @requests.size %> purchase <%= "request".pluralize(@requests.size) %> <%= @requests.size == 1 ? "is" : "are" %> waiting for approver review.
+(! = waiting 5+ weeks, * = waiting 3+ weeks)
+
+<% @requests.each do |r| -%>
+  <%= r.column_class == "table-danger" ? "!" : "*" %> <%= r.to_s %> — <%= r.vendor %> — by <%= r.account %> — submitted <%= r.submitted_at ? I18n.l(r.submitted_at.to_date) : "—" %>
+    <%= url_for(r) %>
+<% end -%>

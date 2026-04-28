@@ -11,6 +11,8 @@ module Purchasing
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
+    config.active_job.queue_adapter = :solid_queue
+
     config.time_zone = ENV['TIME_ZONE'] || 'Central Time (US & Canada)'
 
     # Configuration for the application, engines, and railties goes here.

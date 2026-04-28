@@ -36,6 +36,10 @@ gem 'omniauth_openid_connect', '~> 0.7.1'
 # OpenID Connect CSRF Protection
 gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.1'
 
+# Background jobs (Postgres-backed, Rails 8 default)
+gem 'solid_queue'
+gem 'mission_control-jobs'
+
 # ODS spreadsheet export
 gem 'rodf'
 
