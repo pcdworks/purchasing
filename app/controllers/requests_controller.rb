@@ -128,6 +128,7 @@ class RequestsController < ApplicationController
         ["Date Approved",  (req.date_approved ? req.date_approved.to_date : nil)],
         ["Approved By",    req.approved_by.to_s],
       ]
+      meta << ["On Hold Until", req.on_hold_until.to_date] if req.on_hold_until.present?
 
       totals = [
         ["Subtotal",   req.subtotal.to_f],
@@ -138,8 +139,9 @@ class RequestsController < ApplicationController
         ["Total",      req.total.to_f],
       ]
 
-      ss.set_column_widths(
-        table: ss.table(req.identifier.to_s.upcase) do |t|
+      ss.table(req.identifier.to_s.upcase) do |t|
+        %w[4cm 8cm 4cm 1.5cm 3cm 3cm].each { |w| t.column style: OdsStyles.column_for(w) }
+
           meta.each do |label, value|
             t.row do |r|
               r.cell label, style: "subheader"
@@ -193,13 +195,24 @@ class RequestsController < ApplicationController
               r.cell req.reason_for_rejection.to_s, style: "cell"
             end
           end
-        end,
-        column_widths: [
-          { "column-width" => "1cm" },   { "column-width" => "8cm" },
-          { "column-width" => "4cm" },   { "column-width" => "1.5cm" },
-          { "column-width" => "3cm" },   { "column-width" => "3cm" }
-        ]
-      )
+
+          if req.attachment.attached?
+            t.row do |r|
+              r.cell "Attachments", style: "header"
+              r.cell "",            style: "header"
+            end
+            req.attachment.each do |att|
+              url = Rails.application.routes.url_helpers.rails_blob_url(att, host: request.base_url)
+              t.row do |r|
+                r.cell style: "cell" do |c|
+                  c.paragraph do |p|
+                    p.link(att.filename.to_s, href: url)
+                  end
+                end
+              end
+            end
+          end
+      end
       ss.bytes
     end
 
