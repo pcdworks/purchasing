@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby ">=3.3.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem "rails", "~> 7.0.8"
+gem "rails", "~> 7.1.0"
 # Extracted from Ruby stdlib in 3.1+ — required by ActionMailer
 gem "net-smtp", require: false
 gem "net-imap", require: false
@@ -12,7 +12,7 @@ gem "net-pop", require: false
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 # Use Puma as the app server
-gem "puma", "~> 5.0"
+gem "puma", ">= 6.0"
 # Asset pipeline (serves the prebuilt JS/CSS produced by esbuild/sass)
 gem "sprockets-rails"
 # JS pipeline: esbuild via jsbundling-rails

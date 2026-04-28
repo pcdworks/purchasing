@@ -76,7 +76,9 @@ class RequestsController < ApplicationController
       end
 
       update_items(request_params)
-      if @request.update(request_params.except(:received, :submitted, :approved))
+      new_attachments = Array(request_params[:attachment]).compact_blank
+      if @request.update(request_params.except(:received, :submitted, :approved, :attachment))
+        @request.attachment.attach(new_attachments) if new_attachments.any?
         send_mail(@request, type)
         format.html { redirect_to request_url(@request), notice: "Request was successfully updated." }
         format.json { render :show, status: :ok, location: @request }
