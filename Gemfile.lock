@@ -299,9 +299,9 @@ GEM
       faraday-follow_redirects
     thor (1.5.0)
     timeout (0.6.1)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
+    turbo-rails (2.0.12)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (0.13.0)
@@ -361,7 +361,7 @@ DEPENDENCIES
   selenium-webdriver
   spring
   sprockets-rails
-  turbolinks (~> 5)
+  turbo-rails
   web-console (>= 4.1.0)
   webdrivers
 

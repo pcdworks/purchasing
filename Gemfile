@@ -19,8 +19,8 @@ gem "sprockets-rails"
 gem "jsbundling-rails"
 # CSS pipeline: sass via cssbundling-rails
 gem "cssbundling-rails"
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem "turbolinks", "~> 5"
+# Hotwire Turbo for SPA-style navigation
+gem "turbo-rails"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.7"
 

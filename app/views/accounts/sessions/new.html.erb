@@ -9,11 +9,9 @@
 <br/>
 <h2>Log in</h2>
 <br/>
-<div class="d-grid gap-2">
-  <%= link_to "Log in with #{ENV['OAUTH_OC_PROVIDER']}",
+<%= button_to "Log in with #{ENV['OAUTH_OC_PROVIDER']}",
               account_openid_connect_omniauth_authorize_path,
               method: :post,
               class: 'btn btn-primary full-width',
-              data: { turbolinks: false }
-  %>
-</div>
+              form: { class: 'd-grid gap-2', data: { turbo: false } }
+%>
