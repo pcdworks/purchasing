@@ -4,13 +4,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby ">=3.3.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem "rails", "~> 7.1.0"
+gem "rails", "~> 8.0.0"
 # Extracted from Ruby stdlib in 3.1+ — required by ActionMailer
 gem "net-smtp", require: false
 gem "net-imap", require: false
 gem "net-pop", require: false
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.5"
 # Use Puma as the app server
 gem "puma", ">= 6.0"
 # Asset pipeline (serves the prebuilt JS/CSS produced by esbuild/sass)
@@ -22,10 +22,10 @@ gem "cssbundling-rails"
 # Hotwire Turbo for SPA-style navigation
 gem "turbo-rails"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.7"
+gem "jbuilder", "~> 2.13"
 
 # Devise for accounts
-gem "devise"
+gem "devise", "~> 4.9"
 
 # OmniAuth
 gem 'omniauth', '~> 2.1', '>= 2.1.2'
@@ -57,8 +57,8 @@ gem "cocoon"
 gem "bootsnap", ">= 1.4.4", require: false
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  # Modern debugger (replaces byebug); use `debugger` anywhere in code
+  gem "debug", platforms: [:mri], require: "debug/prelude"
 end
 
 group :development do
@@ -68,8 +68,6 @@ group :development do
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem "rack-mini-profiler", "~> 2.0"
   gem "listen", "~> 3.3"
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring"
 
   gem 'rails_real_favicon'
 end
