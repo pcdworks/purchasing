@@ -1,9 +1,10 @@
 FROM ruby:3.3.8
-RUN curl https://deb.nodesource.com/setup_12.x | bash
-RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client libmagickwand-dev yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get update -qq && \
+    apt-get install -y nodejs postgresql-client libmagickwand-dev && \
+    corepack enable && \
+    corepack prepare yarn@1.22.19 --activate
 
 ENV RAILS_ENV=production
 ENV NODE_ENV=production
@@ -14,9 +15,8 @@ ENV RAILS_LOG_TO_STDOUT=true
 ADD . /app
 WORKDIR /app
 RUN bundle install
-RUN yarn install
+RUN yarn install --frozen-lockfile
 RUN bundle exec rake assets:precompile
-RUN bundle exec rails webpacker:compile
 
 
 COPY ./docker/entrypoint.sh /usr/bin/
