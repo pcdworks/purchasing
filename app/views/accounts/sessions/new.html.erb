@@ -1,6 +1,6 @@
 <br/>
 <center>
-  <% if ENV['LOGO'] and File.exists?( Rails.public_path + 'style/' + ENV['LOGO'] ) %>
+  <% if ENV['LOGO'] and File.exist?( Rails.public_path + 'style/' + ENV['LOGO'] ) %>
     <%= image_tag ('/style/' + ENV['LOGO'].to_s), style: 'max-height: 256px; max-width: 100%;' %>
   <% else %>
     <%= image_tag asset_path('purchasing.png')%>
